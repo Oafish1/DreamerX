@@ -23,9 +23,16 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
 ]
-
 templates_path = ['_templates']
 exclude_patterns = []
+
+# Don't skip __init__ methods in autodoc
+autodoc_default_options = {
+    'member-order': 'groupwise',
+    'undoc-members': True,
+    'private-members': True,
+    'special-members': '__init__',
+}
 
 # HTML
 html_theme = 'pydata_sphinx_theme'

@@ -17,3 +17,18 @@ def test_ChannelNorm():
     assert output.shape == x.shape
     assert torch.allclose(output_mean, torch.zeros_like(output_mean), atol=1e-3)
     assert torch.allclose(output_std, torch.ones_like(output_std), atol=1e-3)
+
+
+def test_RecurrentModel():
+    """Test RecurrentModel."""
+    # Create a random input tensor
+    torch.manual_seed(42)
+    x = torch.randn(2, 10)
+    # Create the recurrent model
+    model = fishyrl.models.RecurrentModel(input_size=10, hidden_size=5)
+    # Test the forward pass with no initial hidden state
+    h0 = model(x)
+    assert h0.shape == (2, 5)
+    # Test the forward pass with an initial hidden state
+    h1 = model(x, h0)
+    assert h1.shape == (2, 5)

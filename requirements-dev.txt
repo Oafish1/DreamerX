@@ -4,10 +4,16 @@
 #
 #    pip-compile --extra=dev --output-file=requirements-dev.txt pyproject.toml
 #
+accessible-pygments==0.0.5
+    # via pydata-sphinx-theme
 alabaster==1.0.0
     # via sphinx
 babel==2.18.0
-    # via sphinx
+    # via
+    #   pydata-sphinx-theme
+    #   sphinx
+beautifulsoup4==4.14.3
+    # via pydata-sphinx-theme
 build==1.4.0
     # via pip-tools
 certifi==2026.2.25
@@ -23,7 +29,9 @@ colorama==0.4.6
     #   pytest
     #   sphinx
 docutils==0.22.4
-    # via sphinx
+    # via
+    #   pydata-sphinx-theme
+    #   sphinx
 filelock==3.25.2
     # via torch
 fsspec==2026.2.0
@@ -56,8 +64,12 @@ pip-tools==7.5.3
     # via fishyrl (pyproject.toml)
 pluggy==1.6.0
     # via pytest
+pydata-sphinx-theme==0.16.1
+    # via fishyrl (pyproject.toml)
 pygments==2.19.2
     # via
+    #   accessible-pygments
+    #   pydata-sphinx-theme
     #   pytest
     #   sphinx
 pyproject-hooks==1.2.0
@@ -74,8 +86,12 @@ ruff==0.15.7
     # via fishyrl (pyproject.toml)
 snowballstemmer==3.0.1
     # via sphinx
+soupsieve==2.8.3
+    # via beautifulsoup4
 sphinx==9.1.0
-    # via fishyrl (pyproject.toml)
+    # via
+    #   fishyrl (pyproject.toml)
+    #   pydata-sphinx-theme
 sphinxcontrib-applehelp==2.0.0
     # via sphinx
 sphinxcontrib-devhelp==2.0.0
@@ -93,7 +109,10 @@ sympy==1.14.0
 torch==2.10.0
     # via fishyrl (pyproject.toml)
 typing-extensions==4.15.0
-    # via torch
+    # via
+    #   beautifulsoup4
+    #   pydata-sphinx-theme
+    #   torch
 urllib3==2.6.3
     # via requests
 wheel==0.46.3

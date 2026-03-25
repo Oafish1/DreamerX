@@ -1,3 +1,8 @@
+# 0.4.0
+- Add tentative mode calculation to RSSM stochastic sampling
+- Add workflow to automatically generate docs and deploy to GitHub pages
+- Fix incorrect `Makefile` library reference
+
 # 0.3.0
 - Add Dreamer wrapper for recurrent state space modeling, `models.RSSM`
 - Add classic gymnasium environments

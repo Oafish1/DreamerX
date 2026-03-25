@@ -300,11 +300,11 @@ class LayerNormGRU(nn.Module):
 
         Applies layer normalization to the hidden state after the GRU computation.
 
-        :param x: The input tensor of shape (*batch_shape, input_dim).
+        :param x: The input tensor of shape (batch_size, input_dim).
         :type x: torch.Tensor
-        :param h: The initial hidden state of shape (*batch_shape, hidden_dim), or None to use zeros. (Default: ``None``)
+        :param h: The initial hidden state of shape (batch_size, hidden_dim), or None to use zeros. (Default: ``None``)
         :type h: torch.Tensor | None
-        :return: The final hidden state of shape (*batch_shape, hidden_dim).
+        :return: The final hidden state of shape (batch_size, hidden_dim).
         :rtype: torch.Tensor
 
         """
@@ -464,6 +464,10 @@ class RSSM(nn.Module):
         #       compute log probabilities
         dist = torch.distributions.OneHotCategoricalStraightThrough(probs=probs)
         sample = dist.rsample()
+
+        # Don't sample, and instead take the mode - Might be useful for inference
+        # maxprobs = probs.argmax(dim=-1)
+        # mode = torch.nn.functional.one_hot(maxprobs, num_classes=probs.size(-1))
 
         # Flatten both logits and sample
         # NOTE: This assumes no continuity between bins. It may be more faithful to theory if these were

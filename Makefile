@@ -17,7 +17,7 @@ build:
 # Build docs
 .PHONY: build-docs
 build-docs:
-	sphinx-apidoc --separate --remove-old -o docs/source/api ../fishyrl
+	sphinx-apidoc --separate --remove-old -o ./docs/source/api ./fishyrl
 	make -C ./docs html
 
 # Run tests

@@ -11,13 +11,16 @@ from . import distributions
 
 class MLP(nn.Module):
     """MLP for processing vector inputs."""
-    def __init__(self, input_dim: int, hidden_dims: list[int]) -> None:
+    def __init__(self, input_dim: int, output_dim: int | None = None, hidden_dims: list[int] | None = None) -> None:
         """Initialize the MLP.
 
         :param input_dim: The dimension of the input vector.
         :type input_dim: int
+        :param output_dim: The dimension of the output vector. If provided,
+            a final hidden layer will be added with no normalization or activation
+        :type output_dim: int | None
         :param hidden_dims: The dimensions of the hidden layers.
-        :type hidden_dims: list[int]
+        :type hidden_dims: list[int] | None
 
         """
         super().__init__()
@@ -32,6 +35,12 @@ class MLP(nn.Module):
                 nn.LayerNorm(hidden_dims[i + 1], eps=1e-3),
                 nn.SiLU(),
             ]
+
+        # Add final hidden layer
+        if output_dim is not None:
+            layers += [nn.Linear(hidden_dims[-1], output_dim)]
+
+        # Assemble model
         self._model = nn.Sequential(*layers)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -61,18 +70,11 @@ class MLPEncoder(nn.Module):
         """
         super().__init__()
 
-        # Create model in blocks
-        layers = []
-        num_blocks = 3
-        hidden_dims = [input_dim] + [hidden_dim] * num_blocks + [output_dim]
-        for i in range(len(hidden_dims) - 1):
-            layers += [
-                # Layer, dropout, norm, activation
-                nn.Linear(hidden_dims[i], hidden_dims[i + 1], bias=False),
-                nn.LayerNorm(hidden_dims[i + 1], eps=1e-3),
-                nn.SiLU(),
-            ]
-        self._model = nn.Sequential(*layers)
+        # Create model
+        self._model = MLP(
+            input_dim=input_dim,
+            hidden_dims=3 * [hidden_dim] + [output_dim],
+        )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Perform a forward pass through the MLP encoder.
@@ -101,25 +103,12 @@ class MLPDecoder(nn.Module):
         """
         super().__init__()
 
-        # Create model in blocks
-        layers = []
-        num_blocks = 3
-        hidden_dims = [input_dim] + [hidden_dim] * num_blocks + [output_dim]
-        for i in range(len(hidden_dims) - 1):
-            # Add blocks if not last
-            if i != len(hidden_dims) - 1:
-                layers += [
-                    # Layer, dropout, norm, activation
-                    nn.Linear(hidden_dims[i], hidden_dims[i + 1], bias=False),
-                    nn.LayerNorm(hidden_dims[i + 1], eps=1e-3),
-                    nn.SiLU(),
-                ]
-            # Otherwise, add final block with bias and no norm/activation
-            else:
-                layers += [
-                    nn.Linear(hidden_dims[i], hidden_dims[i + 1], bias=True),
-                ]
-        self._model = nn.Sequential(*layers)
+        # Create model
+        self._model = MLP(
+            input_dim=input_dim,
+            output_dim=output_dim,
+            hidden_dims=3 * [hidden_dim],
+        )
 
     def forward(self, x: torch.Tensor) -> tuple[torch.Tensor] | torch.Tensor:
         """Perform a forward pass through the MLP decoder.

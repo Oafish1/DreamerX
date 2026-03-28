@@ -1,3 +1,8 @@
+# 0.5.0
+- Add `output_dim` argument to `models.MLP` for unnormalized output
+- Fix transition and representation model structures in example notebook
+- Revise `models.MLPEncoder` and `models.MLPDecoder` to use `models.MLP` as constructor
+
 # 0.4.0
 - Add tentative mode calculation to RSSM stochastic sampling
 - Add workflow to automatically generate docs and deploy to GitHub pages

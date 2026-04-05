@@ -1,3 +1,9 @@
+# 0.9.0
+- Add `symexp` and `TwoHot` to `distributions` module
+- Fix and add `dims` argument to `mse_loss`
+- Implement full reconstruction loss and world optimizer
+- Rename `MSELoss` to `mse_loss`
+
 # 0.8.0
 - Add `convert_samples_to_tensors` to `buffers` module for converting from `numpy`
 - Add `sequence_length` argument to buffer sampling

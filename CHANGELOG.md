@@ -1,3 +1,18 @@
+# 0.11.0
+- Add discretization strategy `actions.TwoHotDiscretizedContinuousAction` and `actions.DiscretizedContinuousAction`
+- Add `distributions.identity` utility function
+- Add novel `TwoHot` sampling and entropy
+- Add preliminary model saving
+- Add preliminary tuned configuration file
+- Add `state_dict` and `load_state_dict` methods to buffers
+- Add `utilities.Ratio` class for computing gradient updates
+- Add `learnable_initial_state` argument to `models.RSSM`
+- Documentation and typing corrections, default parameter adjustments
+- Fix documentation formatting and minor issues
+- Numerous bugfixes, including gradient detach in action generation and proper loss formulations
+- Revise sampling strategy `buffers.IndependentVectorizedBuffer` to sample from all buffers randomly
+- Test to optimality on `CartPole-v1`
+
 # 0.10.0
 - Add `actions.construct_actions` utility function
 - Add `construct` method to `actions.Action` and all child actions

@@ -65,24 +65,29 @@ class Action(nn.Module):
         pass
 
     @abstractmethod
-    def sample(self, logits: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+    def sample(self, logits: torch.Tensor) -> tuple[torch.Tensor, torch.distributions.Distribution]:
         """Sample an action from the logits.
 
         :param logits: The base logits of shape (batch_dim, input_dim).
         :type logits: torch.Tensor
-        :return: The sampled action of shape (batch_dim, output_dim).
-        :rtype: torch.Tensor
+        :return: The sampled action of shape (batch_dim, output_dim) and the corresponding distribution.
+        :rtype: tuple[torch.Tensor, torch.distributions.Distribution]
 
         """
         pass
 
 
 class ContinuousActions(Action):
-    """Continuous action definition using `Normal`."""
+    """Continuous action definition using ``torch.distributionsNormal``.
+
+    Computed using mean ``tanh(mean)`` and std
+    ``(std_max - std_min) * sigmoid(std + std_init) + std_min``.
+
+    """
     def __init__(
             self,
             num_actions: int = 1,
-            std_init: float = 1,
+            std_init: float = 2,
             std_min: float = .1,
             std_max: float = 1,
             clip: float = 0,
@@ -91,6 +96,8 @@ class ContinuousActions(Action):
 
         :param num_actions: The number of actions to initialize.
         :type num_actions: int
+        :param std_init: The initial standard deviation.
+        :type std_init: float
         :param std_min: The minimum standard deviation.
         :type std_min: float
         :param std_max: The maximum standard deviation.
@@ -161,14 +168,14 @@ class ContinuousActions(Action):
         """
         return action
 
-    def sample(self, logits: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-        """Sample logits using `Normal`, clipped to [-clip, clip].
+    def sample(self, logits: torch.Tensor) -> tuple[torch.Tensor, torch.distributions.Distribution]:
+        """Sample logits using ``Normal``, clipped to [-clip, clip].
 
         :param logits: The base logits of shape (batch_dim, input_dim).
         :type logits: torch.Tensor
         :return: Tuple containing the sampled action of shape (batch_dim, output_dim)
             and the distribution.
-        :rtype: tuple[torch.Tensor, torch.Tensor]
+        :rtype: tuple[torch.Tensor, torch.distributions.Distribution]
 
         """
         # Get mean and std
@@ -194,7 +201,7 @@ class ContinuousActions(Action):
 
 
 class DiscreteAction(Action):
-    """Discrete action definition using `OneHotCategoricalStraightThrough`."""
+    """Discrete action definition using ``OneHotCategoricalStraightThrough``."""
     def __init__(self, num_options: int) -> None:
         """Initialize the action definition.
 
@@ -264,21 +271,252 @@ class DiscreteAction(Action):
 
         # Cast to long and convert to one-hot
         action = action.long()
-        return torch.nn.functional.one_hot(action.squeeze(-1), num_classes=self._num_options).to(torch.get_default_dtype())
+        return nn.functional.one_hot(action.squeeze(-1), num_classes=self._num_options).to(torch.get_default_dtype())
 
-    def sample(self, logits: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-        """Sample logits using `OneHotCategoricalStraightThrough`.
+    def sample(self, logits: torch.Tensor) -> tuple[torch.Tensor, torch.distributions.Distribution]:
+        """Sample logits using ``OneHotCategoricalStraightThrough``.
 
         :param logits: The base logits of shape (batch_dim, input_dim).
         :type logits: torch.Tensor
         :return: Tuple containing the sampled action of shape (batch_dim, output_dim)
             and the distribution.
-        :rtype: tuple[torch.Tensor, torch.Tensor]
+        :rtype: tuple[torch.Tensor, torch.distributions.Distribution]
 
         """
         # Create and sample from distribution
         dist = torch.distributions.OneHotCategoricalStraightThrough(
                 logits=distributions.uniform_mix(logits)[0])
+        return dist.rsample(), dist
+
+
+class TwoHotDiscretizedContinuousAction(Action):
+    """Discretized continuous action definition using a two-hot encoding."""
+    def __init__(
+            self,
+            bins: int = 32,
+            low: float = -1.,
+            high: float = 1.,
+            pre_func: callable = distributions.identity,
+            post_func: callable = distributions.identity,
+            eps: float = 1e-8,
+        ) -> None:
+        """Initialize the action definition.
+
+        :param num_actions: The number of actions to initialize.
+        :type num_actions: int
+        :param bins: The number of bins to use for discretization.
+        :type bins: int
+        :param low: The lower bound of the action values.
+        :type low: float
+        :param high: The upper bound of the action values.
+        :type high: float
+        :param pre_func: A function to apply to the input logits before creating the distribution. (Default: ``symlog``)
+        :type pre_func: callable
+        :param post_func: A function to apply to the output of the distribution. (Default: ``symexp``)
+        :type post_func: callable
+        :param eps: A small value to add when computing entropy to avoid numerical issues. (Default: ``1e-8``)
+        :type eps: float
+
+        """
+        # Parameters
+        self._bins = bins
+        self._low = low
+        self._high = high
+        self._pre_func = pre_func
+        self._post_func = post_func
+        self._eps = eps
+
+    @property
+    def input_dim(self) -> int:
+        """The number of input features for the discretized continuous action, equal to the number of bins.
+
+        :type: int
+
+        """
+        return self._bins
+
+    @property
+    def output_dim(self) -> int:
+        """The number of output features for the discretized continuous action, always 1.
+
+        :type: int
+
+        """
+        return 1
+
+    @property
+    def num_actions(self) -> int:
+        """The number of actions.
+
+        :type: int
+
+        """
+        return 1
+
+    def simplify(self, x: torch.Tensor) -> torch.Tensor:
+        """Simplify each action to a single value. Is a no-op for discretized continuous actions.
+
+        :param x: The action(s) of shape (batch_dim, output_dim).
+        :type x: torch.Tensor
+        :return: The input tensor ``x``.
+        :rtype: torch.Tensor
+        """
+        return x
+
+    def construct(self, action: torch.Tensor) -> torch.Tensor:
+        """Construct the full action from the simplified action. Is a no-op for discretized continuous actions.
+
+        :param action: The simplified action of shape (batch_dim, output_dim).
+        :type action: torch.Tensor
+        :return: The input tensor ``action``.
+        :rtype: torch.Tensor
+        """
+        return action
+
+    def sample(self, logits: torch.Tensor) -> tuple[torch.Tensor, distributions.TwoHot]:
+        """Sample logits using a two-hot encoding.
+
+        :param logits: The base logits of shape (batch_dim, input_dim).
+        :type logits: torch.Tensor
+        :return: Tuple containing the sampled action of shape (batch_dim, output_dim)
+            and the distribution.
+        :rtype: tuple[torch.Tensor, distributions.TwoHot]
+
+        """
+        # Create and sample from distribution
+        dist = distributions.TwoHot(
+            logits=distributions.uniform_mix(logits.unsqueeze(-2))[0],  # Add output_dim dimension
+            # bins=self._bins,
+            low=self._low,
+            high=self._high,
+            pre_func=self._pre_func,
+            post_func=self._post_func,
+            event_dims=2,  # Last two dimensions are event dimensions (bins and output_dim)
+            eps=self._eps)
+
+        return dist.rsample(), dist
+
+
+class DiscretizedContinuousAction(Action):
+    """Discretized continuous action definition using a one-hot encoding."""
+    def __init__(
+            self,
+            bins: int = 32,
+            low: float = -1.,
+            high: float = 1.,
+            pre_func: callable = distributions.identity,
+            post_func: callable = distributions.identity,
+            eps: float = 1e-8,
+        ) -> None:
+        """Initialize the action definition.
+
+        :param num_actions: The number of actions to initialize.
+        :type num_actions: int
+        :param bins: The number of bins to use for discretization.
+        :type bins: int
+        :param low: The lower bound of the action values.
+        :type low: float
+        :param high: The upper bound of the action values.
+        :type high: float
+        :param pre_func: A function to apply to the input logits before creating the distribution. (Default: ``symlog``)
+        :type pre_func: callable
+        :param post_func: A function to apply to the output of the distribution. (Default: ``symexp``)
+        :type post_func: callable
+        :param eps: A small value to add when computing entropy to avoid numerical issues. (Default: ``1e-8``)
+        :type eps: float
+
+        """
+        # Parameters
+        self._bins = bins
+        self._low = low
+        self._high = high
+        self._pre_func = pre_func
+        self._post_func = post_func
+        self._eps = eps
+
+        # Compute bin values
+        self._bin_values = torch.linspace(low, high, bins)
+
+    @property
+    def input_dim(self) -> int:
+        """The number of input features for the discretized continuous action, equal to the number of bins.
+
+        :type: int
+
+        """
+        return self._bins
+
+    @property
+    def output_dim(self) -> int:
+        """The number of output features for the discretized continuous action, equal to the number of bins.
+
+        :type: int
+
+        """
+        return self._bins
+
+    @property
+    def num_actions(self) -> int:
+        """The number of actions.
+
+        :type: int
+
+        """
+        return 1
+
+    def simplify(self, x: torch.Tensor) -> torch.Tensor:
+        """Simplify each action to a single value.
+
+        Takes the index of the one-hot encoded action and returns the corresponding bin value.
+
+        :param x: The action(s) of shape (batch_dim, output_dim).
+        :type x: torch.Tensor
+        :return: The simplified action of shape (batch_dim, 1).
+        :rtype: torch.Tensor
+
+        """
+        # Make sure bin values are on the same device as input
+        self._bin_values = self._bin_values.to(x.device)
+
+        # Get index of one-hot encoding
+        indices = torch.argmax(x, dim=-1)
+
+        # Get corresponding bin values
+        return self._bin_values[indices].unsqueeze(-1)
+
+    def construct(self, action: torch.Tensor) -> torch.Tensor:
+        """Construct the full action from the simplified action.
+
+        Takes the simplified action value and returns a one-hot encoding corresponding to the proper bin.
+
+        :param action: The simplified action of shape (batch_dim, 1).
+        :type action: torch.Tensor
+        :return: The full action of shape (batch_dim, output_dim).
+        :rtype: torch.Tensor
+
+        """
+        # Make sure bin values are on the same device as action
+        self._bin_values = self._bin_values.to(action.device)
+
+        # Get bin indices for each action value
+        indices = torch.bucketize(action.squeeze(-1), self._bin_values)
+
+        # Convert to one-hot encoding
+        return nn.functional.one_hot(indices, num_classes=self._bins).to(torch.get_default_dtype())
+
+    def sample(self, logits: torch.Tensor) -> tuple[torch.Tensor, torch.distributions.Distribution]:
+        """Sample logits using a one-hot encoding.
+
+        :param logits: The base logits of shape (batch_dim, input_dim).
+        :type logits: torch.Tensor
+        :return: Tuple containing the sampled action of shape (batch_dim, output_dim)
+            and the distribution.
+        :rtype: tuple[torch.Tensor, torch.distributions.Distribution]
+
+        """
+        # Create and sample from distribution
+        dist = torch.distributions.OneHotCategoricalStraightThrough(
+            logits=distributions.uniform_mix(logits)[0])
         return dist.rsample(), dist
 
 
@@ -291,6 +529,7 @@ def simplify_actions(actions: torch.Tensor, model_actions: list[Action]) -> torc
     :type model_actions: list[Action]
     :return: The simplified actions of shape (batch_dim, sum(num_actions)).
     :rtype: torch.Tensor
+
     """
     return torch.cat([
         ma.simplify(a)
@@ -310,6 +549,7 @@ def construct_actions(actions: torch.Tensor, model_actions: list[Action]) -> tor
     :type model_actions: list[Action]
     :return: The full actions of shape (batch_dim, sum(output_dim)).
     :rtype: torch.Tensor
+
     """
     return torch.cat([
         ma.construct(a)

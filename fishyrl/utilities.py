@@ -1,5 +1,7 @@
 """Utilities for state management and common operations."""
 
+from typing import Any
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -14,7 +16,7 @@ class MovingMinMaxScaler(nn.Module):
         frac_high: float = .95,
         eps: float = 1e-8,
     ) -> None:
-        """Initialize the `MovingMinMaxScaler`.
+        """Initialize the ``MovingMinMaxScaler``.
 
         :param beta: The decay rate for the moving min and max. (Default: ``0.99``)
         :param eps: Minimal value for the computed high-low range. (Default: ``1e-8``)
@@ -34,12 +36,12 @@ class MovingMinMaxScaler(nn.Module):
         self.register_buffer('_low', torch.zeros((), dtype=torch.get_default_dtype()))
         self.register_buffer('_high', torch.zeros((), dtype=torch.get_default_dtype()))
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         """Update and return the low and range estimates.
 
         :param x: The input tensor to use while updating the estimates.
-        :return: The normalized tensor.
-        :rtype: torch.Tensor
+        :return: A tuple containing the low estimate and the range estimate.
+        :rtype: Tuple[torch.Tensor, torch.Tensor]
 
         """
         # Detatch input to avoid memory leaks
@@ -54,6 +56,50 @@ class MovingMinMaxScaler(nn.Module):
 
         # Return low and range
         return self._low, torch.max(self._high - self._low, self._eps)
+
+
+class Ratio:
+    """Module for computing the number of gradient update steps."""
+    def __init__(self, ratio: float = 1.) -> None:
+        """Initialize ``Ratio``.
+
+        :param ratio: The ratio of gradient update steps to environment steps. (Default: ``1.0``)
+
+        """
+        # Parameters
+        self._ratio = ratio
+        self._step = 0
+
+    def __call__(self, step: int) -> int:
+        """Compute the number of gradient update steps for the given environment step.
+
+        :param step: The current environment step.
+        :return: The number of gradient update steps to perform.
+        :rtype: int
+
+        """
+        # Compute the number of gradient update steps
+        num_updates = int((step - self._step) * self._ratio)
+        self._step += num_updates / self._ratio
+        return num_updates
+
+    def state_dict(self) -> dict[str, Any]:
+        """Return the state of the module as a dictionary.
+
+        :return: A dictionary containing the state of the module.
+        :rtype: dict[str, Any]
+
+        """
+        return {'_ratio': self._ratio, '_step': self._step}
+
+    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
+        """Load the state of the module from a dictionary.
+
+        :param state_dict: The state dictionary to load from.
+
+        """
+        self._ratio = state_dict['_ratio']
+        self._step = state_dict['_step']
 
 
 # Taken from SheepRL

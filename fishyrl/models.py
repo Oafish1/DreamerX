@@ -389,6 +389,7 @@ class RSSM(nn.Module):
         representation_model: nn.Module,
         transition_model: nn.Module,
         bins: int = 32,
+        learnable_initial_state: bool = True,
     ) -> None:
         """Initialize the RSSM.
 
@@ -413,7 +414,10 @@ class RSSM(nn.Module):
         # Initialize recurrent model hidden state
         # NOTE: Making this initial state learnable allows the model to learn an initial state
         #       rather than always starting from zeros
-        self._initial_hidden_state = nn.Parameter(torch.zeros(recurrent_model.hidden_dim))
+        if learnable_initial_state:
+            self._initial_hidden_state = nn.Parameter(torch.zeros(recurrent_model.hidden_dim))
+        else:
+            self.register_buffer('_initial_hidden_state', torch.zeros(recurrent_model.hidden_dim, dtype=torch.get_default_dtype()))
 
     @property
     def initial_hidden_state(self) -> torch.Tensor:
@@ -486,7 +490,7 @@ class RSSM(nn.Module):
         """Perform one step of the RSSM.
 
         Will compute the hidden state using action, posterior, and previous hidden state. If not available,
-        will instead use the initial hidden state. If `embedded_obs` is not provided, imagines the next
+        will instead use the initial hidden state. If ``embedded_obs`` is not provided, imagines the next
         hidden state.
 
         :param action: The action taken, of shape (batch_dim, action_dim).

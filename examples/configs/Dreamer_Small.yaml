@@ -3,11 +3,11 @@ name: "Dreamer_Small"
 
 # Checkpoint configuration
 checkpoint:
-  frequency: 5000
+  frequency: 10000
 
 # Evaluation configuration
 eval:
-  frequency: 2500
+  frequency: 5000
 
 # Training recipe
 training:

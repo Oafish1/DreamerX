@@ -7,7 +7,7 @@
 <table>
     <tbody>
         <!-- Hopper -->
-        <!-- <tr>
+        <tr bgcolor="#2b2b68">
             <td colspan=4 style="text-align: center"><b>MuJoCo Hopper-v5</b></td>
         </tr>
         <tr>
@@ -21,9 +21,9 @@
             <td style="text-align: center"><img src="./examples/images/Hopper_50k.gif" width="100%" alt="Trained Dreamer-V3 agent after 50k steps on MuJoCo Hopper-v5 environment"></td>
             <td style="text-align: center"><img src="./examples/images/Hopper_100k.gif" width="100%" alt="Trained Dreamer-V3 agent after 100k steps on MuJoCo Hopper-v5 environment"></td>
             <td style="text-align: center"><img src="./examples/images/Hopper_200k.gif" width="100%" alt="Trained Dreamer-V3 agent after 200k steps on MuJoCo Hopper-v5 environment"></td>
-        </tr> -->
+        </tr>
         <!-- Ant -->
-        <tr bgcolor="#2b2b68" >
+        <tr bgcolor="#2b2b68">
             <td colspan=4 style="text-align: center"><b>MuJoCo Ant-v5</b></td>
         </tr>
         <tr>
@@ -40,7 +40,7 @@
         </tr>
         <!-- BipedalWalker -->
         <tr bgcolor="#2b2b68">
-            <td colspan=4 style="text-align: center"><b>LunarLander-v3</b></td>
+            <td colspan=4 style="text-align: center"><b>BipedalWalker-v3</b></td>
         </tr>
         <tr>
             <td style="text-align: center">10K Steps</td>

@@ -676,6 +676,8 @@ def train_loop(
     actor_critic_model: frl_utilities.ContainerModule,
     utility_modules: frl_utilities.Container,
     tensorboard_writer: torch.utils.tensorboard.SummaryWriter = None,
+    # Loaded model parameters
+    start_environment_step: int = 0,
     # Checkpointing parameters
     checkpoint_dir: str = None,
     checkpoint_frequency: int = 5_000,
@@ -705,6 +707,8 @@ def train_loop(
     :type utility_modules: frl_utilities.Container
     :param tensorboard_writer: The TensorBoard writer for logging, if desired. (Default: ``None``)
     :type tensorboard_writer: torch.utils.tensorboard.SummaryWriter
+    :param start_environment_step: The initial environment step. Used for resuming training from a checkpoint. (Default: ``0``)
+    :type start_environment_step: int
     :param checkpoint_dir: The directory to save checkpoints in. (Default: ``None``)
     :type checkpoint_dir: str
     :param checkpoint_frequency: The frequency (in environment steps) for saving checkpoints. (Default: ``5_000``)
@@ -738,13 +742,13 @@ def train_loop(
 
     # Tracking
     cumulative_rewards = np.zeros(envs.num_envs)
-    cumulative_gradient_steps = 0
+    cumulative_gradient_steps = 0  # NOTE: These will reset on checkpoint load
     cumulative_episodes = 0
 
     # Loop for specified number of iterations
     obs, info = envs.reset(seed=42)
     obs = obs.astype(np.float32)
-    for environment_step in range(0, training_steps, envs.num_envs):
+    for environment_step in range(start_environment_step, training_steps, envs.num_envs):
         # Compute an action using the model
         # TODO: Make this easier for inference
         if environment_step >= training_pretrain_steps:

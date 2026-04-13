@@ -1,3 +1,10 @@
+# 0.15.0
+- Add checkpoint resume to notebook
+- Add environment start state
+- Add MuJoCo `Reacher-v5` configuration
+- Add preliminary `Hopper-v5` results
+- Change preview GIFs to loop
+
 # 0.14.1
 - Add trained model for `Ant-v5` in `README`
 - Begin training model for `Hopper-v5` with associated config

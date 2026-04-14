@@ -220,6 +220,20 @@ class Container:
             module.load_state_dict(state_dict[name])
 
 
+class CaseInsensitiveEnumMeta(enum.EnumMeta):
+    """Enum meta class for case-insensitive lookup."""
+    def __getitem__(cls, value: str) -> Any:  # noqa: ANN401
+        """Override the default item access to perform case-insensitive lookup.
+
+        :param value: The value to look for.
+        :type value: str
+        :return: The matching enum member.
+        :rtype: Any
+
+        """
+        return super().__getitem__(value.upper()).value
+
+
 def load_config(*paths: list[str], list_behavior: str = 'replace') -> DotDict:
     """Load and merge YAML configuration files into a single ``DotDict``, with priority given to earlier files.
 
@@ -353,18 +367,37 @@ def _flatten_dict(
     return _result
 
 
-class CaseInsensitiveEnumMeta(enum.EnumMeta):
-    """Enum meta class for case-insensitive lookup."""
-    def __getitem__(cls, value: str) -> Any:  # noqa: ANN401
-        """Override the default item access to perform case-insensitive lookup.
+def export_gif(path: str, frames: np.ndarray, fps: int = 30, max_fps: int = 30, **kwargs: dict[str, Any]) -> None:
+    """Export a sequence of frames as a GIF.
 
-        :param value: The value to look for.
-        :type value: str
-        :return: The matching enum member.
-        :rtype: Any
+    :param path: The path of the resultant GIF.
+    :type path: str
+    :param frames: The sequence of frames to export, as a numpy array of shape (time, height, width, channels).
+    :type frames: np.ndarray
+    :param fps: Frames per second. (Default: ``30``)
+    :type fps: int
+    :param max_fps: The maximum frames per second to use when exporting the GIF. Will drop frames if needed. (Default: ``30``)
+    :type max_fps: int
+    :param kwargs: Additional keyword arguments to pass to the imageio.mimsave function.
+    :type kwargs: dict[str, Any]
 
-        """
-        return super().__getitem__(value.upper()).value
+    """
+    # Import if needed
+    import imageio
+
+    # Get kwargs
+    new_kwargs = {'loop': 0}  # Default kwargs
+    new_kwargs.update(kwargs)
+
+    # Drop frames if fps is greater than max_fps
+    if fps > max_fps:
+        step = int(np.ceil(fps / max_fps))
+        frames = frames[::step]
+        fps = int(fps / step)
+
+    # Save the frames as a GIF
+    # TODO: Maybe add delay on loop? (https://github.com/imageio/imageio/issues/1073#issuecomment-2040188027)
+    imageio.mimsave(path, frames, fps=fps, **new_kwargs)
 
 
 # Taken from SheepRL

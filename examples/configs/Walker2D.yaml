@@ -1,0 +1,20 @@
+# MuJoCo Walker2D
+name: "Walker2D"
+
+# Environment configuration
+env:
+  num: 4
+  name: "Walker2d-v5"
+  actions:
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7

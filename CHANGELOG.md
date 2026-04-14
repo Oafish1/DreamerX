@@ -1,3 +1,14 @@
+# 0.16.0
+- Add configurations for `Pusher-v5`, `Walker2D-v5`, and `Humanoid-v5`
+- Add in-notebook model evaluation and export to `examples/images` folder
+- Add `utilities.export_gif` with automatic and adjustable frame skipping
+- Add optional calculation of prior for `models.RSSM`
+- Change model construction behavior to line up with original
+- Fix citation version
+- Reorganize `utilities` module
+- Small optimizations to `dreamer` inference
+- Update `Hopper` results in `README`
+
 # 0.15.1
 - Add more details to `README`
 - Add `tensor_log_prob` argument to `distributions.TwoHot`

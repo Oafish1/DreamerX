@@ -1,0 +1,44 @@
+# MuJoCo Humanoid
+name: "Humanoid"
+
+# Environment configuration
+env:
+  num: 4
+  name: "Humanoid-v5"
+  actions:
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+    - type: "Discretized_Continuous"
+      bins: 7
+
+# TODO: Make `Dreamer_Medium` or large

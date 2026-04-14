@@ -1,0 +1,36 @@
+# MuJoCo Pusher
+name: "Pusher"
+
+# Environment configuration
+env:
+  num: 4
+  name: "Pusher-v5"
+  actions:
+    - type: "Discretized_Continuous"
+      low: -2.0
+      high: 2.0
+      bins: 9
+    - type: "Discretized_Continuous"
+      low: -2.0
+      high: 2.0
+      bins: 9
+    - type: "Discretized_Continuous"
+      low: -2.0
+      high: 2.0
+      bins: 9
+    - type: "Discretized_Continuous"
+      low: -2.0
+      high: 2.0
+      bins: 9
+    - type: "Discretized_Continuous"
+      low: -2.0
+      high: 2.0
+      bins: 9
+    - type: "Discretized_Continuous"
+      low: -2.0
+      high: 2.0
+      bins: 9
+    - type: "Discretized_Continuous"
+      low: -2.0
+      high: 2.0
+      bins: 9

@@ -155,8 +155,9 @@ def construct_models(
     action_dim = sum(model_action_output_dims)
 
     # Encoder-decoder models
-    encoder_model = frl_models.MLPEncoder(env_obs_dim, model_global_embedded, num_blocks=model_global_blocks, hidden_dim=model_global_dense).to(device)
-    decoder_model = frl_models.MLPDecoder(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, env_obs_dim, num_blocks=model_global_blocks, hidden_dim=model_global_dense).to(device)
+    # NOTE: This uses `model_global_embedded` for all encoder and decoder dims, as in the original implementation
+    encoder_model = frl_models.MLPEncoder(env_obs_dim, model_global_embedded, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
+    decoder_model = frl_models.MLPDecoder(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, env_obs_dim, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
 
     # RSSM models
     recurrent_model = frl_models.RecurrentModel(model_global_stochastic_dim * model_global_categorical_bins + action_dim, model_global_deterministic_dim).to(device)
@@ -605,22 +606,23 @@ def learning_step(
 
 @frl_utilities.optional_flatten_cfg(exceptions=[])
 def compute_actions(
-    obs: torch.Tensor,
     world_model: frl_utilities.ContainerModule,
     actor_critic_model: frl_utilities.ContainerModule,
+    obs: torch.Tensor = None,
     actions: torch.Tensor = None,
     posteriors: torch.Tensor = None,
     hidden_states: torch.Tensor = None,
     initializations: torch.Tensor = None,
+    compute_prior: bool = False,
 ) -> dict[str, Union[np.ndarray, torch.Tensor]]:
     """Compute an action given the current observation.
 
-    :param obs: The current observation from the environment, as a tensor of shape (batch_dim, obs_dim).
-    :type obs: torch.Tensor
     :param world_model: The world model for the Dreamer agent.
     :type world_model: frl_utilities.ContainerModule
     :param actor_critic_model: The actor-critic model for the Dreamer agent.
     :type actor_critic_model: frl_utilities.ContainerModule
+    :param obs: The current observation from the environment, as a tensor of shape (batch_dim, obs_dim). (Default: ``None``)
+    :type obs: torch.Tensor
     :param actions: The actions from the previous step. If not provided, will use a default. (Default: ``None``)
     :type actions: torch.Tensor
     :param posteriors: The posterior states from the previous step. If not provided, will use a default. (Default: ``None``)
@@ -629,6 +631,8 @@ def compute_actions(
     :type hidden_states: torch.Tensor
     :param initializations: The initializations (`terminations | truncations`) from the previous step. If not provided, will use a default. (Default: ``None``)
     :type initializations: torch.Tensor
+    :param compute_prior: Whether to compute the prior state for the current step. If ``False``, will only compute the posterior. (Default: ``False``)
+    :type compute_prior: bool
     :return: A dictionary containing the environment actions, actions, posteriors, hidden states, and world model output.
     :rtype: dict[str, Union[np.ndarray, torch.Tensor]]
 
@@ -638,7 +642,8 @@ def compute_actions(
         raise ValueError('Must provide initializations (`terminations | truncations`) based on previous step.')
 
     # Embed observation
-    embedded_obs = world_model.encoder_model(obs)
+    if obs is not None:
+        embedded_obs = world_model.encoder_model(obs)
 
     # Compute hidden states
     world_model_out = world_model.rssm_model(
@@ -648,6 +653,7 @@ def compute_actions(
         embedded_obs,
         initializations,
         batch_dim=obs.shape[0],
+        compute_prior=compute_prior,
     )
     hidden_states = world_model_out['hidden_state']
     posteriors = world_model_out['posterior']
@@ -836,21 +842,18 @@ def train_loop(
         # Evaluate
         if environment_step % eval_frequency < envs.num_envs and tensorboard_writer is not None:
             # Run evaluation episode
-            video_out, fps = evaluate(
+            frames, fps = evaluate(
                 env_name=env_name,
                 world_model=world_model,
                 actor_critic_model=actor_critic_model,
             )
 
-            # Format video output
-            video_out = np.stack(video_out, axis=0)  # (time, height, width, channels)
-
             # Output to gif
-            import imageio  # Import if needed
-            imageio.mimsave(
+            frl_utilities.export_gif(
                 os.path.join(tensorboard_writer.get_logdir(), f'eval_{environment_step:07d}.gif'),
-                video_out,
-                fps=fps)
+                frames,
+                fps=fps,
+            )
 
             # Log video to tensorboard (For some reason, causes permission error and is broken)
             # tensorboard_writer.add_video(  # (batch, time, channels, height, width)
@@ -898,28 +901,29 @@ def evaluate(
     env = gym.make(env_name, render_mode='rgb_array')
     obs, info = env.reset(seed=seed)
     actions = posteriors = hidden_states = initializations = None
-    video_frames = [env.render()]
+    frames = [env.render()]
 
     # Loop until episode ends
     while True:
         # Compute action using model
-        ret = compute_actions(
-            obs=torch.from_numpy(obs).unsqueeze(0).to(device),  # TODO: Maybe auto-detect in `compute_actions`
-            world_model=world_model,
-            actor_critic_model=actor_critic_model,
-            actions=actions,
-            posteriors=posteriors,
-            hidden_states=hidden_states,
-            initializations=initializations,
-        )
-        env_actions = ret['env_actions']
-        actions = ret['actions']
-        posteriors = ret['posterior']
-        hidden_states = ret['hidden_state']
+        with torch.no_grad():
+            ret = compute_actions(
+                obs=torch.from_numpy(obs).unsqueeze(0).to(device),  # TODO: Maybe auto-detect in `compute_actions`
+                world_model=world_model,
+                actor_critic_model=actor_critic_model,
+                actions=actions,
+                posteriors=posteriors,
+                hidden_states=hidden_states,
+                initializations=initializations,
+            )
+            env_actions = ret['env_actions']
+            actions = ret['actions']
+            posteriors = ret['posterior']
+            hidden_states = ret['hidden_state']
 
         # Step environment
         obs, rewards, terminated, truncated, infos = env.step(env_actions.squeeze(0))
-        video_frames.append(env.render())
+        frames.append(env.render())
 
         # Update initializations
         initializations = torch.tensor([terminated | truncated], dtype=bool, device=device)
@@ -928,6 +932,9 @@ def evaluate(
         if terminated or truncated:
             break
 
+    # Stack video frames
+    frames = np.stack(frames, axis=0)  # (time, height, width, channels)
+
     # Return video frames
-    return video_frames, env.metadata['render_fps']
+    return frames, env.metadata['render_fps']
 

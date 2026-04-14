@@ -1,4 +1,4 @@
-# MuJoCo Hopper
+# 40k steps, 3h to almost optimal, but still inconsistent
 name: "Hopper"
 
 # Environment configuration
@@ -18,14 +18,4 @@ env:
 
 # Replay adjustments
 replay:
-  ratio: 1  # 32 from original
-
-# Training adjustments
-training:
-  # Sample dimensions
-  batch_size: 16
-  sequence_length: 64
-  imagination_horizon: 15
-
-  # Timesteps and frequency
-  pretrain_steps: 1024  # Batch size * sequence len from original
+  ratio: 1

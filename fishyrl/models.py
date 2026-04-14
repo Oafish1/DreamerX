@@ -401,7 +401,7 @@ class RSSM(nn.Module):
         representation_model: nn.Module,
         transition_model: nn.Module,
         bins: int = 32,
-        learnable_initial_state: bool = True,
+        learnable_initial_state: bool = False,
     ) -> None:
         """Initialize the RSSM.
 
@@ -498,6 +498,7 @@ class RSSM(nn.Module):
         embedded_obs: torch.Tensor | None = None,
         initialize: torch.Tensor | None = None,
         batch_dim: int | None = None,
+        compute_prior: bool = True,
     ) -> dict[str, torch.Tensor]:
         """Perform one step of the RSSM.
 
@@ -517,13 +518,15 @@ class RSSM(nn.Module):
         :type initialize: torch.Tensor | None
         :param batch_dim: The batch dimension, inferred if not provided. (Default: ``None``)
         :type batch_dim: int | None
+        :param compute_prior: Whether to compute the prior distribution. (Default: ``True``)
+        :type compute_prior: bool
         :return: A dictionary containing the prior and posterior logits and samples, and the updated hidden state.
         :rtype: dict[str, torch.Tensor]
 
         """
         # Get initial hidden state if not provided
-        # NOTE: SheepRL performs one step of the recurrent model to get to the initial hidden state.
-        #       We do not perform this, as it appears to be unnecessary
+        # NOTE: SheepRL performs one step of the recurrent model with zero action to get to the initial hidden state.
+        #       We do not perform this, as it appears to be unnecessary and might be harmful to the action formulation.
         # if hidden_state is None:
         #     hidden_state = torch.tanh(self._initial_hidden_state).expand(action.shape[:-1], -1)
 
@@ -570,9 +573,10 @@ class RSSM(nn.Module):
         return_dict['hidden_state'] = hidden_state
 
         # Get the prior distribution from the transition model
-        prior_logits, prior = self.infer_stochastic(hidden_state)
-        return_dict['prior_logits'] = prior_logits
-        return_dict['prior'] = prior
+        if compute_prior:
+            prior_logits, prior = self.infer_stochastic(hidden_state)
+            return_dict['prior_logits'] = prior_logits
+            return_dict['prior'] = prior
 
         # Get the posterior distribution from the representation model if not imagining
         if embedded_obs is not None:

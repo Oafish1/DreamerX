@@ -1,4 +1,5 @@
 # MuJoCo Reacher
+# Likely requires some reward formulation - specifically incremental `reward_distance`
 name: "Reacher"
 
 # Environment configuration
@@ -7,19 +8,27 @@ env:
   name: "Reacher-v5"
   actions:
     - type: "Discretized_Continuous"
-      bins: 5
+      bins: 9
     - type: "Discretized_Continuous"
-      bins: 5
+      bins: 9
     # - type: "Continuous"
     #   num_actions: 4
     #   clip: 1.0
 
+# Replay adjustments
+replay:
+  ratio: 1.0
+
 # Training adjustments
 training:
-  # Sample dimensions
-  batch_size: 64
-  sequence_length: 16
-  imagination_horizon: 15
+  # Discount parameters
+  gamma: 0.99
 
-  # Timesteps and frequency
-  pretrain_steps: 1024
+  # Sample dimensions
+  # sequence_length: 16
+
+# Structure adjustments
+model:
+  global:
+    # Hidden dimensions
+    blocks: 2

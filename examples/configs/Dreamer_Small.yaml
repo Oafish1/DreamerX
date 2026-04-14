@@ -16,7 +16,7 @@ training:
 
   # Timesteps and frequency
   steps: 1000000
-  pretrain_steps: 1024
+  pretrain_steps: 1024  # Batch size * sequence len from original
   critic_target_update_freq: 1
 
   # Sample dimensions
@@ -43,7 +43,7 @@ training:
 
 # Ratio configuration
 replay:
-  ratio: 0.5
+  ratio: 0.5  # 32 from original
 
 # Buffer configuration
 buffer:
@@ -56,18 +56,19 @@ scaler:
 # Model configuration
 model:
   global:
+    # Guidelines for scaling: Generally depth=classes and units=hidden, then deter is 8xhidden
     # Hidden dimensions
-    embedded: 256
-    blocks: 1
-    dense: 256
+    embedded: 256  # Units, in original, controls all encoder/decoder layers
+    blocks: 1  # Depth, in original
+    dense: 256  # Hidden, in original
 
     # Bins
-    categorical_bins: 32
+    categorical_bins: 32  # Classes, in original
     reward_bins: 255
 
     # Output dimensions
-    stochastic_dim: 32
-    deterministic_dim: 256
+    stochastic_dim: 32  # Will be effectively multiplied by number of categorical bins
+    deterministic_dim: 256  # Deter, in original
 
   world:
     lr: 1.0e-4

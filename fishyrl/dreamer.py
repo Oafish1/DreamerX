@@ -53,9 +53,11 @@ def get_environments_and_actions(
     # Make actions
     actions = []
     for action in env_actions:
-        actions.append(
-            frl_actions.ACTION_IDENTIFIERS[action['type']](
-                **{k: v for k, v in action.items() if k != 'type'}))
+        rep_num = action['num'] if 'num' in action else 1
+        for _ in range(rep_num):
+            actions.append(
+                frl_actions.ACTION_IDENTIFIERS[action['type']](
+                    **{k: v for k, v in action.items() if k not in ('type', 'replicate_num')}))
 
     return envs, actions
 
@@ -863,9 +865,9 @@ def train_loop(
             #     fps=fps)
 
         # Checkpoint
-        if checkpoint_dir is not None and environment_step % checkpoint_frequency < envs.num_envs:
+        if checkpoint_dir is not None and (environment_step + 1) % checkpoint_frequency < envs.num_envs:
             save_models(
-                path=os.path.join(checkpoint_dir, f'checkpoint_{environment_step:07d}.pt'),
+                path=os.path.join(checkpoint_dir, f'checkpoint_{environment_step + 1:07d}.pt'),
                 world_model=world_model,
                 actor_critic_model=actor_critic_model,
                 utility_modules=utility_modules,

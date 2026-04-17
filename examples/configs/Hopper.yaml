@@ -8,14 +8,4 @@ env:
   actions:
     - type: "Discretized_Continuous"
       bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    # - type: "Continuous"
-    #   num_actions: 4
-    #   clip: 1.0
-
-# Replay adjustments
-replay:
-  ratio: 1
+      num: 3

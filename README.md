@@ -22,21 +22,21 @@ The library is designed to be *flexible* and *user-friendly*, allowing researche
 <table>
     <tbody>
         <!-- Walker2D -->
-        <!-- <tr bgcolor="#2b2b68">
+        <tr bgcolor="#2b2b68">
             <td colspan=4 style="text-align: center"><b>MuJoCo Walker2d-v5</b></td>
         </tr>
         <tr>
-            <td style="text-align: center">10K Steps</td>
-            <td style="text-align: center">20K Steps</td>
-            <td style="text-align: center">30K Steps</td>
-            <td style="text-align: center">40K Steps</td>
+            <td style="text-align: center">100K Steps</td>
+            <td style="text-align: center">200K Steps</td>
+            <td style="text-align: center">500K Steps</td>
+            <td style="text-align: center">1M Steps</td>
         </tr>
         <tr>
-            <td style="text-align: center"><img src="./examples/images/Walker2D_10k.gif" width="100%" alt="Trained Dreamer-V3 agent after 10k steps on MuJoCo Walker2d-v5 environment"></td>
-            <td style="text-align: center"><img src="./examples/images/Walker2D_20k.gif" width="100%" alt="Trained Dreamer-V3 agent after 20k steps on MuJoCo Walker2d-v5 environment"></td>
-            <td style="text-align: center"><img src="./examples/images/Walker2D_30k.gif" width="100%" alt="Trained Dreamer-V3 agent after 30k steps on MuJoCo Walker2d-v5 environment"></td>
-            <td style="text-align: center"><img src="./examples/images/Walker2D_40k.gif" width="100%" alt="Trained Dreamer-V3 agent after 40k steps on MuJoCo Walker2d-v5 environment"></td>
-        </tr> -->
+            <td style="text-align: center"><img src="./examples/images/Walker2D_100k.gif" width="100%" alt="Trained Dreamer-V3 agent after 100k steps on MuJoCo Walker2d-v5 environment"></td>
+            <td style="text-align: center"><img src="./examples/images/Walker2D_200k.gif" width="100%" alt="Trained Dreamer-V3 agent after 200k steps on MuJoCo Walker2d-v5 environment"></td>
+            <td style="text-align: center"><img src="./examples/images/Walker2D_500k.gif" width="100%" alt="Trained Dreamer-V3 agent after 500k steps on MuJoCo Walker2d-v5 environment"></td>
+            <td style="text-align: center"><img src="./examples/images/Walker2D_1m.gif" width="100%" alt="Trained Dreamer-V3 agent after 1m steps on MuJoCo Walker2d-v5 environment"></td>
+        </tr>
         <!-- Ant -->
         <tr bgcolor="#2b2b68">
             <td colspan=4 style="text-align: center"><b>MuJoCo Ant-v5</b></td>

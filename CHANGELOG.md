@@ -1,3 +1,10 @@
+# 0.16.1
+- Add presets based on parameter numbers from original implementation
+- Add units for training step saving in `Dreamer` notebook
+- Adjust environment step offset to be more correct
+- Allow replicate action creation from configuration files using `num` parameter
+- `Walker2D` preview in `README`
+
 # 0.16.0
 - Add configurations for `Pusher-v5`, `Walker2D-v5`, and `Humanoid-v5`
 - Add in-notebook model evaluation and export to `examples/images` folder

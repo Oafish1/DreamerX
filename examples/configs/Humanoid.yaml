@@ -8,37 +8,4 @@ env:
   actions:
     - type: "Discretized_Continuous"
       bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-
-# TODO: Make `Dreamer_Medium` or large
+      num: 17

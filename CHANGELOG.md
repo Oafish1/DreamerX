@@ -1,3 +1,6 @@
+# 0.16.2
+- Bugfix for checkpoint saving on wrong offset
+
 # 0.16.1
 - Add presets based on parameter numbers from original implementation
 - Add units for training step saving in `Dreamer` notebook

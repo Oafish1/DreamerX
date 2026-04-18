@@ -756,10 +756,10 @@ def train_loop(
     # Loop for specified number of iterations
     obs, info = envs.reset(seed=42)
     obs = obs.astype(np.float32)
-    for environment_step in range(start_environment_step, training_steps, envs.num_envs):
+    for environment_step in range(start_environment_step + 1, training_steps + 1, envs.num_envs):
         # Compute an action using the model
         # TODO: Make this easier for inference
-        if environment_step >= training_pretrain_steps:
+        if environment_step > training_pretrain_steps:
             with torch.no_grad():
                 ret = compute_actions(
                     obs=torch.from_numpy(obs).to(device),
@@ -814,7 +814,7 @@ def train_loop(
                 cumulative_episodes += 1
 
         # Train
-        if environment_step >= training_pretrain_steps:
+        if environment_step > training_pretrain_steps:
             gradient_steps = utility_modules.ratio(environment_step - training_pretrain_steps)
             for _ in range(gradient_steps):
                 # Sample batch of experiences from buffer
@@ -865,9 +865,9 @@ def train_loop(
             #     fps=fps)
 
         # Checkpoint
-        if checkpoint_dir is not None and (environment_step + 1) % checkpoint_frequency < envs.num_envs:
+        if checkpoint_dir is not None and environment_step % checkpoint_frequency < envs.num_envs:
             save_models(
-                path=os.path.join(checkpoint_dir, f'checkpoint_{environment_step + 1:07d}.pt'),
+                path=os.path.join(checkpoint_dir, f'checkpoint_{environment_step:07d}.pt'),
                 world_model=world_model,
                 actor_critic_model=actor_critic_model,
                 utility_modules=utility_modules,

@@ -4,6 +4,7 @@ name: "BipedalWalker"
 # Environment configuration
 env:
   num: 4
+  group: "gymnasium"
   name: "BipedalWalker-v3"
   actions:
     - type: "Discretized_Continuous"

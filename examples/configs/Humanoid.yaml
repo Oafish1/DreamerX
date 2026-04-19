@@ -4,6 +4,7 @@ name: "Humanoid"
 # Environment configuration
 env:
   num: 4
+  group: "gymnasium"
   name: "Humanoid-v5"
   actions:
     - type: "Discretized_Continuous"

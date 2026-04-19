@@ -12,7 +12,7 @@ install-dev:
 .PHONY: build
 build:
 	pip-compile --resolver=backtracking --output-file=requirements.txt pyproject.toml
-	pip-compile --resolver=backtracking --extra=dev,gym,extras --output-file=requirements-dev.txt pyproject.toml
+	pip-compile --resolver=backtracking --extra=dev,gym,rlgym,extras --output-file=requirements-dev.txt pyproject.toml
 
 # Build docs
 # NOTE: May require `rm -rf ./docs/source/api` even with --remove-old, but doesn't work on Windows when folder doesn't exist

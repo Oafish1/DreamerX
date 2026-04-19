@@ -3,6 +3,7 @@ from . import (
     buffers,
     distributions,
     dreamer,
+    environments,
     losses,
     models,
     utilities,

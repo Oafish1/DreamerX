@@ -4,6 +4,7 @@ name: "CartPole"
 # Environment configuration
 env:
   num: 4
+  group: "gymnasium"
   name: "CartPole-v1"
   actions:
     - type: "Discrete"

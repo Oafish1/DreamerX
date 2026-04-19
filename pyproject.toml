@@ -1,6 +1,6 @@
 [project]
 name = "fishyrl"
-version = "0.16.2"
+version = "0.17.0"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -19,6 +19,9 @@ dev = [
 ]
 gym = [
     "gymnasium[classic_control,box2d,mujoco]",  # Make sure to install OpenGL for MuJoCo
+]
+rlgym = [
+    'rlgym[rl-rlviser]',  # Uses numpy 1.26.4 with [all]
 ]
 extras = [
     "imageio",  # For saving evaluation videos as gifs

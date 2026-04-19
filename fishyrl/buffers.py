@@ -287,15 +287,23 @@ class IndependentVectorizedBuffer(Buffer):
         for buffer in self._buffers:
             buffer.reset()
 
-    def add(self, experience: dict[str, np.ndarray]) -> None:
+    def add(self, experience: dict[str, np.ndarray], mask: list[bool] = None) -> None:
         """Add experience to all buffers. Note that buffers will desync if an error occurs while adding and experience to any buffer.
 
         :param experience: Vectorized experiences to add, represented as a dictionary of 2-dimensional numpy arrays.
         :type experience: dict[str, np.ndarray]
+        :param mask: Mask of buffers for adding experiences, defaults to all True. (Default: ``None``)
+        :type mask: list[bool]
 
         """
+        # Select buffers according to mask
+        if mask is not None:
+            buffers = [b for b, m in zip(self._buffers, mask) if m]
+        else:
+            buffers = self._buffers
+
         # Add each experience to buffers
-        for i, buffer in enumerate(self._buffers):
+        for i, buffer in enumerate(buffers):
             buffer.add({k: v[i] for k, v in experience.items()})
 
     def sample(self, batch_size: int, **sample_kwargs: dict[str, Any]) -> dict[str, np.ndarray]:

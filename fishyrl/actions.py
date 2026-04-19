@@ -363,6 +363,7 @@ class TwoHotDiscretizedContinuousAction(Action):
         :type x: torch.Tensor
         :return: Simplified action(s) of shape (batch_dim, num_actions).
         :rtype: torch.Tensor
+
         """
         bins = torch.linspace(self._low, self._high, self._bins, device=x.device)
         val = (x * bins).sum(dim=-1, keepdim=True)
@@ -375,6 +376,7 @@ class TwoHotDiscretizedContinuousAction(Action):
         :type action: torch.Tensor
         :return: The constructed action of shape (batch_dim, output_dim).
         :rtype: torch.Tensor
+
         """
         # Apply pre-function to action
         action = self._pre_func(action)

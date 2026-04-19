@@ -4,7 +4,6 @@ import copy
 import os
 from typing import Any, Union
 
-import gymnasium as gym
 import numpy as np
 import torch
 from torch import nn
@@ -12,6 +11,7 @@ from torch import nn
 from . import actions as frl_actions
 from . import buffers as frl_buffers
 from . import distributions as frl_distributions
+from . import environments as frl_environments
 from . import losses as frl_losses
 from . import models as frl_models
 from . import utilities as frl_utilities
@@ -24,32 +24,58 @@ except ImportError:
 
 
 @frl_utilities.optional_flatten_cfg(exceptions=[])
-def get_environments_and_actions(
+def construct_envs(
+    env_group: str,
     env_name: str,
     env_num: int = 1,
-    env_actions: list[dict[str, Any]] = [],
     **kwargs: dict[str, Any],
-) -> tuple[gym.vector.AsyncVectorEnv, list[frl_actions.Action]]:
-    """Get the environments and actions for the Dreamer agent, given a configuration.
+) -> frl_environments.VectorizedEnvironment:
+    """Get the environments for the Dreamer agent, given a configuration.
 
     Can optionally take a configuration dictionary with argument ``cfg``.
 
+    :param env_group: The group of environments to create.
+    :type env_group: str
     :param env_name: The identifier of the environment to create.
     :type env_name: str
     :param env_num: The number of parallel environments to create. (Default: ``1``)
     :type env_num: int
+    :param kwargs: Catch keyword arguments for compatibility with ``utilities.optional_flatten_cfg``.
+    :type kwargs: dict[str, Any]
+
+    :return: The vectorized environments.
+
+    """
+    # Get environment arguments by taking all kwargs with prefix `env_`
+    env_prefix = 'env_'
+    env_args = {
+        k[len(env_prefix):]: v
+        for k, v in kwargs.items()
+        if k.startswith(env_prefix) and k != env_prefix + 'actions'}
+
+    # Create environments
+    envs = frl_environments.ENVIRONMENT_IDENTIFIERS[env_group](env_name=env_name, num_envs=env_num, **env_args)
+
+    return envs
+
+
+@frl_utilities.optional_flatten_cfg(exceptions=[])
+def construct_actions(
+    env_actions: list[dict[str, Any]] = [],
+    **kwargs: dict[str, Any],
+) -> list[frl_actions.Action]:
+    """Get the actions for the Dreamer agent, given a configuration.
+
+    Can optionally take a configuration dictionary with argument ``cfg``.
+
     :param env_actions: A list of action configurations for the environment. (Default: ``[]``)
     :type env_actions: list[dict[str, Any]]
     :param kwargs: Catch keyword arguments for compatibility with ``utilities.optional_flatten_cfg``.
     :type kwargs: dict[str, Any]
 
-    :return: A tuple containing the vectorized environments and a list of actions.
+    :return: The list of actions.
 
     """
-    # Initialize environments
-    envs = gym.vector.AsyncVectorEnv([
-        lambda: gym.make(env_name) for _ in range(env_num)])
-
     # Make actions
     actions = []
     for action in env_actions:
@@ -57,9 +83,9 @@ def get_environments_and_actions(
         for _ in range(rep_num):
             actions.append(
                 frl_actions.ACTION_IDENTIFIERS[action['type']](
-                    **{k: v for k, v in action.items() if k not in ('type', 'replicate_num')}))
+                    **{k: v for k, v in action.items() if k not in ('type', 'num')}))
 
-    return envs, actions
+    return actions
 
 
 @frl_utilities.optional_flatten_cfg(exceptions=[])
@@ -679,7 +705,7 @@ def compute_actions(
 @frl_utilities.optional_flatten_cfg(exceptions=[])
 def train_loop(
     # Manually supplied parameters
-    envs: gym.vector.AsyncVectorEnv,
+    envs: frl_environments.VectorizedEnvironment,
     world_model: frl_utilities.ContainerModule,
     actor_critic_model: frl_utilities.ContainerModule,
     utility_modules: frl_utilities.Container,
@@ -704,7 +730,7 @@ def train_loop(
     """Train the Dreamer agent in the given environment.
 
     :param envs: The vectorized environments to train in.
-    :type envs: gym.vector.AsyncVectorEnv
+    :type envs: frl_environments.VectorizedEnvironment
     :param model_actions: A list of actions for the model to use. Should correspond to the environment action space.
     :type model_actions: list[frl_actions.Action]
     :param world_model: The world model for the Dreamer agent.
@@ -778,7 +804,7 @@ def train_loop(
         # Compute action randomly if not training yet
         else:
             # TODO: Revise this flow
-            sampled_actions = envs.action_space.sample().reshape(envs.num_envs, -1)
+            sampled_actions = envs.action_sample().reshape(envs.num_envs, -1)
             actions = frl_actions.construct_actions(torch.tensor(sampled_actions, dtype=torch.get_default_dtype()), actor_critic_model.actor_model._actions)
             env_actions = sampled_actions.squeeze(-1) if sampled_actions.shape[-1] == 1 else sampled_actions
 
@@ -845,7 +871,7 @@ def train_loop(
         if environment_step % eval_frequency < envs.num_envs and tensorboard_writer is not None:
             # Run evaluation episode
             frames, fps = evaluate(
-                env_name=env_name,
+                env=envs.copy(num_envs=1, allow_rendering=True),
                 world_model=world_model,
                 actor_critic_model=actor_critic_model,
             )
@@ -876,15 +902,15 @@ def train_loop(
 
 @frl_utilities.optional_flatten_cfg(exceptions=[])
 def evaluate(
-    env_name: str,
+    env: frl_environments.VectorizedEnvironment,
     world_model: frl_utilities.ContainerModule,
     actor_critic_model: frl_utilities.ContainerModule,
     seed: int = None,
 ) -> tuple[np.ndarray, float]:
     """Run a single evaluation episode for the Dreamer agent.
 
-    :param env_name: The name of the environment to evaluate in.
-    :type env_name: str
+    :param env: The name of the environment to evaluate in.
+    :type  env: frl_environments.VectorizedEnvironment
     :param world_model: The world model for the Dreamer agent.
     :type world_model: frl_utilities.ContainerModule
     :param actor_critic_model: The actor-critic model for the Dreamer agent.
@@ -896,21 +922,24 @@ def evaluate(
     :rtype: tuple[np.ndarray, float]
 
     """
+    # Check that there is only one environment
+    if env.num_envs != 1:
+        raise ValueError(f'Expected one environment provided to `evaluate`, got {env.num_envs}.')
+
     # Infer device
     device = next(world_model.parameters()).device
 
     # Create environment with rendering
-    env = gym.make(env_name, render_mode='rgb_array')
     obs, info = env.reset(seed=seed)
     actions = posteriors = hidden_states = initializations = None
-    frames = [env.render()]
+    frames = [env.render().squeeze(0)]
 
     # Loop until episode ends
     while True:
         # Compute action using model
         with torch.no_grad():
             ret = compute_actions(
-                obs=torch.from_numpy(obs).unsqueeze(0).to(device),  # TODO: Maybe auto-detect in `compute_actions`
+                obs=torch.from_numpy(obs).to(device),  # TODO: Maybe auto-detect in `compute_actions`
                 world_model=world_model,
                 actor_critic_model=actor_critic_model,
                 actions=actions,
@@ -924,11 +953,11 @@ def evaluate(
             hidden_states = ret['hidden_state']
 
         # Step environment
-        obs, rewards, terminated, truncated, infos = env.step(env_actions.squeeze(0))
-        frames.append(env.render())
+        obs, rewards, terminated, truncated, infos = env.step(env_actions)
+        frames.append(env.render().squeeze(0))
 
         # Update initializations
-        initializations = torch.tensor([terminated | truncated], dtype=bool, device=device)
+        initializations = torch.from_numpy(terminated | truncated).to(dtype=bool, device=device)
 
         # Check for episode end
         if terminated or truncated:
@@ -938,5 +967,5 @@ def evaluate(
     frames = np.stack(frames, axis=0)  # (time, height, width, channels)
 
     # Return video frames
-    return frames, env.metadata['render_fps']
+    return frames, env.render_fps
 

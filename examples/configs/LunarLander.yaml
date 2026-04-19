@@ -4,6 +4,7 @@ name: "LunarLander"
 # Environment configuration
 env:
   num: 4
+  group: "gymnasium"
   name: "LunarLander-v3"
   actions:
     - type: "Discrete"

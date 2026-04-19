@@ -4,27 +4,12 @@ name: "Ant"
 # Environment configuration
 env:
   num: 4
+  group: "gymnasium"
   name: "Ant-v5"
   actions:
     - type: "Discretized_Continuous"
       bins: 5
-    - type: "Discretized_Continuous"
-      bins: 5
-    - type: "Discretized_Continuous"
-      bins: 5
-    - type: "Discretized_Continuous"
-      bins: 5
-    - type: "Discretized_Continuous"
-      bins: 5
-    - type: "Discretized_Continuous"
-      bins: 5
-    - type: "Discretized_Continuous"
-      bins: 5
-    - type: "Discretized_Continuous"
-      bins: 5
-    # - type: "Continuous"
-    #   num_actions: 4
-    #   clip: 1.0
+      num: 8
 
 # Training adjustments
 training:

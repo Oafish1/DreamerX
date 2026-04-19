@@ -4,6 +4,7 @@ name: "Hopper"
 # Environment configuration
 env:
   num: 4
+  group: "gymnasium"
   name: "Hopper-v5"
   actions:
     - type: "Discretized_Continuous"

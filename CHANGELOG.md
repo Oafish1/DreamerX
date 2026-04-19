@@ -1,3 +1,11 @@
+# 0.17.0
+- Add `environments` module with `VectorizedEnvironment` subclasses and `ENVIRONMENT_IDENTIFIERS` enum, generalizing environments in the library
+- Add `group` parameter to `env` config corresponding to `ENVIRONMENT_IDENTIFIERS`
+- Add mask to buffer `add` method to allow for differing numbers of recorded memories per step
+- Begin outlining `RLGym` integration
+- Bugfix for `num` parameter on replicate action creation
+- Separate environment and action constructors in `dreamer` module
+
 # 0.16.2
 - Bugfix for checkpoint saving on wrong offset
 

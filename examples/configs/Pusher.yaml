@@ -4,6 +4,7 @@ name: "Pusher"
 # Environment configuration
 env:
   num: 4
+  group: "gymnasium"
   name: "Pusher-v5"
   actions:
     - type: "Discretized_Continuous"

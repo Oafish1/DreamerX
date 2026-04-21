@@ -19,8 +19,9 @@ from . import utilities as frl_utilities
 # Try importing tensorboard
 try:
     import torch.utils.tensorboard
+    tensorboard_SummaryWriter_cls = torch.utils.tensorboard.SummaryWriter
 except ImportError:
-    torch.utils.tensorboard = None
+    tensorboard_SummaryWriter_cls = None
 
 
 @frl_utilities.optional_flatten_cfg(exceptions=[])
@@ -91,9 +92,10 @@ def construct_actions(
 @frl_utilities.optional_flatten_cfg(exceptions=[])
 def construct_models(
     # Environment parameters
-    env_obs_dim: int,
     env_actions: list[frl_actions.Action],
     env_num: int,
+    # Model embedding parameters
+    model_embedding: list[dict[str, Any]] = [],
     # Model hidden parameters
     model_global_embedded: int = 1024,
     model_global_blocks: int = 5,
@@ -129,12 +131,13 @@ def construct_models(
 
     Can optionally take a configuration dictionary with argument ``cfg``.
 
-    :param env_obs_dim: The dimension of the environment observations.
-    :type env_obs_dim: int
     :param env_actions: A list of actions for the environment.
     :type env_actions: list[frl_actions.Action]
     :param env_num: The number of parallel environments. (Default: ``1``)
     :type env_num: int
+    :param model_embedding: A list of parameters defining the encoding inputs for the model. For more
+        details, see the documentation for ``CompoundEncoder``. (Default: ``[]``)
+    :type model_embedding: list[dict[str, Any]]
     :param model_global_embedded: The dimension of the embedded observation space. (Default: ``1024``)
     :type model_global_embedded: int
     :param model_global_blocks: The number of blocks in the MLP models. (Default: ``5``)
@@ -184,12 +187,14 @@ def construct_models(
 
     # Encoder-decoder models
     # NOTE: This uses `model_global_embedded` for all encoder and decoder dims, as in the original implementation
-    encoder_model = frl_models.MLPEncoder(env_obs_dim, model_global_embedded, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
-    decoder_model = frl_models.MLPDecoder(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, env_obs_dim, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
+    # encoder_model = frl_models.MLPEncoder(env_obs_dim, model_global_embedded, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
+    # decoder_model = frl_models.MLPDecoder(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, env_obs_dim, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
+    encoder_model = frl_models.CompoundEncoder(*model_embedding, output_dim=model_global_embedded, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
+    decoder_model = frl_models.CompoundDecoder(*model_embedding, input_dim=model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
 
     # RSSM models
     recurrent_model = frl_models.RecurrentModel(model_global_stochastic_dim * model_global_categorical_bins + action_dim, model_global_deterministic_dim).to(device)
-    representation_model = frl_models.MLP(model_global_embedded + model_global_deterministic_dim, model_global_stochastic_dim * model_global_categorical_bins).to(device)
+    representation_model = frl_models.MLP(encoder_model.output_dim + model_global_deterministic_dim, model_global_stochastic_dim * model_global_categorical_bins).to(device)
     transition_model = frl_models.MLP(model_global_deterministic_dim, model_global_stochastic_dim * model_global_categorical_bins).to(device)
     rssm_model = frl_models.RSSM(recurrent_model, representation_model, transition_model, model_global_categorical_bins, learnable_initial_state=model_world_learnable_initial_state).to(device)
 
@@ -353,7 +358,7 @@ def learning_step(
     world_model: frl_utilities.ContainerModule,
     actor_critic_model: frl_utilities.ContainerModule,
     utility_modules: frl_utilities.Container,
-    tensorboard_writer: torch.utils.tensorboard.SummaryWriter = None,
+    tensorboard_writer: tensorboard_SummaryWriter_cls = None,
     environment_step: int = -1,
     # Training parameters
     training_imagination_horizon: int = 15,
@@ -709,14 +714,13 @@ def train_loop(
     world_model: frl_utilities.ContainerModule,
     actor_critic_model: frl_utilities.ContainerModule,
     utility_modules: frl_utilities.Container,
-    tensorboard_writer: torch.utils.tensorboard.SummaryWriter = None,
+    tensorboard_writer: tensorboard_SummaryWriter_cls = None,
     # Loaded model parameters
     start_environment_step: int = 0,
     # Checkpointing parameters
     checkpoint_dir: str = None,
     checkpoint_frequency: int = 5_000,
     # Evaluation parameters
-    env_name: str = None,
     eval_frequency: int = 10**3,
     # Training parameters
     training_steps: int = 10**6,
@@ -725,6 +729,9 @@ def train_loop(
     training_batch_size: int = 16,
     training_sequence_length: int = 64,
     training_tau: float = 0.02,
+    # Initialization parameters
+    seed: int = None,
+    eval_seed: int = 42,
     **kwargs: dict[str, Any],
 ) -> None:
     """Train the Dreamer agent in the given environment.
@@ -763,6 +770,10 @@ def train_loop(
     :type training_sequence_length: int
     :param training_tau: The tau parameter for soft updates of the target critic. (Default: ``0.02``)
     :type training_tau: float
+    :param seed: The random seed for reproducibility. (Default: ``None``)
+    :type seed: int
+    :param eval_seed: The random seed for evaluation. (Default: ``42``)
+    :type eval_seed: int
     :param kwargs: Catch keyword arguments for compatibility with ``utilities.optional_flatten_cfg``.
     :type kwargs: dict[str, Any]
 
@@ -780,7 +791,7 @@ def train_loop(
     cumulative_episodes = 0
 
     # Loop for specified number of iterations
-    obs, info = envs.reset(seed=42)
+    obs, info = envs.reset(seed=seed)
     obs = obs.astype(np.float32)
     for environment_step in range(start_environment_step + 1, training_steps + 1, envs.num_envs):
         # Compute an action using the model
@@ -874,6 +885,7 @@ def train_loop(
                 env=envs.copy(num_envs=1, allow_rendering=True),
                 world_model=world_model,
                 actor_critic_model=actor_critic_model,
+                seed=eval_seed,
             )
 
             # Output to gif

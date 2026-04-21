@@ -1,3 +1,13 @@
+# 0.18.0
+- Add arguments to `CNNEncoder` and `CNNDecoder` to accomodate differing image sizes
+- Add `models.AttentionEncoder` and `models.AttentionDecoder` models
+- Add `models.CompoundEncoder` and `models.CompoundDecoder` models for combining CNN, MLP, and attention observations with utility function `models.extract_representation`
+- Add `output_dim` property to all encoders
+- Fix `tensorboard` dependency typing issue when not installed
+- Fix training and evaluation environment seeding
+- Formalize `VectorizedRLGymEnvironment` implementation in `environments` module
+- Replace single encoder with compound encoder throughout `dreamer` module and training loop
+
 # 0.17.0
 - Add `environments` module with `VectorizedEnvironment` subclasses and `ENVIRONMENT_IDENTIFIERS` enum, generalizing environments in the library
 - Add `group` parameter to `env` config corresponding to `ENVIRONMENT_IDENTIFIERS`

@@ -19,7 +19,7 @@ eval:
 
 # Ratio configuration
 replay:
-  ratio: 0.1
+  ratio: 1.0
 
 # Model configuration
 model:

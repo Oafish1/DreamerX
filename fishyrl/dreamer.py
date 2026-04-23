@@ -727,6 +727,7 @@ def compute_actions(
 
     # Embed observation
     if obs is not None:
+        obs = obs.to(world_model.encoder_model.parameters().__next__().dtype)  # Cast to same dtype as model parameters
         extracted_obs = frl_models.extract_representation(obs, world_model.encoder_model._encoder_specs)
         embedded_obs = world_model.encoder_model(extracted_obs)
 
@@ -844,8 +845,7 @@ def train_loop(
 
     # Loop for specified number of iterations
     obs, info = envs.reset(seed=seed)
-    obs = obs.astype(np.float32)
-    for environment_step in range(start_environment_step + 1, training_steps + 1, envs.num_envs):
+    for environment_step in range(start_environment_step + envs.num_envs, training_steps + envs.num_envs, envs.num_envs):
         # Compute an action using the model
         # TODO: Make this easier for inference
         if environment_step > training_pretrain_steps:
@@ -884,7 +884,6 @@ def train_loop(
 
         # Step environment
         obs, rewards, terminations, truncations, infos = envs.step(env_actions)
-        obs = obs.astype(np.float32)  # TODO: Make mixed precision possible
         initializations = torch.tensor(terminations | truncations, dtype=torch.bool, device=device)
 
         # Iterate and record rewards if done, and also track cumulative rewards by environment
@@ -909,6 +908,7 @@ def train_loop(
                 # Sample batch of experiences from buffer
                 batch = utility_modules.buffer.sample(training_batch_size, sequence_length=training_sequence_length)
                 batch = frl_buffers.convert_samples_to_tensors(batch, device=device)
+                batch['obs'] = batch['obs'].to(world_model.encoder_model.parameters().__next__().dtype)  # TODO: Maybe a cleaner way?
 
                 # Iterate target critic model towards critic model
                 # NOTE: Assumes initialization took care of initial copy

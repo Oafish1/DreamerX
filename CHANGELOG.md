@@ -1,3 +1,9 @@
+# 0.19.0
+- Add preview for `VectorizedRLGymEnvironment` using `RLViser`
+- Correct start offset for multiple environments
+- Fix `environments.CloseReward` calculation when using `use_diff` and normalization
+- Tune default rewards for `VectorizedRLGymEnvironment`
+
 # 0.18.0
 - Add automatic resetting to `VectorizedRLGymEnvironment`
 - Add arguments to `CNNEncoder` and `CNNDecoder` to accomodate differing image sizes

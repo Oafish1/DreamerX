@@ -236,7 +236,7 @@ class VectorizedGymEnvironment(VectorizedEnvironment):
 
 class CloseReward(rlapi.RewardFunction):  # TODO: Move to separate file for dependency reasons
     """A reward function that rewards agents for being close to the ball in RLGym."""
-    def __init__(self, *args: list[Any], use_diff: bool = False, **kwargs: dict[str, Any]) -> None:
+    def __init__(self, *args: list[Any], use_diff: bool = True, **kwargs: dict[str, Any]) -> None:
         """Initialize the CloseReward.
 
         :param args: Positional arguments for the base class.
@@ -253,7 +253,7 @@ class CloseReward(rlapi.RewardFunction):  # TODO: Move to separate file for depe
         # Parameters
         self._use_diff = use_diff
 
-        # Get scaling factor based on max diagonal of field to scale rewards to range [-1, 0]
+        # Get scaling factor based on max diagonal of field to scale rewards to a range of ~2
         self._max_dist = np.linalg.norm([rlcommon.SIDE_WALL_X, rlcommon.BACK_NET_Y, rlcommon.CEILING_Z])
 
 
@@ -307,19 +307,19 @@ class CloseReward(rlapi.RewardFunction):  # TODO: Move to separate file for depe
         :rtype: dict[str, float]
 
         """
-        # Get ball position
-        ball_pos = state.ball.position
+        # Get new distances
+        new_dist = self._compute_dist(state)
 
         # Compute reward for each agent based on distance to ball
         rewards = {}
         for agent in agents:
-            # Get car position and compute distance to ball
-            car_pos = state.cars[agent].physics.position
-            dist = np.linalg.norm(car_pos - ball_pos)
-
             # Compute reward and record
-            reward = self._dist[agent] - dist if self._use_diff else - dist
+            reward = self._dist[agent] - new_dist[agent] if self._use_diff else - new_dist[agent]
+            reward = reward / self._max_dist  # Scale reward to a range of ~2
             rewards[agent] = reward
+
+        # Update stored distances
+        self._dist = new_dist
 
         return rewards
 
@@ -374,7 +374,7 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
                     rldone.NoTouchTimeoutCondition(30), rldone.TimeoutCondition(300))
                 # Rewards
                 reward_fn = rlreward.CombinedReward(
-                    (rlreward.GoalReward(), 100), (rlreward.TouchReward(), 1), (CloseReward(), .01))
+                    (rlreward.GoalReward(), 100), (rlreward.TouchReward(), 1), (CloseReward(), 10))  # TODO: Maybe remove `TouchReward`
                 # Observations
                 obs_builder = rlobs.DefaultObs(
                     zero_padding=None,
@@ -611,18 +611,21 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
         #         frame = np.array(sct.grab(sct.monitors[0]))
         #         frame = frame[:, :, [2, 1, 0]]  # Convert from BGRA to RGB
         #     return frame
-        # NOTE: Rendering currently does not work
+        # NOTE: Rendering currently does not work for capture, only for visualization
         # TODO: Implement in RLBot and just record manually
-        raise NotImplementedError("Rendering is currently not implemented for RLGym environments. This is due to issues with RLViser.")
+        # raise NotImplementedError("Rendering is currently not implemented for RLGym environments. This is due to issues with RLViser.")
 
-        # Gather frames from each environment
-        frames = []
-        for env in self._envs:
-            env_frame = env.render()
-            frames.append(env_frame)
+        # # Gather frames from each environment
+        # frames = []
+        # for env in self._envs:
+        #     env_frame = env.render()
+        #     frames.append(env_frame)
 
-        # Stack frames and return
-        return np.stack(frames, axis=0)
+        # # Stack frames and return
+        # return np.stack(frames, axis=0)
+
+        self._envs[0].render()  # We render just to update the RLViser window, but we can't capture frames from it, so we return an empty array
+        return np.array([])
 
     def copy(self, **kwargs: dict[str, Any]) -> 'VectorizedRLGymEnvironment':
         """Copy the environment, overriding parameters in `kwargs`.

@@ -20,4 +20,5 @@ examples/Dreamer.py
 # RLGym requirements
 examples/collision_meshes/
 examples/rlviser
+examples/rlviser.exe
 examples/settings.txt

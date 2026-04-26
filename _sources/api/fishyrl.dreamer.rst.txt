@@ -1,0 +1,7 @@
+fishyrl.dreamer module
+======================
+
+.. automodule:: fishyrl.dreamer
+   :members:
+   :show-inheritance:
+   :undoc-members:

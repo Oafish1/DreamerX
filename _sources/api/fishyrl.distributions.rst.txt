@@ -1,0 +1,7 @@
+fishyrl.distributions module
+============================
+
+.. automodule:: fishyrl.distributions
+   :members:
+   :show-inheritance:
+   :undoc-members:

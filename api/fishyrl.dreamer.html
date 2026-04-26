@@ -1,0 +1,671 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>fishyrl.dreamer module &#8212; Fishy RL 0.21.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=c4f92b34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/fishyrl.dreamer';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="fishyrl.environments module" href="fishyrl.environments.html" />
+    <link rel="prev" title="fishyrl.distributions module" href="fishyrl.distributions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Fishy RL 0.21.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="fishyrl.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="fishyrl.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="fishyrl.rlgym.html">fishyrl.rlgym package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.rlgym.rewards.html">fishyrl.rlgym.rewards module</a></li>
+</ul>
+</details></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.actions.html">fishyrl.actions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.buffers.html">fishyrl.buffers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.distributions.html">fishyrl.distributions module</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">fishyrl.dreamer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.environments.html">fishyrl.environments module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.losses.html">fishyrl.losses module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.models.html">fishyrl.models module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.utilities.html">fishyrl.utilities module</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="fishyrl.html" class="nav-link">fishyrl package</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">fishyrl.dreamer module</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-fishyrl.dreamer">
+<span id="fishyrl-dreamer-module"></span><h1>fishyrl.dreamer module<a class="headerlink" href="#module-fishyrl.dreamer" title="Link to this heading">#</a></h1>
+<p>Main functions for training and running the Dreamer agent.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="fishyrl.dreamer.compute_actions">
+<span class="sig-prename descclassname"><span class="pre">fishyrl.dreamer.</span></span><span class="sig-name descname"><span class="pre">compute_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">world_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">actor_critic_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posteriors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initializations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_prior</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fishyrl.dreamer.compute_actions" title="Link to this definition">#</a></dt>
+<dd><p>Compute an action given the current observation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>world_model</strong> (<em>frl_utilities.ContainerModule</em>) – The world model for the Dreamer agent.</p></li>
+<li><p><strong>actor_critic_model</strong> (<em>frl_utilities.ContainerModule</em>) – The actor-critic model for the Dreamer agent.</p></li>
+<li><p><strong>obs</strong> (<em>torch.Tensor</em>) – The current observation from the environment, as a tensor of shape (batch_dim, obs_dim). (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>actions</strong> (<em>torch.Tensor</em>) – The actions from the previous step. If not provided, will use a default. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>posteriors</strong> (<em>torch.Tensor</em>) – The posterior states from the previous step. If not provided, will use a default. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>hidden_states</strong> (<em>torch.Tensor</em>) – The hidden states from the previous step. If not provided, will use a default. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>initializations</strong> (<em>torch.Tensor</em>) – The initializations (<cite>terminations | truncations</cite>) from the previous step. If not provided, will use a default. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>compute_prior</strong> (<em>bool</em>) – Whether to compute the prior state for the current step. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, will only compute the posterior. (Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the environment actions, actions, posteriors, hidden states, and world model output.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Union[np.ndarray, torch.Tensor]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fishyrl.dreamer.construct_actions">
+<span class="sig-prename descclassname"><span class="pre">fishyrl.dreamer.</span></span><span class="sig-name descname"><span class="pre">construct_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env_actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.Action" title="fishyrl.actions.Action"><span class="pre">Action</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fishyrl.dreamer.construct_actions" title="Link to this definition">#</a></dt>
+<dd><p>Get the actions for the Dreamer agent, given a configuration.</p>
+<p>Can optionally take a configuration dictionary with argument <code class="docutils literal notranslate"><span class="pre">cfg</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env_actions</strong> (<em>list</em><em>[</em><em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – A list of action configurations for the environment. (Default: <code class="docutils literal notranslate"><span class="pre">[]</span></code>)</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Catch keyword arguments for compatibility with <code class="docutils literal notranslate"><span class="pre">utilities.optional_flatten_cfg</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of actions.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fishyrl.dreamer.construct_envs">
+<span class="sig-prename descclassname"><span class="pre">fishyrl.dreamer.</span></span><span class="sig-name descname"><span class="pre">construct_envs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment" title="fishyrl.environments.VectorizedEnvironment"><span class="pre">VectorizedEnvironment</span></a></span></span><a class="headerlink" href="#fishyrl.dreamer.construct_envs" title="Link to this definition">#</a></dt>
+<dd><p>Get the environments for the Dreamer agent, given a configuration.</p>
+<p>Can optionally take a configuration dictionary with argument <code class="docutils literal notranslate"><span class="pre">cfg</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env_group</strong> (<em>str</em>) – The group of environments to create.</p></li>
+<li><p><strong>env_name</strong> (<em>str</em>) – The identifier of the environment to create.</p></li>
+<li><p><strong>env_num</strong> (<em>int</em>) – The number of parallel environments to create. (Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Catch keyword arguments for compatibility with <code class="docutils literal notranslate"><span class="pre">utilities.optional_flatten_cfg</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The vectorized environments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fishyrl.dreamer.construct_models">
+<span class="sig-prename descclassname"><span class="pre">fishyrl.dreamer.</span></span><span class="sig-name descname"><span class="pre">construct_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env_actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.Action" title="fishyrl.actions.Action"><span class="pre">Action</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_global_embedded</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1024</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_global_blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_global_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_global_heads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_global_dense</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1024</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_global_categorical_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_global_reward_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_global_stochastic_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_global_deterministic_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4096</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_world_lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_world_eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_world_learnable_initial_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_actor_lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_actor_eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_critic_lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_critic_eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_rssm_recurrent_blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_capacity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler_eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replay_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">device</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Container" title="fishyrl.utilities.Container"><span class="pre">Container</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fishyrl.dreamer.construct_models" title="Link to this definition">#</a></dt>
+<dd><p>Construct the models for the Dreamer agent.</p>
+<p>Can optionally take a configuration dictionary with argument <code class="docutils literal notranslate"><span class="pre">cfg</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env_actions</strong> (<em>list</em><em>[</em><em>frl_actions.Action</em><em>]</em>) – A list of actions for the environment.</p></li>
+<li><p><strong>env_num</strong> (<em>int</em>) – The number of parallel environments. (Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+<li><p><strong>model_embedding</strong> (<em>list</em><em>[</em><em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – A list of parameters defining the encoding inputs for the model. For more
+details, see the documentation for <code class="docutils literal notranslate"><span class="pre">CompoundEncoder</span></code>. (Default: <code class="docutils literal notranslate"><span class="pre">[]</span></code>)</p></li>
+<li><p><strong>model_global_embedded</strong> (<em>int</em>) – The dimension of the embedded observation space. (Default: <code class="docutils literal notranslate"><span class="pre">1024</span></code>)</p></li>
+<li><p><strong>model_global_blocks</strong> (<em>int</em>) – The number of blocks in the MLP models. (Default: <code class="docutils literal notranslate"><span class="pre">5</span></code>)</p></li>
+<li><p><strong>model_global_layers</strong> (<em>int</em>) – The number of layers in the MLP models. (Default: <code class="docutils literal notranslate"><span class="pre">3</span></code>)</p></li>
+<li><p><strong>model_global_heads</strong> (<em>int</em>) – The number of heads in the attention decoder blocks. (Default: <code class="docutils literal notranslate"><span class="pre">8</span></code>)</p></li>
+<li><p><strong>model_global_dense</strong> (<em>int</em>) – The dimension of the dense layers in the MLP models. (Default: <code class="docutils literal notranslate"><span class="pre">1024</span></code>)</p></li>
+<li><p><strong>model_global_categorical_bins</strong> (<em>int</em>) – The number of categorical bins for the stochastic state. (Default: <code class="docutils literal notranslate"><span class="pre">32</span></code>)</p></li>
+<li><p><strong>model_global_reward_bins</strong> (<em>int</em>) – The number of categorical bins for the reward prediction. (Default: <code class="docutils literal notranslate"><span class="pre">255</span></code>)</p></li>
+<li><p><strong>model_global_stochastic_dim</strong> (<em>int</em>) – The dimension of the stochastic state. (Default: <code class="docutils literal notranslate"><span class="pre">32</span></code>)</p></li>
+<li><p><strong>model_global_deterministic_dim</strong> (<em>int</em>) – The dimension of the deterministic state. (Default: <code class="docutils literal notranslate"><span class="pre">4096</span></code>)</p></li>
+<li><p><strong>model_world_lr</strong> (<em>float</em>) – The learning rate for the world model. (Default: <code class="docutils literal notranslate"><span class="pre">1e-4</span></code>)</p></li>
+<li><p><strong>model_world_eps</strong> (<em>float</em>) – The epsilon for the world model optimizer. (Default: <code class="docutils literal notranslate"><span class="pre">1e-8</span></code>)</p></li>
+<li><p><strong>model_world_learnable_initial_state</strong> (<em>bool</em>) – Whether the initial state of the <code class="docutils literal notranslate"><span class="pre">RSSM</span></code> model is learnable. (Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+<li><p><strong>model_actor_lr</strong> (<em>float</em>) – The learning rate for the actor model. (Default: <code class="docutils literal notranslate"><span class="pre">8e-5</span></code>)</p></li>
+<li><p><strong>model_actor_eps</strong> (<em>float</em>) – The epsilon for the actor model optimizer. (Default: <code class="docutils literal notranslate"><span class="pre">1e-5</span></code>)</p></li>
+<li><p><strong>model_critic_lr</strong> (<em>float</em>) – The learning rate for the critic model. (Default: <code class="docutils literal notranslate"><span class="pre">8e-5</span></code>)</p></li>
+<li><p><strong>model_critic_eps</strong> (<em>float</em>) – The epsilon for the critic model optimizer. (Default: <code class="docutils literal notranslate"><span class="pre">8e-5</span></code>)</p></li>
+<li><p><strong>model_rssm_recurrent_blocks</strong> (<em>int</em>) – The number of parallel GRU blocks for the RSSM recurrent model. (Default: <code class="docutils literal notranslate"><span class="pre">8</span></code>)</p></li>
+<li><p><strong>buffer_capacity</strong> (<em>int</em>) – The capacity of the replay buffer. (Default: <code class="docutils literal notranslate"><span class="pre">10**6</span></code>)</p></li>
+<li><p><strong>scaler_eps</strong> (<em>float</em>) – The epsilon for the lambda value normalizer. (Default: <code class="docutils literal notranslate"><span class="pre">1.</span></code>)</p></li>
+<li><p><strong>replay_ratio</strong> (<em>float</em>) – The ratio of model updates to environment steps. (Default: <code class="docutils literal notranslate"><span class="pre">0.5</span></code>)</p></li>
+<li><p><strong>device</strong> (<em>torch.device</em><em> | </em><em>str</em>) – The device to use for the models. (Default: <code class="docutils literal notranslate"><span class="pre">'cuda'</span></code> if available, else <code class="docutils literal notranslate"><span class="pre">'cpu'</span></code>)</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Catch keyword arguments for compatibility with <code class="docutils literal notranslate"><span class="pre">utilities.optional_flatten_cfg</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the world model, agent model, and utility modules.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[frl_utilities.ContainerModule, frl_utilities.ContainerModule, frl_utilities.Container]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fishyrl.dreamer.evaluate">
+<span class="sig-prename descclassname"><span class="pre">fishyrl.dreamer.</span></span><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment" title="fishyrl.environments.VectorizedEnvironment"><span class="pre">VectorizedEnvironment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">world_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">actor_critic_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fishyrl.dreamer.evaluate" title="Link to this definition">#</a></dt>
+<dd><p>Run a single evaluation episode for the Dreamer agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> (<em>frl_environments.VectorizedEnvironment</em>) – The name of the environment to evaluate in.</p></li>
+<li><p><strong>world_model</strong> (<em>frl_utilities.ContainerModule</em>) – The world model for the Dreamer agent.</p></li>
+<li><p><strong>actor_critic_model</strong> (<em>frl_utilities.ContainerModule</em>) – The actor-critic model for the Dreamer agent.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – The random seed for the environment. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the video frames of the episode (frames, height, width, channels) and the frames per second
+(FPS) of the environment rendering.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[np.ndarray, float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fishyrl.dreamer.learning_step">
+<span class="sig-prename descclassname"><span class="pre">fishyrl.dreamer.</span></span><span class="sig-name descname"><span class="pre">learning_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">world_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">actor_critic_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility_modules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Container" title="fishyrl.utilities.Container"><span class="pre">Container</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensorboard_writer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SummaryWriter</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_imagination_horizon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_free_nats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_kl_dyn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_kl_rep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_kl_reg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_continue_reg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.997</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_lmbda</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_world_model_grad_clip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_actor_model_grad_clip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_critic_model_grad_clip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#fishyrl.dreamer.learning_step" title="Link to this definition">#</a></dt>
+<dd><p>Perform a learning step for the Dreamer agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>torch.Tensor</em><em>]</em>) – A batch of data from the replay buffer, containing tensors for observations, actions, rewards, terminations, and truncations.</p></li>
+<li><p><strong>world_model</strong> (<em>frl_utilities.ContainerModule</em>) – The world model for the Dreamer agent.</p></li>
+<li><p><strong>actor_critic_model</strong> (<em>frl_utilities.ContainerModule</em>) – The actor-critic model for the Dreamer agent.</p></li>
+<li><p><strong>utility_modules</strong> (<em>frl_utilities.Container</em>) – The utility modules for the Dreamer agent.</p></li>
+<li><p><strong>tensorboard_writer</strong> (<em>torch.utils.tensorboard.SummaryWriter</em>) – The TensorBoard writer for logging, if desired. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>environment_step</strong> (<em>int</em>) – The current environment step. Used for logging purposes. (Default: <code class="docutils literal notranslate"><span class="pre">-1</span></code>)</p></li>
+<li><p><strong>training_imagination_horizon</strong> (<em>int</em>) – The number of steps to imagine into the future for actor-critic updates. (Default: <code class="docutils literal notranslate"><span class="pre">15</span></code>)</p></li>
+<li><p><strong>training_free_nats</strong> (<em>float</em>) – The number of free nats for KL balancing. (Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>)</p></li>
+<li><p><strong>training_kl_dyn</strong> (<em>float</em>) – The weight for the dynamic KL loss. (Default: <code class="docutils literal notranslate"><span class="pre">0.5</span></code>)</p></li>
+<li><p><strong>training_kl_rep</strong> (<em>float</em>) – The weight for the representation KL loss. (Default: <code class="docutils literal notranslate"><span class="pre">0.1</span></code>)</p></li>
+<li><p><strong>training_kl_reg</strong> (<em>float</em>) – The overall weight for the KL regularization loss. (Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>)</p></li>
+<li><p><strong>training_continue_reg</strong> (<em>float</em>) – The weight for the continue loss. (Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>)</p></li>
+<li><p><strong>training_gamma</strong> (<em>float</em>) – The discount factor for future rewards. (Default: <code class="docutils literal notranslate"><span class="pre">0.997</span></code>)</p></li>
+<li><p><strong>training_lmbda</strong> (<em>float</em>) – The lambda parameter for computing lambda returns. (Default: <code class="docutils literal notranslate"><span class="pre">0.95</span></code>)</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Catch keyword arguments for compatibility with <code class="docutils literal notranslate"><span class="pre">utilities.optional_flatten_cfg</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fishyrl.dreamer.load_models">
+<span class="sig-prename descclassname"><span class="pre">fishyrl.dreamer.</span></span><span class="sig-name descname"><span class="pre">load_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">world_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actor_critic_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility_modules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Container" title="fishyrl.utilities.Container"><span class="pre">Container</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_optimizers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#fishyrl.dreamer.load_models" title="Link to this definition">#</a></dt>
+<dd><p>Load the models and utilities from a file.</p>
+<p>Uses <code class="docutils literal notranslate"><span class="pre">weights_only=False</span></code> to allow loading optimizer states, which is somewhat unsafe, so make sure to only load from trusted weight files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – The path to the weights file. (Default: <code class="docutils literal notranslate"><span class="pre">'.'</span></code>)</p></li>
+<li><p><strong>world_model</strong> (<em>frl_utilities.ContainerModule</em>) – The world model for applying the loaded weights.</p></li>
+<li><p><strong>actor_critic_model</strong> (<em>frl_utilities.ContainerModule</em>) – The actor-critic model for applying the loaded weights.</p></li>
+<li><p><strong>utility_modules</strong> (<em>frl_utilities.Container</em>) – The utility modules for applying the loaded weights.</p></li>
+<li><p><strong>include_optimizers</strong> (<em>bool</em>) – Whether to load optimizer states or not. (Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fishyrl.dreamer.save_models">
+<span class="sig-prename descclassname"><span class="pre">fishyrl.dreamer.</span></span><span class="sig-name descname"><span class="pre">save_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">world_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actor_critic_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility_modules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Container" title="fishyrl.utilities.Container"><span class="pre">Container</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_optimizers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#fishyrl.dreamer.save_models" title="Link to this definition">#</a></dt>
+<dd><p>Save the models and utilities to a file.</p>
+<p>Can optionally take a configuration dictionary with argument <code class="docutils literal notranslate"><span class="pre">cfg</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – The file path for saving the models. (Default: <code class="docutils literal notranslate"><span class="pre">'.'</span></code>)</p></li>
+<li><p><strong>world_model</strong> (<em>frl_utilities.ContainerModule</em>) – The world model to save. Excluded if not provided.</p></li>
+<li><p><strong>actor_critic_model</strong> (<em>frl_utilities.ContainerModule</em>) – The actor-critic model to save. Excluded if not provided.</p></li>
+<li><p><strong>utility_modules</strong> (<em>frl_utilities.Container</em>) – The utility modules to save. Excluded if not provided.</p></li>
+<li><p><strong>include_optimizers</strong> (<em>bool</em>) – Whether to include the optimizer states in the saved file. (Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fishyrl.dreamer.train_loop">
+<span class="sig-prename descclassname"><span class="pre">fishyrl.dreamer.</span></span><span class="sig-name descname"><span class="pre">train_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">envs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment" title="fishyrl.environments.VectorizedEnvironment"><span class="pre">VectorizedEnvironment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">world_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">actor_critic_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule" title="fishyrl.utilities.ContainerModule"><span class="pre">ContainerModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility_modules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Container" title="fishyrl.utilities.Container"><span class="pre">Container</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensorboard_writer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SummaryWriter</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_environment_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_frequency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_frequency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_pretrain_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1024</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_critic_target_update_freq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_sequence_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.02</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#fishyrl.dreamer.train_loop" title="Link to this definition">#</a></dt>
+<dd><p>Train the Dreamer agent in the given environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>envs</strong> (<em>frl_environments.VectorizedEnvironment</em>) – The vectorized environments to train in.</p></li>
+<li><p><strong>model_actions</strong> (<em>list</em><em>[</em><em>frl_actions.Action</em><em>]</em>) – A list of actions for the model to use. Should correspond to the environment action space.</p></li>
+<li><p><strong>world_model</strong> (<em>frl_utilities.ContainerModule</em>) – The world model for the Dreamer agent.</p></li>
+<li><p><strong>actor_critic_model</strong> (<em>frl_utilities.ContainerModule</em>) – The actor-critic model for the Dreamer agent.</p></li>
+<li><p><strong>utility_modules</strong> (<em>frl_utilities.Container</em>) – The utility modules for the Dreamer agent.</p></li>
+<li><p><strong>tensorboard_writer</strong> (<em>torch.utils.tensorboard.SummaryWriter</em>) – The TensorBoard writer for logging, if desired. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>start_environment_step</strong> (<em>int</em>) – The initial environment step. Used for resuming training from a checkpoint. (Default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
+<li><p><strong>checkpoint_dir</strong> (<em>str</em>) – The directory to save checkpoints in. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>checkpoint_frequency</strong> (<em>int</em>) – The frequency (in environment steps) for saving checkpoints. (Default: <code class="docutils literal notranslate"><span class="pre">5_000</span></code>)</p></li>
+<li><p><strong>env_name</strong> (<em>str</em>) – The name of the environment for evaluation purposes. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>eval_frequency</strong> (<em>int</em>) – The frequency (in environment steps) for performing evaluations. (Default: <code class="docutils literal notranslate"><span class="pre">10**3</span></code>)</p></li>
+<li><p><strong>training_steps</strong> (<em>int</em>) – The total number of environment steps to train for. (Default: <code class="docutils literal notranslate"><span class="pre">10**6</span></code>)</p></li>
+<li><p><strong>training_pretrain_steps</strong> (<em>int</em>) – The number of environment steps to pretrain the world model before starting training. (Default: <code class="docutils literal notranslate"><span class="pre">1024</span></code>)</p></li>
+<li><p><strong>training_critic_target_update_freq</strong> (<em>int</em>) – The interval for soft updates of the target critic. (Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+<li><p><strong>training_batch_size</strong> (<em>int</em>) – The batch size for training. (Default: <code class="docutils literal notranslate"><span class="pre">16</span></code>)</p></li>
+<li><p><strong>training_sequence_length</strong> (<em>int</em>) – The batch sample sequence length for training. (Default: <code class="docutils literal notranslate"><span class="pre">64</span></code>)</p></li>
+<li><p><strong>training_tau</strong> (<em>float</em>) – The tau parameter for soft updates of the target critic. (Default: <code class="docutils literal notranslate"><span class="pre">0.02</span></code>)</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – The random seed for reproducibility. (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>eval_seed</strong> (<em>int</em>) – The random seed for evaluation. (Default: <code class="docutils literal notranslate"><span class="pre">42</span></code>)</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Catch keyword arguments for compatibility with <code class="docutils literal notranslate"><span class="pre">utilities.optional_flatten_cfg</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="fishyrl.distributions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">fishyrl.distributions module</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="fishyrl.environments.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">fishyrl.environments module</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fishyrl.dreamer.compute_actions"><code class="docutils literal notranslate"><span class="pre">compute_actions()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fishyrl.dreamer.construct_actions"><code class="docutils literal notranslate"><span class="pre">construct_actions()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fishyrl.dreamer.construct_envs"><code class="docutils literal notranslate"><span class="pre">construct_envs()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fishyrl.dreamer.construct_models"><code class="docutils literal notranslate"><span class="pre">construct_models()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fishyrl.dreamer.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fishyrl.dreamer.learning_step"><code class="docutils literal notranslate"><span class="pre">learning_step()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fishyrl.dreamer.load_models"><code class="docutils literal notranslate"><span class="pre">load_models()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fishyrl.dreamer.save_models"><code class="docutils literal notranslate"><span class="pre">save_models()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fishyrl.dreamer.train_loop"><code class="docutils literal notranslate"><span class="pre">train_loop()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/fishyrl.dreamer.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, Noah Cohen Kalafut.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

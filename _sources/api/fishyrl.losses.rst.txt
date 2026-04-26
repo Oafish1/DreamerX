@@ -1,0 +1,7 @@
+fishyrl.losses module
+=====================
+
+.. automodule:: fishyrl.losses
+   :members:
+   :show-inheritance:
+   :undoc-members:

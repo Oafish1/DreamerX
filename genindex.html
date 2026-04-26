@@ -1,0 +1,1077 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; Fishy RL 0.21.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=c4f92b34"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Fishy RL 0.21.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/fishyrl.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/fishyrl.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.ContinuousActions.__init__">__init__() (fishyrl.actions.ContinuousActions method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscreteAction.__init__">(fishyrl.actions.DiscreteAction method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.__init__">(fishyrl.actions.DiscretizedContinuousAction method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.__init__">(fishyrl.actions.TwoHotDiscretizedContinuousAction method)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.__init__">(fishyrl.buffers.IndependentVectorizedBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.__init__">(fishyrl.buffers.SequentialBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.TwoHot.__init__">(fishyrl.distributions.TwoHot method)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.__init__">(fishyrl.environments.VectorizedGymEnvironment method)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.__init__">(fishyrl.environments.VectorizedRLGymEnvironment method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.Actor.__init__">(fishyrl.models.Actor method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.AttentionDecoder.__init__">(fishyrl.models.AttentionDecoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.AttentionEncoder.__init__">(fishyrl.models.AttentionEncoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.BlockLinear.__init__">(fishyrl.models.BlockLinear method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.BlockRecurrentModel.__init__">(fishyrl.models.BlockRecurrentModel method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.ChannelNorm.__init__">(fishyrl.models.ChannelNorm method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CNNDecoder.__init__">(fishyrl.models.CNNDecoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CNNEncoder.__init__">(fishyrl.models.CNNEncoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CompoundDecoder.__init__">(fishyrl.models.CompoundDecoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CompoundEncoder.__init__">(fishyrl.models.CompoundEncoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.LayerNormGRU.__init__">(fishyrl.models.LayerNormGRU method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.MLP.__init__">(fishyrl.models.MLP method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.MLPDecoder.__init__">(fishyrl.models.MLPDecoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.MLPEncoder.__init__">(fishyrl.models.MLPEncoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.RSSM.__init__">(fishyrl.models.RSSM method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.SingleRecurrentModel.__init__">(fishyrl.models.SingleRecurrentModel method)</a>
+</li>
+        <li><a href="api/fishyrl.rlgym.rewards.html#fishyrl.rlgym.rewards.CloseReward.__init__">(fishyrl.rlgym.rewards.CloseReward method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.Container.__init__">(fishyrl.utilities.Container method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.ContainerModule.__init__">(fishyrl.utilities.ContainerModule method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.DotDict.__init__">(fishyrl.utilities.DotDict method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.MovingMinMaxScaler.__init__">(fishyrl.utilities.MovingMinMaxScaler method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.Ratio.__init__">(fishyrl.utilities.Ratio method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.rlgym.rewards.html#fishyrl.rlgym.rewards.CloseReward._compute_dist">_compute_dist() (fishyrl.rlgym.rewards.CloseReward method)</a>
+</li>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment._construct_actions">_construct_actions() (fishyrl.environments.VectorizedRLGymEnvironment method)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.DotDict._crawl">_crawl() (fishyrl.utilities.DotDict method)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities._flatten_dict">_flatten_dict() (in module fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities._merge_dotdicts">_merge_dotdicts() (in module fishyrl.utilities)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.Action">Action (class in fishyrl.actions)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS">ACTION_IDENTIFIERS (class in fishyrl.actions)</a>
+</li>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.action_sample">action_sample() (fishyrl.environments.VectorizedEnvironment method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.action_sample">(fishyrl.environments.VectorizedGymEnvironment method)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.action_sample">(fishyrl.environments.VectorizedRLGymEnvironment method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.Actor">Actor (class in fishyrl.models)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.Buffer.add">add() (fishyrl.buffers.Buffer method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.add">(fishyrl.buffers.IndependentVectorizedBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.add">(fishyrl.buffers.SequentialBuffer method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.losses.html#fishyrl.losses.attention_reconstruction_loss">attention_reconstruction_loss() (in module fishyrl.losses)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.AttentionDecoder">AttentionDecoder (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.AttentionEncoder">AttentionEncoder (class in fishyrl.models)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.BlockLinear">BlockLinear (class in fishyrl.models)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.BlockRecurrentModel">BlockRecurrentModel (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.Buffer">Buffer (class in fishyrl.buffers)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.capacity">capacity (fishyrl.buffers.SequentialBuffer property)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.CaseInsensitiveEnumMeta">CaseInsensitiveEnumMeta (class in fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.ChannelNorm">ChannelNorm (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.rlgym.rewards.html#fishyrl.rlgym.rewards.CloseReward">CloseReward (class in fishyrl.rlgym.rewards)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.CNNDecoder">CNNDecoder (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.CNNEncoder">CNNEncoder (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.CompoundDecoder">CompoundDecoder (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.CompoundEncoder">CompoundEncoder (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.dreamer.html#fishyrl.dreamer.compute_actions">compute_actions() (in module fishyrl.dreamer)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.Action.construct">construct() (fishyrl.actions.Action method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.ContinuousActions.construct">(fishyrl.actions.ContinuousActions method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscreteAction.construct">(fishyrl.actions.DiscreteAction method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.construct">(fishyrl.actions.DiscretizedContinuousAction method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.construct">(fishyrl.actions.TwoHotDiscretizedContinuousAction method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.construct_actions">construct_actions() (in module fishyrl.actions)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.dreamer.html#fishyrl.dreamer.construct_actions">(in module fishyrl.dreamer)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.dreamer.html#fishyrl.dreamer.construct_envs">construct_envs() (in module fishyrl.dreamer)</a>
+</li>
+      <li><a href="api/fishyrl.dreamer.html#fishyrl.dreamer.construct_models">construct_models() (in module fishyrl.dreamer)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.Container">Container (class in fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.ContainerModule">ContainerModule (class in fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS.CONTINUOUS">CONTINUOUS (fishyrl.actions.ACTION_IDENTIFIERS attribute)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.ContinuousActions">ContinuousActions (class in fishyrl.actions)</a>
+</li>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.convert_samples_to_tensors">convert_samples_to_tensors() (in module fishyrl.buffers)</a>
+</li>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.copy">copy() (fishyrl.environments.VectorizedEnvironment method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.copy">(fishyrl.environments.VectorizedGymEnvironment method)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.copy">(fishyrl.environments.VectorizedRLGymEnvironment method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.BlockRecurrentModel.deter_dim">deter_dim (fishyrl.models.BlockRecurrentModel property)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.SingleRecurrentModel.deter_dim">(fishyrl.models.SingleRecurrentModel property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS.DISCRETE">DISCRETE (fishyrl.actions.ACTION_IDENTIFIERS attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscreteAction">DiscreteAction (class in fishyrl.actions)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS.DISCRETIZED_CONTINUOUS">DISCRETIZED_CONTINUOUS (fishyrl.actions.ACTION_IDENTIFIERS attribute)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction">DiscretizedContinuousAction (class in fishyrl.actions)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.DotDict">DotDict (class in fishyrl.utilities)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.TwoHot.entropy">entropy() (fishyrl.distributions.TwoHot method)</a>
+</li>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.ENVIRONMENT_IDENTIFIERS">ENVIRONMENT_IDENTIFIERS (class in fishyrl.environments)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.dreamer.html#fishyrl.dreamer.evaluate">evaluate() (in module fishyrl.dreamer)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.export_frames">export_frames() (in module fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.extract_representation">extract_representation() (in module fishyrl.models)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    fishyrl
+
+      <ul>
+        <li><a href="api/fishyrl.html#module-fishyrl">module</a>
+</li>
+      </ul></li>
+      <li>
+    fishyrl.actions
+
+      <ul>
+        <li><a href="api/fishyrl.actions.html#module-fishyrl.actions">module</a>
+</li>
+      </ul></li>
+      <li>
+    fishyrl.buffers
+
+      <ul>
+        <li><a href="api/fishyrl.buffers.html#module-fishyrl.buffers">module</a>
+</li>
+      </ul></li>
+      <li>
+    fishyrl.distributions
+
+      <ul>
+        <li><a href="api/fishyrl.distributions.html#module-fishyrl.distributions">module</a>
+</li>
+      </ul></li>
+      <li>
+    fishyrl.dreamer
+
+      <ul>
+        <li><a href="api/fishyrl.dreamer.html#module-fishyrl.dreamer">module</a>
+</li>
+      </ul></li>
+      <li>
+    fishyrl.environments
+
+      <ul>
+        <li><a href="api/fishyrl.environments.html#module-fishyrl.environments">module</a>
+</li>
+      </ul></li>
+      <li>
+    fishyrl.losses
+
+      <ul>
+        <li><a href="api/fishyrl.losses.html#module-fishyrl.losses">module</a>
+</li>
+      </ul></li>
+      <li>
+    fishyrl.models
+
+      <ul>
+        <li><a href="api/fishyrl.models.html#module-fishyrl.models">module</a>
+</li>
+      </ul></li>
+      <li>
+    fishyrl.rlgym
+
+      <ul>
+        <li><a href="api/fishyrl.rlgym.html#module-fishyrl.rlgym">module</a>
+</li>
+      </ul></li>
+      <li>
+    fishyrl.rlgym.rewards
+
+      <ul>
+        <li><a href="api/fishyrl.rlgym.rewards.html#module-fishyrl.rlgym.rewards">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    fishyrl.utilities
+
+      <ul>
+        <li><a href="api/fishyrl.utilities.html#module-fishyrl.utilities">module</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.Actor.forward">forward() (fishyrl.models.Actor method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.AttentionDecoder.forward">(fishyrl.models.AttentionDecoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.AttentionEncoder.forward">(fishyrl.models.AttentionEncoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.BlockLinear.forward">(fishyrl.models.BlockLinear method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.BlockRecurrentModel.forward">(fishyrl.models.BlockRecurrentModel method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.ChannelNorm.forward">(fishyrl.models.ChannelNorm method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CNNDecoder.forward">(fishyrl.models.CNNDecoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CNNEncoder.forward">(fishyrl.models.CNNEncoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CompoundDecoder.forward">(fishyrl.models.CompoundDecoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CompoundEncoder.forward">(fishyrl.models.CompoundEncoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.LayerNormGRU.forward">(fishyrl.models.LayerNormGRU method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.MLP.forward">(fishyrl.models.MLP method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.MLPDecoder.forward">(fishyrl.models.MLPDecoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.MLPEncoder.forward">(fishyrl.models.MLPEncoder method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.RSSM.forward">(fishyrl.models.RSSM method)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.SingleRecurrentModel.forward">(fishyrl.models.SingleRecurrentModel method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.MovingMinMaxScaler.forward">(fishyrl.utilities.MovingMinMaxScaler method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.rlgym.rewards.html#fishyrl.rlgym.rewards.CloseReward.get_rewards">get_rewards() (fishyrl.rlgym.rewards.CloseReward method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.ENVIRONMENT_IDENTIFIERS.GYMNASIUM">GYMNASIUM (fishyrl.environments.ENVIRONMENT_IDENTIFIERS attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.losses.html#fishyrl.losses.hungarian_loss">hungarian_loss() (in module fishyrl.losses)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.identity">identity() (in module fishyrl.distributions)</a>
+</li>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer">IndependentVectorizedBuffer (class in fishyrl.buffers)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.RSSM.infer_stochastic">infer_stochastic() (fishyrl.models.RSSM method)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.init_weights">init_weights() (in module fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.RSSM.initial_hidden_state">initial_hidden_state (fishyrl.models.RSSM property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.Action.input_dim">input_dim (fishyrl.actions.Action property)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.ContinuousActions.input_dim">(fishyrl.actions.ContinuousActions property)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscreteAction.input_dim">(fishyrl.actions.DiscreteAction property)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.input_dim">(fishyrl.actions.DiscretizedContinuousAction property)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.input_dim">(fishyrl.actions.TwoHotDiscretizedContinuousAction property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.is_full">is_full (fishyrl.buffers.SequentialBuffer property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.LayerNormGRU">LayerNormGRU (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.dreamer.html#fishyrl.dreamer.learning_step">learning_step() (in module fishyrl.dreamer)</a>
+</li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.load_config">load_config() (in module fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.dreamer.html#fishyrl.dreamer.load_models">load_models() (in module fishyrl.dreamer)</a>
+</li>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.Buffer.load_state_dict">load_state_dict() (fishyrl.buffers.Buffer method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.load_state_dict">(fishyrl.buffers.IndependentVectorizedBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.load_state_dict">(fishyrl.buffers.SequentialBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.Container.load_state_dict">(fishyrl.utilities.Container method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.Ratio.load_state_dict">(fishyrl.utilities.Ratio method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.TwoHot.log_prob">log_prob() (fishyrl.distributions.TwoHot method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.TwoHot.mean">mean (fishyrl.distributions.TwoHot property)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.MLP">MLP (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.MLPDecoder">MLPDecoder (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.MLPEncoder">MLPEncoder (class in fishyrl.models)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api/fishyrl.html#module-fishyrl">fishyrl</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#module-fishyrl.actions">fishyrl.actions</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#module-fishyrl.buffers">fishyrl.buffers</a>
+</li>
+        <li><a href="api/fishyrl.distributions.html#module-fishyrl.distributions">fishyrl.distributions</a>
+</li>
+        <li><a href="api/fishyrl.dreamer.html#module-fishyrl.dreamer">fishyrl.dreamer</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#module-fishyrl.environments">fishyrl.environments</a>
+</li>
+        <li><a href="api/fishyrl.losses.html#module-fishyrl.losses">fishyrl.losses</a>
+</li>
+        <li><a href="api/fishyrl.models.html#module-fishyrl.models">fishyrl.models</a>
+</li>
+        <li><a href="api/fishyrl.rlgym.html#module-fishyrl.rlgym">fishyrl.rlgym</a>
+</li>
+        <li><a href="api/fishyrl.rlgym.rewards.html#module-fishyrl.rlgym.rewards">fishyrl.rlgym.rewards</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#module-fishyrl.utilities">fishyrl.utilities</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.MovingMinMaxScaler">MovingMinMaxScaler (class in fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.losses.html#fishyrl.losses.mse_loss">mse_loss() (in module fishyrl.losses)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.Action.num_actions">num_actions (fishyrl.actions.Action property)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.ContinuousActions.num_actions">(fishyrl.actions.ContinuousActions property)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscreteAction.num_actions">(fishyrl.actions.DiscreteAction property)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.num_actions">(fishyrl.actions.DiscretizedContinuousAction property)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.num_actions">(fishyrl.actions.TwoHotDiscretizedContinuousAction property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.num_envs">num_envs (fishyrl.environments.VectorizedEnvironment property)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.num_envs">(fishyrl.environments.VectorizedGymEnvironment property)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.num_envs">(fishyrl.environments.VectorizedRLGymEnvironment property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.obs_shape">obs_shape (fishyrl.environments.VectorizedEnvironment property)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.obs_shape">(fishyrl.environments.VectorizedGymEnvironment property)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.obs_shape">(fishyrl.environments.VectorizedRLGymEnvironment property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.optional_flatten_cfg">optional_flatten_cfg() (in module fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.Action.output_dim">output_dim (fishyrl.actions.Action property)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.ContinuousActions.output_dim">(fishyrl.actions.ContinuousActions property)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscreteAction.output_dim">(fishyrl.actions.DiscreteAction property)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.output_dim">(fishyrl.actions.DiscretizedContinuousAction property)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.output_dim">(fishyrl.actions.TwoHotDiscretizedContinuousAction property)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.AttentionEncoder.output_dim">(fishyrl.models.AttentionEncoder property)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CNNEncoder.output_dim">(fishyrl.models.CNNEncoder property)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.CompoundEncoder.output_dim">(fishyrl.models.CompoundEncoder property)</a>
+</li>
+        <li><a href="api/fishyrl.models.html#fishyrl.models.MLPEncoder.output_dim">(fishyrl.models.MLPEncoder property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.Ratio">Ratio (class in fishyrl.utilities)</a>
+</li>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.render">render() (fishyrl.environments.VectorizedEnvironment method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.render">(fishyrl.environments.VectorizedGymEnvironment method)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.render">(fishyrl.environments.VectorizedRLGymEnvironment method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.render_fps">render_fps (fishyrl.environments.VectorizedEnvironment property)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.render_fps">(fishyrl.environments.VectorizedGymEnvironment property)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.render_fps">(fishyrl.environments.VectorizedRLGymEnvironment property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.Buffer.reset">reset() (fishyrl.buffers.Buffer method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.reset">(fishyrl.buffers.IndependentVectorizedBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.reset">(fishyrl.buffers.SequentialBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.reset">(fishyrl.environments.VectorizedEnvironment method)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.reset">(fishyrl.environments.VectorizedGymEnvironment method)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.reset">(fishyrl.environments.VectorizedRLGymEnvironment method)</a>
+</li>
+        <li><a href="api/fishyrl.rlgym.rewards.html#fishyrl.rlgym.rewards.CloseReward.reset">(fishyrl.rlgym.rewards.CloseReward method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.ENVIRONMENT_IDENTIFIERS.RLGYM">RLGYM (fishyrl.environments.ENVIRONMENT_IDENTIFIERS attribute)</a>
+</li>
+      <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.TwoHot.rsample">rsample() (fishyrl.distributions.TwoHot method)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.RSSM">RSSM (class in fishyrl.models)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.Action.sample">sample() (fishyrl.actions.Action method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.ContinuousActions.sample">(fishyrl.actions.ContinuousActions method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscreteAction.sample">(fishyrl.actions.DiscreteAction method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.sample">(fishyrl.actions.DiscretizedContinuousAction method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.sample">(fishyrl.actions.TwoHotDiscretizedContinuousAction method)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.Buffer.sample">(fishyrl.buffers.Buffer method)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.sample">(fishyrl.buffers.IndependentVectorizedBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.sample">(fishyrl.buffers.SequentialBuffer method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.dreamer.html#fishyrl.dreamer.save_models">save_models() (in module fishyrl.dreamer)</a>
+</li>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer">SequentialBuffer (class in fishyrl.buffers)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.Action.simplify">simplify() (fishyrl.actions.Action method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.ContinuousActions.simplify">(fishyrl.actions.ContinuousActions method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscreteAction.simplify">(fishyrl.actions.DiscreteAction method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.simplify">(fishyrl.actions.DiscretizedContinuousAction method)</a>
+</li>
+        <li><a href="api/fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.simplify">(fishyrl.actions.TwoHotDiscretizedContinuousAction method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.simplify_actions">simplify_actions() (in module fishyrl.actions)</a>
+</li>
+      <li><a href="api/fishyrl.models.html#fishyrl.models.SingleRecurrentModel">SingleRecurrentModel (class in fishyrl.models)</a>
+</li>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.Buffer.size">size (fishyrl.buffers.Buffer property)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.size">(fishyrl.buffers.IndependentVectorizedBuffer property)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.size">(fishyrl.buffers.SequentialBuffer property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.Buffer.state_dict">state_dict() (fishyrl.buffers.Buffer method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.state_dict">(fishyrl.buffers.IndependentVectorizedBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.state_dict">(fishyrl.buffers.SequentialBuffer method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.Container.state_dict">(fishyrl.utilities.Container method)</a>
+</li>
+        <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.Ratio.state_dict">(fishyrl.utilities.Ratio method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.step">step() (fishyrl.environments.VectorizedEnvironment method)</a>
+
+      <ul>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.step">(fishyrl.environments.VectorizedGymEnvironment method)</a>
+</li>
+        <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.step">(fishyrl.environments.VectorizedRLGymEnvironment method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.symexp">symexp() (in module fishyrl.distributions)</a>
+</li>
+      <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.symlog">symlog() (in module fishyrl.distributions)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.dreamer.html#fishyrl.dreamer.train_loop">train_loop() (in module fishyrl.dreamer)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS.TWO_HOT_DISCRETIZED_CONTINUOUS">TWO_HOT_DISCRETIZED_CONTINUOUS (fishyrl.actions.ACTION_IDENTIFIERS attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.TwoHot">TwoHot (class in fishyrl.distributions)</a>
+</li>
+      <li><a href="api/fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction">TwoHotDiscretizedContinuousAction (class in fishyrl.actions)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.utilities.html#fishyrl.utilities.uniform_init_weights">uniform_init_weights() (in module fishyrl.utilities)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.distributions.html#fishyrl.distributions.uniform_mix">uniform_mix() (in module fishyrl.distributions)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment">VectorizedEnvironment (class in fishyrl.environments)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment">VectorizedGymEnvironment (class in fishyrl.environments)</a>
+</li>
+      <li><a href="api/fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment">VectorizedRLGymEnvironment (class in fishyrl.environments)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, Noah Cohen Kalafut.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

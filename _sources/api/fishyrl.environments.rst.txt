@@ -1,0 +1,7 @@
+fishyrl.environments module
+===========================
+
+.. automodule:: fishyrl.environments
+   :members:
+   :show-inheritance:
+   :undoc-members:

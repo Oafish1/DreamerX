@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>fishyrl package &#8212; Fishy RL 0.21.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=c4f92b34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/fishyrl';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="fishyrl.rlgym package" href="fishyrl.rlgym.html" />
+    <link rel="prev" title="Fishy RL" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Fishy RL 0.21.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="fishyrl.rlgym.html">fishyrl.rlgym package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.rlgym.rewards.html">fishyrl.rlgym.rewards module</a></li>
+</ul>
+</details></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.actions.html">fishyrl.actions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.buffers.html">fishyrl.buffers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.distributions.html">fishyrl.distributions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.dreamer.html">fishyrl.dreamer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.environments.html">fishyrl.environments module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.losses.html">fishyrl.losses module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.models.html">fishyrl.models module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.utilities.html">fishyrl.utilities module</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">fishyrl package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="fishyrl-package">
+<h1>fishyrl package<a class="headerlink" href="#fishyrl-package" title="Link to this heading">#</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.rlgym.html">fishyrl.rlgym package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.rlgym.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.rlgym.rewards.html">fishyrl.rlgym.rewards module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fishyrl.rlgym.rewards.html#fishyrl.rlgym.rewards.CloseReward"><code class="docutils literal notranslate"><span class="pre">CloseReward</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.rlgym.html#module-fishyrl.rlgym">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.actions.html">fishyrl.actions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS"><code class="docutils literal notranslate"><span class="pre">ACTION_IDENTIFIERS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS.CONTINUOUS"><code class="docutils literal notranslate"><span class="pre">ACTION_IDENTIFIERS.CONTINUOUS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS.DISCRETE"><code class="docutils literal notranslate"><span class="pre">ACTION_IDENTIFIERS.DISCRETE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS.DISCRETIZED_CONTINUOUS"><code class="docutils literal notranslate"><span class="pre">ACTION_IDENTIFIERS.DISCRETIZED_CONTINUOUS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ACTION_IDENTIFIERS.TWO_HOT_DISCRETIZED_CONTINUOUS"><code class="docutils literal notranslate"><span class="pre">ACTION_IDENTIFIERS.TWO_HOT_DISCRETIZED_CONTINUOUS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.Action"><code class="docutils literal notranslate"><span class="pre">Action</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.Action.construct"><code class="docutils literal notranslate"><span class="pre">Action.construct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.Action.sample"><code class="docutils literal notranslate"><span class="pre">Action.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.Action.simplify"><code class="docutils literal notranslate"><span class="pre">Action.simplify()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.Action.input_dim"><code class="docutils literal notranslate"><span class="pre">Action.input_dim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.Action.num_actions"><code class="docutils literal notranslate"><span class="pre">Action.num_actions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.Action.output_dim"><code class="docutils literal notranslate"><span class="pre">Action.output_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ContinuousActions"><code class="docutils literal notranslate"><span class="pre">ContinuousActions</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ContinuousActions.__init__"><code class="docutils literal notranslate"><span class="pre">ContinuousActions.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ContinuousActions.construct"><code class="docutils literal notranslate"><span class="pre">ContinuousActions.construct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ContinuousActions.sample"><code class="docutils literal notranslate"><span class="pre">ContinuousActions.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ContinuousActions.simplify"><code class="docutils literal notranslate"><span class="pre">ContinuousActions.simplify()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ContinuousActions.input_dim"><code class="docutils literal notranslate"><span class="pre">ContinuousActions.input_dim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ContinuousActions.num_actions"><code class="docutils literal notranslate"><span class="pre">ContinuousActions.num_actions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.ContinuousActions.output_dim"><code class="docutils literal notranslate"><span class="pre">ContinuousActions.output_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscreteAction"><code class="docutils literal notranslate"><span class="pre">DiscreteAction</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscreteAction.__init__"><code class="docutils literal notranslate"><span class="pre">DiscreteAction.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscreteAction.construct"><code class="docutils literal notranslate"><span class="pre">DiscreteAction.construct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscreteAction.sample"><code class="docutils literal notranslate"><span class="pre">DiscreteAction.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscreteAction.simplify"><code class="docutils literal notranslate"><span class="pre">DiscreteAction.simplify()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscreteAction.input_dim"><code class="docutils literal notranslate"><span class="pre">DiscreteAction.input_dim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscreteAction.num_actions"><code class="docutils literal notranslate"><span class="pre">DiscreteAction.num_actions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscreteAction.output_dim"><code class="docutils literal notranslate"><span class="pre">DiscreteAction.output_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction"><code class="docutils literal notranslate"><span class="pre">DiscretizedContinuousAction</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.__init__"><code class="docutils literal notranslate"><span class="pre">DiscretizedContinuousAction.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.construct"><code class="docutils literal notranslate"><span class="pre">DiscretizedContinuousAction.construct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.sample"><code class="docutils literal notranslate"><span class="pre">DiscretizedContinuousAction.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.simplify"><code class="docutils literal notranslate"><span class="pre">DiscretizedContinuousAction.simplify()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.input_dim"><code class="docutils literal notranslate"><span class="pre">DiscretizedContinuousAction.input_dim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.num_actions"><code class="docutils literal notranslate"><span class="pre">DiscretizedContinuousAction.num_actions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.DiscretizedContinuousAction.output_dim"><code class="docutils literal notranslate"><span class="pre">DiscretizedContinuousAction.output_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction"><code class="docutils literal notranslate"><span class="pre">TwoHotDiscretizedContinuousAction</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.__init__"><code class="docutils literal notranslate"><span class="pre">TwoHotDiscretizedContinuousAction.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.construct"><code class="docutils literal notranslate"><span class="pre">TwoHotDiscretizedContinuousAction.construct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.sample"><code class="docutils literal notranslate"><span class="pre">TwoHotDiscretizedContinuousAction.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.simplify"><code class="docutils literal notranslate"><span class="pre">TwoHotDiscretizedContinuousAction.simplify()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.input_dim"><code class="docutils literal notranslate"><span class="pre">TwoHotDiscretizedContinuousAction.input_dim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.num_actions"><code class="docutils literal notranslate"><span class="pre">TwoHotDiscretizedContinuousAction.num_actions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.TwoHotDiscretizedContinuousAction.output_dim"><code class="docutils literal notranslate"><span class="pre">TwoHotDiscretizedContinuousAction.output_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.construct_actions"><code class="docutils literal notranslate"><span class="pre">construct_actions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.actions.html#fishyrl.actions.simplify_actions"><code class="docutils literal notranslate"><span class="pre">simplify_actions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.buffers.html">fishyrl.buffers module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.Buffer"><code class="docutils literal notranslate"><span class="pre">Buffer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.Buffer.add"><code class="docutils literal notranslate"><span class="pre">Buffer.add()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.Buffer.load_state_dict"><code class="docutils literal notranslate"><span class="pre">Buffer.load_state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.Buffer.reset"><code class="docutils literal notranslate"><span class="pre">Buffer.reset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.Buffer.sample"><code class="docutils literal notranslate"><span class="pre">Buffer.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.Buffer.state_dict"><code class="docutils literal notranslate"><span class="pre">Buffer.state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.Buffer.size"><code class="docutils literal notranslate"><span class="pre">Buffer.size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer"><code class="docutils literal notranslate"><span class="pre">IndependentVectorizedBuffer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.__init__"><code class="docutils literal notranslate"><span class="pre">IndependentVectorizedBuffer.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.add"><code class="docutils literal notranslate"><span class="pre">IndependentVectorizedBuffer.add()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.load_state_dict"><code class="docutils literal notranslate"><span class="pre">IndependentVectorizedBuffer.load_state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.reset"><code class="docutils literal notranslate"><span class="pre">IndependentVectorizedBuffer.reset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.sample"><code class="docutils literal notranslate"><span class="pre">IndependentVectorizedBuffer.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.state_dict"><code class="docutils literal notranslate"><span class="pre">IndependentVectorizedBuffer.state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.IndependentVectorizedBuffer.size"><code class="docutils literal notranslate"><span class="pre">IndependentVectorizedBuffer.size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.__init__"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.add"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer.add()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.load_state_dict"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer.load_state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.reset"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer.reset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.sample"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer.sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.state_dict"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer.state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.capacity"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer.capacity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.is_full"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer.is_full</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.SequentialBuffer.size"><code class="docutils literal notranslate"><span class="pre">SequentialBuffer.size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.buffers.html#fishyrl.buffers.convert_samples_to_tensors"><code class="docutils literal notranslate"><span class="pre">convert_samples_to_tensors()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.distributions.html">fishyrl.distributions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.TwoHot"><code class="docutils literal notranslate"><span class="pre">TwoHot</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.TwoHot.__init__"><code class="docutils literal notranslate"><span class="pre">TwoHot.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.TwoHot.entropy"><code class="docutils literal notranslate"><span class="pre">TwoHot.entropy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.TwoHot.log_prob"><code class="docutils literal notranslate"><span class="pre">TwoHot.log_prob()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.TwoHot.rsample"><code class="docutils literal notranslate"><span class="pre">TwoHot.rsample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.TwoHot.mean"><code class="docutils literal notranslate"><span class="pre">TwoHot.mean</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.symexp"><code class="docutils literal notranslate"><span class="pre">symexp()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.symlog"><code class="docutils literal notranslate"><span class="pre">symlog()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.distributions.html#fishyrl.distributions.uniform_mix"><code class="docutils literal notranslate"><span class="pre">uniform_mix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.dreamer.html">fishyrl.dreamer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.dreamer.html#fishyrl.dreamer.compute_actions"><code class="docutils literal notranslate"><span class="pre">compute_actions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.dreamer.html#fishyrl.dreamer.construct_actions"><code class="docutils literal notranslate"><span class="pre">construct_actions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.dreamer.html#fishyrl.dreamer.construct_envs"><code class="docutils literal notranslate"><span class="pre">construct_envs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.dreamer.html#fishyrl.dreamer.construct_models"><code class="docutils literal notranslate"><span class="pre">construct_models()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.dreamer.html#fishyrl.dreamer.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.dreamer.html#fishyrl.dreamer.learning_step"><code class="docutils literal notranslate"><span class="pre">learning_step()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.dreamer.html#fishyrl.dreamer.load_models"><code class="docutils literal notranslate"><span class="pre">load_models()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.dreamer.html#fishyrl.dreamer.save_models"><code class="docutils literal notranslate"><span class="pre">save_models()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.dreamer.html#fishyrl.dreamer.train_loop"><code class="docutils literal notranslate"><span class="pre">train_loop()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.environments.html">fishyrl.environments module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.ENVIRONMENT_IDENTIFIERS"><code class="docutils literal notranslate"><span class="pre">ENVIRONMENT_IDENTIFIERS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.ENVIRONMENT_IDENTIFIERS.GYMNASIUM"><code class="docutils literal notranslate"><span class="pre">ENVIRONMENT_IDENTIFIERS.GYMNASIUM</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.ENVIRONMENT_IDENTIFIERS.RLGYM"><code class="docutils literal notranslate"><span class="pre">ENVIRONMENT_IDENTIFIERS.RLGYM</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment"><code class="docutils literal notranslate"><span class="pre">VectorizedEnvironment</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.action_sample"><code class="docutils literal notranslate"><span class="pre">VectorizedEnvironment.action_sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.copy"><code class="docutils literal notranslate"><span class="pre">VectorizedEnvironment.copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.render"><code class="docutils literal notranslate"><span class="pre">VectorizedEnvironment.render()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.reset"><code class="docutils literal notranslate"><span class="pre">VectorizedEnvironment.reset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.step"><code class="docutils literal notranslate"><span class="pre">VectorizedEnvironment.step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.num_envs"><code class="docutils literal notranslate"><span class="pre">VectorizedEnvironment.num_envs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.obs_shape"><code class="docutils literal notranslate"><span class="pre">VectorizedEnvironment.obs_shape</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedEnvironment.render_fps"><code class="docutils literal notranslate"><span class="pre">VectorizedEnvironment.render_fps</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.__init__"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.action_sample"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment.action_sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.copy"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment.copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.render"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment.render()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.reset"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment.reset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.step"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment.step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.num_envs"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment.num_envs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.obs_shape"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment.obs_shape</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedGymEnvironment.render_fps"><code class="docutils literal notranslate"><span class="pre">VectorizedGymEnvironment.render_fps</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.__init__"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment._construct_actions"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment._construct_actions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.action_sample"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment.action_sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.copy"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment.copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.render"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment.render()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.reset"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment.reset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.step"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment.step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.num_envs"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment.num_envs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.obs_shape"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment.obs_shape</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.environments.html#fishyrl.environments.VectorizedRLGymEnvironment.render_fps"><code class="docutils literal notranslate"><span class="pre">VectorizedRLGymEnvironment.render_fps</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.losses.html">fishyrl.losses module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.losses.html#fishyrl.losses.attention_reconstruction_loss"><code class="docutils literal notranslate"><span class="pre">attention_reconstruction_loss()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.losses.html#fishyrl.losses.hungarian_loss"><code class="docutils literal notranslate"><span class="pre">hungarian_loss()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.losses.html#fishyrl.losses.mse_loss"><code class="docutils literal notranslate"><span class="pre">mse_loss()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.models.html">fishyrl.models module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.Actor"><code class="docutils literal notranslate"><span class="pre">Actor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.Actor.__init__"><code class="docutils literal notranslate"><span class="pre">Actor.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.Actor.forward"><code class="docutils literal notranslate"><span class="pre">Actor.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.AttentionDecoder"><code class="docutils literal notranslate"><span class="pre">AttentionDecoder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.AttentionDecoder.__init__"><code class="docutils literal notranslate"><span class="pre">AttentionDecoder.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.AttentionDecoder.forward"><code class="docutils literal notranslate"><span class="pre">AttentionDecoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.AttentionEncoder"><code class="docutils literal notranslate"><span class="pre">AttentionEncoder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.AttentionEncoder.__init__"><code class="docutils literal notranslate"><span class="pre">AttentionEncoder.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.AttentionEncoder.forward"><code class="docutils literal notranslate"><span class="pre">AttentionEncoder.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.AttentionEncoder.output_dim"><code class="docutils literal notranslate"><span class="pre">AttentionEncoder.output_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.BlockLinear"><code class="docutils literal notranslate"><span class="pre">BlockLinear</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.BlockLinear.__init__"><code class="docutils literal notranslate"><span class="pre">BlockLinear.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.BlockLinear.forward"><code class="docutils literal notranslate"><span class="pre">BlockLinear.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.BlockRecurrentModel"><code class="docutils literal notranslate"><span class="pre">BlockRecurrentModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.BlockRecurrentModel.__init__"><code class="docutils literal notranslate"><span class="pre">BlockRecurrentModel.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.BlockRecurrentModel.forward"><code class="docutils literal notranslate"><span class="pre">BlockRecurrentModel.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.BlockRecurrentModel.deter_dim"><code class="docutils literal notranslate"><span class="pre">BlockRecurrentModel.deter_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CNNDecoder"><code class="docutils literal notranslate"><span class="pre">CNNDecoder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CNNDecoder.__init__"><code class="docutils literal notranslate"><span class="pre">CNNDecoder.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CNNDecoder.forward"><code class="docutils literal notranslate"><span class="pre">CNNDecoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CNNEncoder"><code class="docutils literal notranslate"><span class="pre">CNNEncoder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CNNEncoder.__init__"><code class="docutils literal notranslate"><span class="pre">CNNEncoder.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CNNEncoder.forward"><code class="docutils literal notranslate"><span class="pre">CNNEncoder.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CNNEncoder.output_dim"><code class="docutils literal notranslate"><span class="pre">CNNEncoder.output_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.ChannelNorm"><code class="docutils literal notranslate"><span class="pre">ChannelNorm</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.ChannelNorm.__init__"><code class="docutils literal notranslate"><span class="pre">ChannelNorm.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.ChannelNorm.forward"><code class="docutils literal notranslate"><span class="pre">ChannelNorm.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CompoundDecoder"><code class="docutils literal notranslate"><span class="pre">CompoundDecoder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CompoundDecoder.__init__"><code class="docutils literal notranslate"><span class="pre">CompoundDecoder.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CompoundDecoder.forward"><code class="docutils literal notranslate"><span class="pre">CompoundDecoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CompoundEncoder"><code class="docutils literal notranslate"><span class="pre">CompoundEncoder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CompoundEncoder.__init__"><code class="docutils literal notranslate"><span class="pre">CompoundEncoder.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CompoundEncoder.forward"><code class="docutils literal notranslate"><span class="pre">CompoundEncoder.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.CompoundEncoder.output_dim"><code class="docutils literal notranslate"><span class="pre">CompoundEncoder.output_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.LayerNormGRU"><code class="docutils literal notranslate"><span class="pre">LayerNormGRU</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.LayerNormGRU.__init__"><code class="docutils literal notranslate"><span class="pre">LayerNormGRU.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.LayerNormGRU.forward"><code class="docutils literal notranslate"><span class="pre">LayerNormGRU.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLP"><code class="docutils literal notranslate"><span class="pre">MLP</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLP.__init__"><code class="docutils literal notranslate"><span class="pre">MLP.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLP.forward"><code class="docutils literal notranslate"><span class="pre">MLP.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLPDecoder"><code class="docutils literal notranslate"><span class="pre">MLPDecoder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLPDecoder.__init__"><code class="docutils literal notranslate"><span class="pre">MLPDecoder.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLPDecoder.forward"><code class="docutils literal notranslate"><span class="pre">MLPDecoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLPEncoder"><code class="docutils literal notranslate"><span class="pre">MLPEncoder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLPEncoder.__init__"><code class="docutils literal notranslate"><span class="pre">MLPEncoder.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLPEncoder.forward"><code class="docutils literal notranslate"><span class="pre">MLPEncoder.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.MLPEncoder.output_dim"><code class="docutils literal notranslate"><span class="pre">MLPEncoder.output_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.RSSM"><code class="docutils literal notranslate"><span class="pre">RSSM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.RSSM.__init__"><code class="docutils literal notranslate"><span class="pre">RSSM.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.RSSM.forward"><code class="docutils literal notranslate"><span class="pre">RSSM.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.RSSM.infer_stochastic"><code class="docutils literal notranslate"><span class="pre">RSSM.infer_stochastic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.RSSM.initial_hidden_state"><code class="docutils literal notranslate"><span class="pre">RSSM.initial_hidden_state</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.SingleRecurrentModel"><code class="docutils literal notranslate"><span class="pre">SingleRecurrentModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.SingleRecurrentModel.__init__"><code class="docutils literal notranslate"><span class="pre">SingleRecurrentModel.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.SingleRecurrentModel.forward"><code class="docutils literal notranslate"><span class="pre">SingleRecurrentModel.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.SingleRecurrentModel.deter_dim"><code class="docutils literal notranslate"><span class="pre">SingleRecurrentModel.deter_dim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.models.html#fishyrl.models.extract_representation"><code class="docutils literal notranslate"><span class="pre">extract_representation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fishyrl.utilities.html">fishyrl.utilities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.CaseInsensitiveEnumMeta"><code class="docutils literal notranslate"><span class="pre">CaseInsensitiveEnumMeta</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Container"><code class="docutils literal notranslate"><span class="pre">Container</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Container.__init__"><code class="docutils literal notranslate"><span class="pre">Container.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Container.load_state_dict"><code class="docutils literal notranslate"><span class="pre">Container.load_state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Container.state_dict"><code class="docutils literal notranslate"><span class="pre">Container.state_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule"><code class="docutils literal notranslate"><span class="pre">ContainerModule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.ContainerModule.__init__"><code class="docutils literal notranslate"><span class="pre">ContainerModule.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.DotDict"><code class="docutils literal notranslate"><span class="pre">DotDict</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.DotDict.__init__"><code class="docutils literal notranslate"><span class="pre">DotDict.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.DotDict._crawl"><code class="docutils literal notranslate"><span class="pre">DotDict._crawl()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.MovingMinMaxScaler"><code class="docutils literal notranslate"><span class="pre">MovingMinMaxScaler</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.MovingMinMaxScaler.__init__"><code class="docutils literal notranslate"><span class="pre">MovingMinMaxScaler.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.MovingMinMaxScaler.forward"><code class="docutils literal notranslate"><span class="pre">MovingMinMaxScaler.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Ratio"><code class="docutils literal notranslate"><span class="pre">Ratio</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Ratio.__init__"><code class="docutils literal notranslate"><span class="pre">Ratio.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Ratio.load_state_dict"><code class="docutils literal notranslate"><span class="pre">Ratio.load_state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.Ratio.state_dict"><code class="docutils literal notranslate"><span class="pre">Ratio.state_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities._flatten_dict"><code class="docutils literal notranslate"><span class="pre">_flatten_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities._merge_dotdicts"><code class="docutils literal notranslate"><span class="pre">_merge_dotdicts()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.export_frames"><code class="docutils literal notranslate"><span class="pre">export_frames()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.init_weights"><code class="docutils literal notranslate"><span class="pre">init_weights()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.optional_flatten_cfg"><code class="docutils literal notranslate"><span class="pre">optional_flatten_cfg()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fishyrl.utilities.html#fishyrl.utilities.uniform_init_weights"><code class="docutils literal notranslate"><span class="pre">uniform_init_weights()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-fishyrl">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-fishyrl" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Fishy RL</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="fishyrl.rlgym.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">fishyrl.rlgym package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-fishyrl">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/fishyrl.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, Noah Cohen Kalafut.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

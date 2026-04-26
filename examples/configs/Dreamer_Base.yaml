@@ -59,7 +59,10 @@ model:
     # Guidelines for scaling: Generally depth=classes and units=hidden, then deter is 8xhidden
     # Hidden dimensions
     embedded: 256  # Units, in original, controls all encoder/decoder layers
-    blocks: 1  # Depth, in original
+    blocks: 4  # Depth, in original, depth of CNN encoder/decoder
+    # TODO: Tune layers/heads for attention, MAYBE ADD SEPARATE CONFIG FOR ATTENTION LAYERS
+    layers: 3  # Layers, in original, number of layers for MLP/ATT enc/dec and actor/critic
+    heads: 8  # Novel addition, number of attention heads for enc/dec
     dense: 256  # Hidden, in original
 
     # Bins
@@ -82,3 +85,6 @@ model:
   critic:
     lr: 8.0e-5
     eps: 1.0e-5
+
+  rssm:
+    recurrent_blocks: 8  # Parallel GRU blocks for recurrent network

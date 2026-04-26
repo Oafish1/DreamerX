@@ -44,6 +44,8 @@ docutils==0.22.4
     # via
     #   pydata-sphinx-theme
     #   sphinx
+einops==0.8.2
+    # via fishyrl (pyproject.toml)
 etils[epath,epy]==1.14.0
     # via mujoco
 farama-notifications==0.0.4

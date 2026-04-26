@@ -11,9 +11,14 @@ env:
       bins: 9
       num: 3
 
+# Training recipe
+training:
+  # Timesteps and frequency
+  steps: 2000000
+
 # Replay ratio
 replay:
-  ratio: 0.5
+  ratio: 1.0
 
 # Model configuration
 model:

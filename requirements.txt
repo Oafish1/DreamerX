@@ -8,6 +8,8 @@ cuda-bindings==12.9.4
     # via torch
 cuda-pathfinder==1.5.2
     # via cuda-bindings
+einops==0.8.2
+    # via fishyrl (pyproject.toml)
 filelock==3.25.2
     # via torch
 fsspec==2026.2.0

@@ -1,3 +1,17 @@
+# 0.21.0
+- Add adjustable global layers, heads, and recurrent GRU blocks to configuration and arguments
+- Add adjustable team sizes per environment to `VectorizedRLGymEnvironment`
+- Add warning and speedup arguments to `VectorizedRLGymEnvironment.render` method
+- Bugfix correcting recurrent model size and intermediate dense layer complexity
+- Correct buffer integration and `num_envs` reporting for `VectorizedRLGymEnvironment`
+- Correct RSSM integration and block GRU recurrent model architecture to match original, rather than SheepRL, saving compute
+- Fix actor, critic, reward, and continue models having incorrect hidden layer numbers, adding `num_layers` arguments where appropriate
+- Fix black screen bug with `RLGym_Preview` notebook
+- Fix `models.Actor` architecture and blocks, hidden layers
+- Implement `models.BlockRecurrent` and `models.BlockLinear` model components
+- Match evaluation parameters for `RLGym` preview
+- Rename `RecurrentModel` to `SingleRecurrentModel`
+
 # 0.20.0
 - Add documentation for `VectorizedRLGymEnvironment` rendering
 - Add `rlgym.rewards` module, and move `CloseReward` for optional importing

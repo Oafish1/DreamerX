@@ -9,13 +9,4 @@ env:
   actions:
     - type: "Discretized_Continuous"
       bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
-    - type: "Discretized_Continuous"
-      bins: 7
+      num: 6

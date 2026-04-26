@@ -99,6 +99,8 @@ def construct_models(
     # Model hidden parameters
     model_global_embedded: int = 1024,
     model_global_blocks: int = 5,
+    model_global_layers: int = 3,
+    model_global_heads: int = 8,
     model_global_dense: int = 1024,
     # Model binning parameters
     model_global_categorical_bins: int = 32,
@@ -116,6 +118,8 @@ def construct_models(
     # Critic parameters
     model_critic_lr: float = 8e-5,
     model_critic_eps: float = 1e-5,
+    # RSSM parameters
+    model_rssm_recurrent_blocks: int = 8,
     # Buffer parameters
     buffer_capacity: int = 10**6,
     # Normalizer parameters
@@ -142,6 +146,10 @@ def construct_models(
     :type model_global_embedded: int
     :param model_global_blocks: The number of blocks in the MLP models. (Default: ``5``)
     :type model_global_blocks: int
+    :param model_global_layers: The number of layers in the MLP models. (Default: ``3``)
+    :type model_global_layers: int
+    :param model_global_heads: The number of heads in the attention decoder blocks. (Default: ``8``)
+    :type model_global_heads: int
     :param model_global_dense: The dimension of the dense layers in the MLP models. (Default: ``1024``)
     :type model_global_dense: int
     :param model_global_categorical_bins: The number of categorical bins for the stochastic state. (Default: ``32``)
@@ -166,6 +174,8 @@ def construct_models(
     :type model_critic_lr: float
     :param model_critic_eps: The epsilon for the critic model optimizer. (Default: ``8e-5``)
     :type model_critic_eps: float
+    :param model_rssm_recurrent_blocks: The number of parallel GRU blocks for the RSSM recurrent model. (Default: ``8``)
+    :type model_rssm_recurrent_blocks: int
     :param buffer_capacity: The capacity of the replay buffer. (Default: ``10**6``)
     :type buffer_capacity: int
     :param scaler_eps: The epsilon for the lambda value normalizer. (Default: ``1.``)
@@ -189,22 +199,22 @@ def construct_models(
     # NOTE: This uses `model_global_embedded` for all encoder and decoder dims, as in the original implementation
     # encoder_model = frl_models.MLPEncoder(env_obs_dim, model_global_embedded, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
     # decoder_model = frl_models.MLPDecoder(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, env_obs_dim, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
-    encoder_model = frl_models.CompoundEncoder(*model_embedding, output_dim=model_global_embedded, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
-    decoder_model = frl_models.CompoundDecoder(*model_embedding, input_dim=model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, num_blocks=model_global_blocks, hidden_dim=model_global_embedded).to(device)
+    encoder_model = frl_models.CompoundEncoder(*model_embedding, output_dim=model_global_embedded, num_blocks=model_global_blocks, num_layers=model_global_layers, num_heads=model_global_heads, hidden_dim=model_global_embedded).to(device)
+    decoder_model = frl_models.CompoundDecoder(*model_embedding, input_dim=model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, num_blocks=model_global_blocks, num_layers=model_global_layers, num_heads=model_global_heads, hidden_dim=model_global_embedded).to(device)
 
     # RSSM models
-    recurrent_model = frl_models.RecurrentModel(model_global_stochastic_dim * model_global_categorical_bins + action_dim, model_global_deterministic_dim).to(device)
-    representation_model = frl_models.MLP(encoder_model.output_dim + model_global_deterministic_dim, model_global_stochastic_dim * model_global_categorical_bins).to(device)
-    transition_model = frl_models.MLP(model_global_deterministic_dim, model_global_stochastic_dim * model_global_categorical_bins).to(device)
+    recurrent_model = frl_models.BlockRecurrentModel(model_global_stochastic_dim * model_global_categorical_bins, action_dim, model_global_dense, model_global_deterministic_dim, num_blocks=model_rssm_recurrent_blocks).to(device)  # 4/25/26Changed hidden from model_global_deterministic_dim to model_global_dense
+    representation_model = frl_models.MLP(encoder_model.output_dim + model_global_deterministic_dim, model_global_stochastic_dim * model_global_categorical_bins, [model_global_dense]).to(device)
+    transition_model = frl_models.MLP(model_global_deterministic_dim, model_global_stochastic_dim * model_global_categorical_bins, [model_global_dense]).to(device)
     rssm_model = frl_models.RSSM(recurrent_model, representation_model, transition_model, model_global_categorical_bins, learnable_initial_state=model_world_learnable_initial_state).to(device)
 
     # Reward and continue models
-    reward_model = frl_models.MLP(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, model_global_reward_bins, model_global_blocks * [model_global_dense]).to(device)
-    continue_model = frl_models.MLP(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, 1, model_global_blocks * [model_global_dense]).to(device)
+    reward_model = frl_models.MLP(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, model_global_reward_bins, [model_global_dense]).to(device)
+    continue_model = frl_models.MLP(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, 1, [model_global_dense]).to(device)
 
     # Actor and critic models
-    actor_model = frl_models.Actor(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, env_actions).to(device).apply(frl_utilities.init_weights)
-    critic_model = frl_models.MLP(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, model_global_reward_bins, model_global_blocks * [model_global_dense]).to(device).apply(frl_utilities.init_weights)
+    actor_model = frl_models.Actor(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, env_actions, num_layers=model_global_layers, hidden_dim=model_global_dense).to(device).apply(frl_utilities.init_weights)
+    critic_model = frl_models.MLP(model_global_stochastic_dim * model_global_categorical_bins + model_global_deterministic_dim, model_global_reward_bins, model_global_layers * [model_global_dense]).to(device).apply(frl_utilities.init_weights)
 
     # Hafner weight initialization
     actor_model._model._model[-1].apply(frl_utilities.uniform_init_weights(1.))

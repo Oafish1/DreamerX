@@ -23,12 +23,13 @@ def test_RecurrentModel():
     """Test RecurrentModel."""
     # Create a random input tensor
     torch.manual_seed(42)
-    x = torch.randn(2, 10)
+    s = torch.randn(2, 7)
+    a = torch.randn(2, 3)
     # Create the recurrent model
-    model = fishyrl.models.RecurrentModel(input_dim=10, hidden_dim=5)
+    model = fishyrl.models.BlockRecurrentModel(stoch_dim=7, act_dim=3, hidden_dim=5, deter_dim=22, num_blocks=11)
     # Test the forward pass with no initial hidden state
-    h0 = model(x)
-    assert h0.shape == (2, 5)
+    h0 = model(s, a)
+    assert h0.shape == (2, 22)
     # Test the forward pass with an initial hidden state
-    h1 = model(x, h0)
-    assert h1.shape == (2, 5)
+    h1 = model(s, a, h0)
+    assert h1.shape == (2, 22)

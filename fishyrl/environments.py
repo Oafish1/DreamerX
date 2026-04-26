@@ -244,8 +244,9 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
     def __init__(
         self,
         env_name: str = 'Soccar',
-        num_envs: int = 4,
-        team_size: int = 2,
+        num_envs: int = 1,
+        team_size: int | list[int] = 2,
+        frame_skip: int = 8,
         allow_rendering: bool = False,
         automatic_reset: bool = True,
         **init_kwargs: dict[str, Any],
@@ -256,10 +257,12 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
         :type env_name: str
         :param num_envs: The number of parallel environments to create. (Default: ``1``)
         :type num_envs: int
-        :param team_size: The size of both teams. (Default: ``2``)
-        :type team_size: int
+        :param team_size: The size of both teams. Can be an int or a list of ints for each environment. (Default: ``2``)
+        :type team_size: int | list[int]
         :param allow_rendering: Whether to allow rendering of the environment, frame grabbing is currently unsupported in favor
             of live visualization. (Default: ``False``)
+        :param frame_skip: The number of frames to skip for each action. (Default: ``8``)
+        :type frame_skip: int
         :type allow_rendering: bool
         :param automatic_reset: Whether to automatically reset the environment after termination. (Default: ``True``)
         :type automatic_reset: bool
@@ -269,8 +272,12 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
         """
         # Parameters
         self._env_name = env_name
-        self._num_envs = num_envs
-        self._team_size = team_size
+        # NOTE: We count each car as a separate environment for the purposes of tracking terminations and observations,
+        #       but we still want to create the correct number of actual RLGym environments
+        self._actual_num_envs = num_envs
+        self._team_size = [team_size] * num_envs if isinstance(team_size, int) else team_size
+        self._effective_num_envs = sum([ts * 2 for ts in self._team_size])  # Each team has `team_size` cars, and there are 2 teams
+        self._frame_skip = frame_skip
         self._allow_rendering = allow_rendering
         self._automatic_reset = automatic_reset
         self._init_kwargs = init_kwargs
@@ -280,13 +287,12 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
 
         # Initialize environments
         self._envs = []
-        # for _ in range(self._num_envs):
-        for _ in range(1): # DEBUGGING TODO REMOVE
+        for team_size in self._team_size:
             # Soccar environment
             if env_name.upper() == 'SOCCAR':
                 # Actions
                 action_parser = rlact.RepeatAction(
-                    rlact.LookupTableAction(), repeats=8)  # TODO: Should scale rewards inversely with repeats
+                    rlact.LookupTableAction(), repeats=self._frame_skip)  # TODO: Should scale rewards inversely with repeats
                 # Truncation and termination
                 termination_cond = rldone.GoalCondition()
                 truncation_cond = rldone.AnyCondition(
@@ -304,7 +310,7 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
                     boost_coef=1 / 100.)
                 # Training conditions
                 state_mutator = rlstate.MutatorSequence(
-                    rlstate.FixedTeamSizeMutator(self._team_size, self._team_size),
+                    rlstate.FixedTeamSizeMutator(team_size, team_size),
                     rlstate.KickoffMutator())
                 # Create environment
                 env = rlapi.RLGym(
@@ -324,15 +330,11 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
             # Record
             self._envs.append(env)
 
-        # Call an initial reset to initialize observations
+        # Initialize render targets
+        self._tick_duration = self._frame_skip / 120.
+
+        # Call an initial reset to initialize observations and tracking
         self.reset()
-
-        # Initialize tracking for automatic reset
-        self._ended = np.zeros(1, dtype=bool)  # DEBUGGING TODO SOMEHOW SQUARE
-
-        # Initialize render tracking
-        self._render_time = time.perf_counter()
-        self._tick_duration = action_parser.repeats / 120.
 
     @property
     def num_envs(self) -> int:
@@ -341,7 +343,7 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
         :type: int
 
         """
-        return self._num_envs
+        return self._effective_num_envs
 
     @property
     def render_fps(self) -> int:
@@ -453,12 +455,16 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
         if idx is not None:
             self._ended[idx] = False
         else:
-            self._ended = np.zeros(1, dtype=bool)  # DEBUGGING TODO SOMEHOW SQUARE
+            self._ended = np.zeros(self._actual_num_envs, dtype=bool)
 
         # Check that agents order matches key order
         for env in self._envs:
             if env_keys != env.agents:
                 raise ValueError('The order of agents must match the order of keys in the observation space. Something went wrong with RLGym environment initialization.')
+
+        # Reset render tracking
+        self._rendering = False
+        self._render_time = time.perf_counter()
 
         return obs, {}
 
@@ -514,7 +520,7 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
 
         return obs, rewards, terminations, truncations, {}
 
-    def render(self, delay: bool = True) -> np.ndarray:
+    def render(self, delay: bool = True, speedup: float = 1.0, warn: bool = True) -> np.ndarray:
         """Render the environments and return a frame.
 
         Live visualization is currently supported, but frame grabbing is not due no support with RLViser. This method will render the
@@ -522,6 +528,10 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
 
         :param delay: Whether to delay rendering to match the render FPS. (Default: ``True``)
         :type delay: bool
+        :param speedup: A factor to speed up rendering, applied to the delay. (Default: ``1.0``)
+        :type speedup: float
+        :param warn: Whether to display warnings on long computations. (Default: ``True``)
+        :type warn: bool
         :return: An array of rendered frames, with shape (num_envs, height, width, channels).
         :rtype: np.ndarray
 
@@ -553,10 +563,19 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
         # return np.stack(frames, axis=0)
 
         # Delay to match render FPS
-        if delay:
+        if delay and self._rendering:
             elapsed = time.perf_counter() - self._render_time
-            sleep_time = max(0, self._tick_duration - elapsed)
+            render_target = self._tick_duration / speedup
+            sleep_time = max(0, render_target - elapsed)
             time.sleep(sleep_time)
+
+            # Warn if sleep time is below zero
+            if warn and sleep_time <= 0:
+                warnings.warn(f'Rendering took {elapsed:.2f} seconds, which is longer than the target frame time of {render_target:.2f} seconds. '
+                              f'Consider lowering the `speedup` parameter if this warning persists.')
+
+        # Set rendering flag
+        self._rendering = True
 
         # Render
         self._envs[0].render()  # We render just to update the RLViser window, but we can't capture frames from it, so we return an empty array
@@ -576,7 +595,7 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
 
         """
         new_kwargs = {
-            'num_envs': self._num_envs,
+            'num_envs': self._actual_num_envs,
             'allow_rendering': self._allow_rendering,
             **self._init_kwargs}
         new_kwargs.update(kwargs)

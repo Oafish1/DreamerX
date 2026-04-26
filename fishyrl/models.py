@@ -4,6 +4,7 @@ import copy
 import math
 from typing import Any
 
+import einops
 import torch
 import torch.nn as nn
 
@@ -60,14 +61,14 @@ class MLP(nn.Module):
 
 class MLPEncoder(nn.Module):
     """MLP encoder for processing vector observations."""
-    def __init__(self, input_dim: int, output_dim: int, num_blocks: int = 4, hidden_dim: int = 512, use_symlog: bool = True) -> None:
+    def __init__(self, input_dim: int, output_dim: int, num_layers: int = 3, hidden_dim: int = 512, use_symlog: bool = True) -> None:
         """Initialize the MLP encoder.
 
         :param input_dim: The dimension of the input vector observation.
         :type input_dim: int
         :param output_dim: The dimension of the output vector.
         :type output_dim: int
-        :param num_blocks: The number of blocks in the MLP. (Default: ``4``)
+        :param num_blocks: The number of blocks in the MLP. (Default: ``3``)
         :type num_blocks: int
         :param hidden_dim: The dimension of the hidden layers. (Default: ``512``)
         :type hidden_dim: int
@@ -84,7 +85,7 @@ class MLPEncoder(nn.Module):
         # Create model
         self._model = MLP(
             input_dim=input_dim,
-            hidden_dims=num_blocks * [hidden_dim] + [output_dim],
+            hidden_dims=num_layers * [hidden_dim] + [output_dim],
         )
 
     @property
@@ -115,14 +116,14 @@ class MLPEncoder(nn.Module):
 
 class MLPDecoder(nn.Module):
     """MLP decoder for reconstructing vector observations from latent representations."""
-    def __init__(self, input_dim: int, output_dim: int, num_blocks: int = 4, hidden_dim: int = 512) -> None:
+    def __init__(self, input_dim: int, output_dim: int, num_layers: int = 3, hidden_dim: int = 512) -> None:
         """Initialize the MLP decoder.
 
         :param input_dim: The dimension of the input tensor.
         :type input_dim: int
         :param output_dim: The dimension of the output vector observations.
         :type output_dim: int
-        :param num_blocks: The number of blocks in the MLP. (Default: ``4``)
+        :param num_blocks: The number of blocks in the MLP. (Default: ``3``)
         :type num_blocks: int
         :param hidden_dim: The dimension of the hidden layers. (Default: ``512``)
         :type hidden_dim: int
@@ -134,7 +135,7 @@ class MLPDecoder(nn.Module):
         self._model = MLP(
             input_dim=input_dim,
             output_dim=output_dim,
-            hidden_dims=num_blocks * [hidden_dim],
+            hidden_dims=num_layers * [hidden_dim],
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -306,16 +307,16 @@ class CNNDecoder(nn.Module):
 
 class AttentionEncoder(nn.Module):
     """Attention encoder for processing sequential observations with attention mechanisms."""
-    def __init__(self, input_dims: list[int], hidden_dim: int = 512, num_blocks: int = 4, num_heads: int = None, num_queries: int = 1) -> None:
+    def __init__(self, input_dims: list[int], hidden_dim: int = 512, num_layers: int = 3, num_heads: int = 8, num_queries: int = 1) -> None:
         """Initialize the attention encoder.
 
         :param input_dims: A list of input dimensions for each sequential observation to be processed with attention.
         :type input_dims: list[int]
         :param hidden_dim: The dimension of the hidden layers and output per query. (Default: ``512``)
         :type hidden_dim: int
-        :param num_blocks: The number of blocks in the attention encoder. (Default: ``4``)
-        :type num_blocks: int
-        :param num_heads: The number of attention heads to use. If None, defaults to the number of blocks. (Default: ``None``)
+        :param num_layers: The number of layers in the attention encoder. (Default: ``3``)
+        :type num_layers: int
+        :param num_heads: The number of attention heads to use. If None, defaults to the number of layers. (Default: ``None``)
         :type num_heads: int | None
         :param num_queries: The number of learned queries to use in the cross attention layer. (Default: ``1``)
         :type num_queries: int
@@ -325,9 +326,6 @@ class AttentionEncoder(nn.Module):
 
         # Parameters
         self._hidden_dim = hidden_dim
-
-        # Default parameters
-        num_heads = num_blocks if num_heads is None else num_heads
 
         # Initialize input heads
         self._input_heads = nn.ModuleList([nn.Linear(input_dim, hidden_dim) for input_dim in input_dims])
@@ -340,7 +338,7 @@ class AttentionEncoder(nn.Module):
                 dim_feedforward=hidden_dim,
                 activation='gelu',
                 batch_first=True),  # NOTE: We normally use SiLU everywhere else
-            num_layers=num_blocks)
+            num_layers=num_layers)
 
         # Initialize cross attention layer
         self._queries = nn.Parameter(torch.randn(num_queries, hidden_dim))
@@ -384,7 +382,7 @@ class AttentionEncoder(nn.Module):
 
 class AttentionDecoder(nn.Module):
     """Attention decoder for reconstructing sequential observations from latent representations."""
-    def __init__(self, input_dim: int, output_dims: list[int], num_queries: list[int] | int = 1, hidden_dim: int = 512, num_blocks: int = 4, num_heads: int = None) -> None:
+    def __init__(self, input_dim: int, output_dims: list[int], num_queries: list[int] | int = 1, hidden_dim: int = 512, num_layers: int = 3, num_heads: int = 8) -> None:
         """Initialize the attention decoder.
 
         :param input_dim: The dimension of the input latent representation.
@@ -397,9 +395,9 @@ class AttentionDecoder(nn.Module):
         :type num_queries: list[int] | int
         :param hidden_dim: The dimension of the hidden layers and output per query. (Default: ``512``)
         :type hidden_dim: int
-        :param num_blocks: The number of blocks in the attention decoder. (Default: ``4``)
-        :type num_blocks: int
-        :param num_heads: The number of attention heads to use. If None, defaults to the number of blocks. (Default: ``None``)
+        :param num_layers: The number of layers in the attention decoder. (Default: ``3``)
+        :type num_layers: int
+        :param num_heads: The number of attention heads to use. If None, defaults to the number of layers. (Default: ``None``)
         :type num_heads: int | None
 
         """
@@ -409,7 +407,6 @@ class AttentionDecoder(nn.Module):
         self._output_dims = output_dims
 
         # Default parameters
-        num_heads = num_blocks if num_heads is None else num_heads
         if isinstance(num_queries, int):
             num_queries = [num_queries] * len(output_dims)
         self._num_queries = num_queries
@@ -429,7 +426,7 @@ class AttentionDecoder(nn.Module):
                 dim_feedforward=hidden_dim,
                 activation='gelu',
                 batch_first=True),
-            num_layers=num_blocks)
+            num_layers=num_layers)
 
         # Initialize output heads and existence predictors
         self._output_heads = nn.ModuleList([nn.Linear(hidden_dim, output_dim) for output_dim in output_dims])
@@ -538,6 +535,8 @@ class CompoundEncoder(nn.Module):
         # Encoder parameters
         output_dim: int = 512,  # Output dimension of each encoder
         num_blocks: int = 4,
+        num_layers: int = 3,
+        num_heads: int = 8,
         hidden_dim: int = 512,
     ) -> None:
         """Initialize the compound encoder.
@@ -554,8 +553,12 @@ class CompoundEncoder(nn.Module):
         :type encoder_specs: list[dict[str, Any]]
         :param output_dim: The output dimension of each encoder. (Default: ``512``)
         :type output_dim: int
-        :param num_blocks: The number of blocks in each encoder. (Default: ``4``)
+        :param num_blocks: The number of blocks in each CNN encoder. (Default: ``4``)
         :type num_blocks: int
+        :param num_layers: The number of layers in each block of the MLP and attention encoders. (Default: ``3``)
+        :type num_layers: int
+        :param num_heads: The number of attention heads in each attention encoder. (Default: ``8``)
+        :type num_heads: int
         :param hidden_dim: The hidden dimension of each encoder. (Default: ``512``)
         :type hidden_dim: int
 
@@ -600,7 +603,7 @@ class CompoundEncoder(nn.Module):
                 encoder = MLPEncoder(
                     input_dim=input_dim,
                     output_dim=output_dim,
-                    num_blocks=num_blocks,
+                    num_layers=num_layers,
                     hidden_dim=hidden_dim)
 
             # CNN encoder
@@ -613,7 +616,8 @@ class CompoundEncoder(nn.Module):
                 # Initialize
                 encoder = CNNEncoder(
                     input_channels=input_channels,
-                    image_dim=image_dim)
+                    image_dim=image_dim,
+                    num_blocks=num_blocks)
 
             # Attention encoder
             elif encoder_type.upper() == 'ATTENTION':
@@ -629,7 +633,8 @@ class CompoundEncoder(nn.Module):
                     input_dims=input_dims,
                     # output_dim=output_dim,  # TODO: Maybe add a final linear transformation here
                     hidden_dim=hidden_dim,
-                    num_blocks=num_blocks)
+                    num_layers=num_layers,
+                    num_heads=num_heads)
 
             # Otherwise, raise error
             else:
@@ -674,6 +679,8 @@ class CompoundDecoder(nn.Module):
         # Decoder parameters
         input_dim: int = 512,  # Input dimension of each decoder
         num_blocks: int = 4,
+        num_layers: int = 3,
+        num_heads: int = 8,
         hidden_dim: int = 512,
     ) -> None:
         """Initialize the compound decoder.
@@ -690,8 +697,12 @@ class CompoundDecoder(nn.Module):
         :type decoder_specs: list[dict[str, Any]]
         :param input_dim: The input dimension of each decoder. (Default: ``512``)
         :type input_dim: int
-        :param num_blocks: The number of blocks in each decoder. (Default: ``4``)
+        :param num_blocks: The number of blocks in each CNN decoder. (Default: ``4``)
         :type num_blocks: int
+        :param num_layers: The number of layers in each block of the MLP and attention decoders. (Default: ``3``)
+        :type num_layers: int
+        :param num_heads: The number of attention heads in each attention decoder. (Default: ``8``)
+        :type num_heads: int
         :param hidden_dim: The hidden dimension of each decoder. (Default: ``512``)
         :type hidden_dim: int
 
@@ -730,7 +741,7 @@ class CompoundDecoder(nn.Module):
                 decoder = MLPDecoder(
                     input_dim=input_dim,
                     output_dim=output_dim,
-                    num_blocks=num_blocks,
+                    num_layers=num_layers,
                     hidden_dim=hidden_dim)
 
             # CNN decoder
@@ -764,7 +775,8 @@ class CompoundDecoder(nn.Module):
                     input_dim=input_dim,
                     output_dims=output_dims,
                     num_queries=num_queries,
-                    num_blocks=num_blocks,
+                    num_layers=num_layers,
+                    num_heads=num_heads,
                     hidden_dim=hidden_dim)
 
             # Otherwise, raise error
@@ -794,7 +806,6 @@ class CompoundDecoder(nn.Module):
         return [decoder(x) for decoder in self._decoders]
 
 
-
 class LayerNormGRU(nn.Module):
     """GRU layer with internal layer normalization."""
     def __init__(self, input_dim: int, hidden_dim: int) -> None:
@@ -813,7 +824,7 @@ class LayerNormGRU(nn.Module):
 
         # Initialize layers
         self._mlp = nn.Sequential(
-            nn.Linear(input_dim + hidden_dim, 3 * hidden_dim, bias=True),
+            nn.Linear(input_dim + hidden_dim, 3 * hidden_dim),
             nn.LayerNorm(3 * hidden_dim, eps=1e-3),
         )
 
@@ -849,26 +860,28 @@ class LayerNormGRU(nn.Module):
         return (1 - update) * h + update * candidate
 
 
-class RecurrentModel(nn.Module):
+class SingleRecurrentModel(nn.Module):
     """Recurrent model for processing sequences of latent representations.
 
     Uses a GRU to process sequences of latent representations, with layer normalization and SiLU
     activations on the output.
 
     """
-    def __init__(self, input_dim: int, hidden_dim: int) -> None:
+    def __init__(self, input_dim: int, hidden_dim: int, deter_dim: int) -> None:
         """Initialize the recurrent model.
 
         :param input_dim: The size of the input tensor.
         :type input_dim: int
-        :param hidden_dim: The size of the hidden state in the GRU.
+        :param hidden_dim: The size of the hidden dimensions.
         :type hidden_dim: int
+        :param deter_dim: The size of the deterministic state output by the recurrent model.
+        :type deter_dim: int
 
         """
         super().__init__()
 
         # Store variables
-        self._hidden_dim = hidden_dim
+        self._deter_dim = deter_dim
 
         # Create MLP and GRU layers
         self._mlp = nn.Sequential(
@@ -876,25 +889,25 @@ class RecurrentModel(nn.Module):
             nn.LayerNorm(hidden_dim, eps=1e-3),
             nn.SiLU(),
         )
-        self._gru = LayerNormGRU(hidden_dim, hidden_dim)
+        self._gru = LayerNormGRU(hidden_dim, deter_dim)
 
     @property
-    def hidden_dim(self) -> int:
-        """Hidden size of the recurrent model.
+    def deter_dim(self) -> int:
+        """Deterministic size of the recurrent model.
 
         :type: int
 
         """
-        return self._hidden_dim
+        return self._deter_dim
 
     def forward(self, x: torch.Tensor, h: torch.Tensor | None = None) -> torch.Tensor:
         """Perform a forward pass through the recurrent model.
 
         :param x: The input tensor of shape (batch_dim, seq_len, latent_dim).
         :type x: torch.Tensor
-        :param h: The initial hidden state of shape (1, batch_dim, hidden_dim), or None to use zeros. (Default: ``None``)
+        :param h: The initial deterministic state of shape (1, batch_dim, deter_dim), or None to use zeros. (Default: ``None``)
         :type h: torch.Tensor | None
-        :return: The final hidden state of shape (batch_dim, hidden_dim).
+        :return: The final deterministic state of shape (batch_dim, deter_dim).
         :rtype: torch.Tensor
 
         """
@@ -902,6 +915,188 @@ class RecurrentModel(nn.Module):
         x = self._mlp(x)
         h = self._gru(x, h)
         return h
+
+
+class BlockLinear(nn.Module):
+    """Linear layer that splits the input into blocks and processes each block separately."""
+    def __init__(self, input_dim: int, output_dim: int, num_blocks: int = 8, bias: bool = True) -> None:
+        """Initialize the BlockLinear layer.
+
+        :param input_dim: The size of the input tensor.
+        :type input_dim: int
+        :param output_dim: The size of the output tensor.
+        :type output_dim: int
+        :param num_blocks: The number of blocks for splitting the input and output. (Default: ``8``)
+        :type num_blocks: int
+        :param bias: Whether to include a bias term. (Default: ``True``)
+        :type bias: bool
+
+        """
+        super().__init__()
+
+        # Check feasibility
+        if input_dim % num_blocks != 0:
+            raise ValueError(f'Input dimension ({input_dim}) must be divisible by number of blocks ({num_blocks}).')
+        if output_dim % num_blocks != 0:
+            raise ValueError(f'Output dimension ({output_dim}) must be divisible by number of blocks ({num_blocks}).')
+
+        # Store parameters
+        self._num_blocks = num_blocks
+        self._use_bias = bias
+
+        # Compute block sizes
+        self._block_input_dim = input_dim // num_blocks
+        self._block_output_dim = output_dim // num_blocks
+
+        # Initialize block linear weights
+        self._weight = nn.Parameter(
+            torch.randn(num_blocks, self._block_input_dim, self._block_output_dim) / math.sqrt(self._block_input_dim))
+        self._bias = nn.Parameter(torch.zeros(num_blocks, self._block_output_dim)) if bias else None  # NOTE: Is not present if `bias` is False
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Perform a forward pass through the BlockLinear layer.
+
+        :param x: The input tensor of shape (batch_dim, input_dim).
+        :type x: torch.Tensor
+        :return: The output tensor of shape (batch_dim, output_dim).
+        :rtype: torch.Tensor
+
+        """
+        # Split into blocks, process with weight tensor, and flatten
+        x = einops.rearrange(x, 'b (g i) -> b g i', g=self._num_blocks)
+        x = torch.einsum('bgi,gio->bgo', x, self._weight)
+        if self._use_bias:
+            x = x + self._bias
+        return einops.rearrange(x, 'b g o -> b (g o)')
+
+
+class BlockRecurrentModel(nn.Module):
+    """Block recurrent model for processing sequences of latent representations.
+
+    Uses a block GRU to process sequences of latent representations, with layer normalization and SiLU
+    activations on the output.
+
+    """
+    def __init__(self, stoch_dim: int, act_dim: int, hidden_dim: int, deter_dim: int, num_blocks: int = 8) -> None:
+        """Initialize the recurrent model.
+
+        :param stoch_dim: The size of the stochastic state.
+        :type stoch_dim: int
+        :param act_dim: The size of the action tensor.
+        :type act_dim: int
+        :param hidden_dim: The size of the hidden dimension.
+        :type hidden_dim: int
+        :param deter_dim: The size of the deterministic state.
+        :type deter_dim: int
+        :param num_blocks: The number of blocks to split the deterministic state. Must divide ``deter_dim``. (Default: ``8``)
+        :type num_blocks: int
+
+        """
+        super().__init__()
+
+        # Check parameter feasibility
+        if deter_dim % num_blocks != 0:
+            raise ValueError(f'Number of blocks ({num_blocks}) must divide deterministic dimension ({deter_dim}).')
+
+        # Store parameters
+        self._deter_dim = deter_dim
+        self._num_blocks = num_blocks
+
+        # Initialize projection layers
+        # TODO: Anything special with bias here?
+        self._stoch_mlp = nn.Sequential(
+            nn.Linear(stoch_dim, hidden_dim, bias=False),
+            nn.LayerNorm(hidden_dim, eps=1e-3),
+            nn.SiLU())
+        self._act_mlp = nn.Sequential(
+            nn.Linear(act_dim, hidden_dim, bias=False),
+            nn.LayerNorm(hidden_dim, eps=1e-3),
+            nn.SiLU())
+        self._deter_mlp = nn.Sequential(
+            nn.Linear(deter_dim, hidden_dim, bias=False),
+            nn.LayerNorm(hidden_dim, eps=1e-3),
+            nn.SiLU())
+
+        # Initialize block linear layers
+        block_hidden_input = 3 * hidden_dim + deter_dim // num_blocks
+        self._block_linear_hidden = nn.Sequential(
+            BlockLinear(num_blocks * block_hidden_input, deter_dim, num_blocks=num_blocks, bias=False),
+            nn.LayerNorm(deter_dim, eps=1e-3),  # Norm on flat representation, as in original Jax implementation
+            nn.SiLU())
+        self._block_linear_gates = BlockLinear(deter_dim, 3 * deter_dim, num_blocks=num_blocks)
+
+    @property
+    def deter_dim(self) -> int:
+        """Deterministic size of the recurrent model.
+
+        :type: int
+
+        """
+        return self._deter_dim
+
+    def forward(self, s: torch.Tensor, a: torch.Tensor, d: torch.Tensor | None = None) -> torch.Tensor:
+        """Perform a forward pass through the recurrent model.
+
+        :param s: The stochastic tensor of shape (batch_dim, seq_len, latent_dim).
+        :type s: torch.Tensor
+        :param a: The action tensor of shape (batch_dim, seq_len, action_dim).
+        :type a: torch.Tensor
+        :param d: The initial deterministic state of shape (1, batch_dim, deter_dim), or None to use zeros. (Default: ``None``)
+        :type d: torch.Tensor | None
+        :return: The final deterministic state of shape (batch_dim, deter_dim).
+        :rtype: torch.Tensor
+
+        """
+        # If d is None, initialize to zeros
+        if d is None:
+            d = torch.zeros(*s.shape[:-1], self._deter_dim, device=s.device, dtype=s.dtype)
+
+        # Flatten batch dimensions
+        batch_dims = s.shape[:-1]
+        s, a, d = s.view(-1, s.shape[-1]), a.view(-1, a.shape[-1]), d.view(-1, d.shape[-1])
+
+        # Clip action
+        # NOTE: This is in the original, but I don't think it is good for continuous actions and does nothing for discrete
+        # a = a / torch.clamp(a.abs(), min=1).detach()
+
+        # Project to hidden dimensions
+        # TODO: Could technically be parallelized using an uneven block weight matrix
+        s_h = self._stoch_mlp(s)  # Includes layer norm and activation
+        a_h = self._act_mlp(a)
+        d_h = self._deter_mlp(d)
+
+        # Concatenate and split by blocks
+        x = torch.cat((s_h, a_h, d_h), dim=-1)
+        x = x.unsqueeze(-2).expand(*x.shape[:-1], self._num_blocks, x.shape[-1])
+
+        # Split deterministic state into blocks and concatenate
+        d_g = einops.rearrange(d, 'b (g h) -> b g h', g=self._num_blocks)
+        x = torch.cat((d_g, x), dim=-1)
+
+        # Feed through block linear layer
+        x = einops.rearrange(x, 'b g h -> b (g h)')
+        x = self._block_linear_hidden(x)  # Includes layer norm and activation
+
+        # Compute gates
+        x = self._block_linear_gates(x)  # No layer norm or activation
+        x = einops.rearrange(x, 'b (g h) -> b g h', g=self._num_blocks)  # Technically 3h
+        reset, update, candidate = x.chunk(3, dim=-1)
+
+        # Resize and process gates
+        # TODO: Maybe implement `flat2group` and `group2flat` functions like in original
+        reset = einops.rearrange(reset, 'b g h -> b (g h)')
+        reset = torch.sigmoid(reset)
+        update = einops.rearrange(update, 'b g h -> b (g h)')
+        update = torch.sigmoid(update - 1)
+        candidate = einops.rearrange(candidate, 'b g h -> b (g h)')
+        candidate = torch.tanh(reset * candidate)
+        # NOTE: This deviates from the standard GRU formulation, but is a common variant that works well in practice
+
+        # Update deterministic state
+        d = update * candidate + (1 - update) * d
+
+        # Unflatten batch dimensions
+        return d.view(*batch_dims, d.shape[-1])
 
 
 class RSSM(nn.Module):
@@ -944,9 +1139,9 @@ class RSSM(nn.Module):
         # NOTE: Making this initial state learnable allows the model to learn an initial state
         #       rather than always starting from zeros
         if learnable_initial_state:
-            self._initial_hidden_state = nn.Parameter(torch.zeros(recurrent_model.hidden_dim))
+            self._initial_hidden_state = nn.Parameter(torch.zeros(recurrent_model.deter_dim))
         else:
-            self.register_buffer('_initial_hidden_state', torch.zeros(recurrent_model.hidden_dim, dtype=torch.get_default_dtype()))
+            self.register_buffer('_initial_hidden_state', torch.zeros(recurrent_model.deter_dim, dtype=torch.get_default_dtype()))
 
     @property
     def initial_hidden_state(self) -> torch.Tensor:
@@ -1077,7 +1272,7 @@ class RSSM(nn.Module):
         # NOTE: Redundant calculations when overwritten by initialize, but might be more
         #       efficient to avoid indexing
         if posterior is not None and action is not None and hidden_state is not None:
-            hidden_state = self._recurrent_model(torch.cat((posterior, action), dim=-1), hidden_state)
+            hidden_state = self._recurrent_model(posterior, action, hidden_state)  # NOTE: SheepRL concatenates action and posterior to a single-cell GRU, but this is not faithful to the block GRN
             if initialize is not None:
                 initialize = initialize.unsqueeze(-1) if hidden_state.ndim > 1 else initialize
                 hidden_state = (
@@ -1114,7 +1309,8 @@ class Actor(nn.Module):
         self,
         input_dim: int,
         actions: list[frl_actions.Action],
-        hidden_dim: int = 512
+        num_layers: int = 3,
+        hidden_dim: int = 512,
     ) -> None:
         """Initialize the actor network.
 
@@ -1122,6 +1318,8 @@ class Actor(nn.Module):
         :type input_dim: int
         :param actions: A list of action definitions, can be continuous or discrete.
         :type actions: list[fishyrl.actions.Action]
+        :param num_layers: The number of blocks in the MLP. (Default: ``3``)
+        :type num_layers: int
         :param hidden_dim: The dimension of the hidden layers. (Default: ``512``)
         :type hidden_dim: int
 
@@ -1139,7 +1337,7 @@ class Actor(nn.Module):
         self._model = MLP(
             input_dim,
             output_dim=sum(self._input_dims),
-            hidden_dims=5 * [hidden_dim],
+            hidden_dims=num_layers * [hidden_dim],
         )
 
     def forward(self, x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:

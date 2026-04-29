@@ -1,0 +1,33 @@
+fishyrl package
+===============
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fishyrl.rlgym
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fishyrl.actions
+   fishyrl.buffers
+   fishyrl.distributions
+   fishyrl.dreamer
+   fishyrl.environments
+   fishyrl.losses
+   fishyrl.models
+   fishyrl.utilities
+
+Module contents
+---------------
+
+.. automodule:: fishyrl
+   :members:
+   :show-inheritance:
+   :undoc-members:

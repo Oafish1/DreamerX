@@ -1,0 +1,18 @@
+fishyrl.rlgym package
+=====================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fishyrl.rlgym.rewards
+
+Module contents
+---------------
+
+.. automodule:: fishyrl.rlgym
+   :members:
+   :show-inheritance:
+   :undoc-members:

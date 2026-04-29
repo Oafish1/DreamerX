@@ -1,0 +1,7 @@
+fishyrl.actions module
+======================
+
+.. automodule:: fishyrl.actions
+   :members:
+   :show-inheritance:
+   :undoc-members:

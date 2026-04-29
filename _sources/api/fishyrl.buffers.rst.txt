@@ -1,0 +1,7 @@
+fishyrl.buffers module
+======================
+
+.. automodule:: fishyrl.buffers
+   :members:
+   :show-inheritance:
+   :undoc-members:

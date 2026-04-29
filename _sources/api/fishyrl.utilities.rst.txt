@@ -1,0 +1,7 @@
+fishyrl.utilities module
+========================
+
+.. automodule:: fishyrl.utilities
+   :members:
+   :show-inheritance:
+   :undoc-members:

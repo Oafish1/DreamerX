@@ -1,0 +1,7 @@
+fishyrl.rlgym.rewards module
+============================
+
+.. automodule:: fishyrl.rlgym.rewards
+   :members:
+   :show-inheritance:
+   :undoc-members:

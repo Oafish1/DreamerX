@@ -2,6 +2,7 @@
 
 import enum
 import functools
+import warnings
 from typing import Any
 
 import numpy as np
@@ -394,9 +395,16 @@ def export_frames(path: str, frames: np.ndarray, fps: int = 30, max_fps: int = N
     new_kwargs.update(kwargs)
 
     # Drop frames if fps is greater than max_fps
+    # NOTE: Will not exactly match desired fps to counteract stutter
     if max_fps is not None and fps > max_fps:
         step = int(np.ceil(fps / max_fps))
         frames = frames[::step]
+        new_fps = int(fps / step)
+
+        # Warn if new fps does not match max_fps
+        if new_fps != max_fps:
+            warnings.warn(f'Clipping fps to {new_fps} instead of desired max_fps of {max_fps} to avoid stutter.')
+
         fps = int(fps / step)
 
     # Save the frames as a GIF

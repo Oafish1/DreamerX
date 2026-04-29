@@ -1286,15 +1286,21 @@ class RSSM(nn.Module):
         # Mix with uniform distribution
         logits, probs = frl_distributions.uniform_mix(logits)
 
-        # Sample
+        # Construct distribution
         # NOTE: SheepRL uses `torch.distributions.Independent`, but this is unneeded since we never
         #       compute log probabilities
         dist = torch.distributions.OneHotCategoricalStraightThrough(probs=probs)
-        sample = dist.rsample()
 
-        # Don't sample, and instead take the mode - Might be useful for inference
-        # maxprobs = probs.argmax(dim=-1)
-        # mode = torch.nn.functional.one_hot(maxprobs, num_classes=probs.size(-1))
+        # Sample
+        if self.training:
+            sample = dist.rsample()
+
+        # Don't sample, and instead take the mode for evaluation
+        # NOTE: We could disable unimix, but it doesn't matter since the max prob is the same
+        else:
+            sample = dist.mode
+            # maxprobs = probs.argmax(dim=-1)
+            # sample = torch.nn.functional.one_hot(maxprobs, num_classes=probs.size(-1))
 
         # Flatten both logits and sample
         # NOTE: This assumes no continuity between bins. It may be more faithful to theory if these were
@@ -1433,7 +1439,7 @@ class Actor(nn.Module):
         super().__init__()
 
         # Parameters
-        self._actions = actions
+        self._actions = nn.ModuleList(actions)
 
         # Extract input and output sizes
         self._input_dims = [action.input_dim for action in actions]

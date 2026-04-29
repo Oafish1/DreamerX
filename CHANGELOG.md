@@ -1,3 +1,15 @@
+# 0.23.0
+- Add decimal places to over 1m step evaluation output filenames
+- Add `mode` to `distributions.TwoHot`
+- Add non-stochastic evaluation mode
+- Adjust checkpoint zero padding to accomodate less than 10B steps
+- Automatic episode highlight detection and optimized GIF output
+- Correct initialization of actions to be compatible with torch modules
+- Exports for `RLGym` training progress and additions to `README`
+- Optimize `RLGym_Preview` evaluation
+- Reorganize TODOs
+- Warning for unexpected fps clipping
+
 # 0.22.0
 - Add config options `log_frequency` and `log_individual_envs`
 - Add positional encoding (`models.PositionalEncoding`) to `models.AttentionEncoder` and implement vectorized positional attention loss, speeding up computation 10x for attention models

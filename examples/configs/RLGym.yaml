@@ -10,6 +10,10 @@ env:
     - type: "Discrete"
       num_options: 90
 
+# Training recipe
+training:
+  steps: 1000000000
+
 # Evaluation configuration
 eval:
   frequency: 0  # Rendering is only available externally

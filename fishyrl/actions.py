@@ -190,7 +190,12 @@ class ContinuousActions(Action):
 
         # Create distribution and sample
         dist = torch.distributions.Independent(torch.distributions.Normal(mean, std), 1)
-        actions = dist.rsample()
+
+        # Sample according to training state
+        if self.training:
+            actions = dist.rsample()
+        else:
+            actions = dist.mean
 
         # Clip actions
         if self._clip > 0:
@@ -289,7 +294,14 @@ class DiscreteAction(Action):
         # Create and sample from distribution
         dist = torch.distributions.OneHotCategoricalStraightThrough(
                 logits=frl_distributions.uniform_mix(logits)[0])
-        return dist.rsample(), dist
+
+        # Sample based on training state
+        if self.training:
+            sample = dist.rsample()
+        else:
+            sample = dist.mode
+
+        return sample, dist
 
 
 class TwoHotDiscretizedContinuousAction(Action):
@@ -321,6 +333,8 @@ class TwoHotDiscretizedContinuousAction(Action):
         :type eps: float
 
         """
+        super().__init__()
+
         # Parameters
         self._bins = bins
         self._low = low
@@ -428,7 +442,13 @@ class TwoHotDiscretizedContinuousAction(Action):
             tensor_log_prob=True,
             eps=self._eps)
 
-        return dist.rsample(), dist
+        # Sample according to training state
+        if self.training:
+            sample = dist.rsample()
+        else:
+            sample = dist.mode
+
+        return sample, dist
 
 
 class DiscretizedContinuousAction(Action):
@@ -457,6 +477,8 @@ class DiscretizedContinuousAction(Action):
         :type post_func: callable
 
         """
+        super().__init__()
+
         # Parameters
         self._bins = bins
         self._low = low
@@ -548,7 +570,13 @@ class DiscretizedContinuousAction(Action):
         dist = torch.distributions.OneHotCategoricalStraightThrough(
             logits=frl_distributions.uniform_mix(logits)[0])
 
-        return dist.rsample(), dist
+        # Sample based on training state
+        if self.training:
+            sample = dist.rsample()
+        else:
+            sample = dist.mode
+
+        return sample, dist
 
 
 class ACTION_IDENTIFIERS(enum.Enum, metaclass=frl_utilities.CaseInsensitiveEnumMeta):

@@ -995,7 +995,7 @@ def train_loop(
         # Checkpoint
         if checkpoint_dir is not None and environment_step % checkpoint_frequency < envs.num_envs:
             save_models(
-                path=os.path.join(checkpoint_dir, f'checkpoint_{environment_step:07d}.pt'),
+                path=os.path.join(checkpoint_dir, f'checkpoint_{environment_step:010d}.pt'),
                 world_model=world_model,
                 actor_critic_model=actor_critic_model,
                 utility_modules=utility_modules)

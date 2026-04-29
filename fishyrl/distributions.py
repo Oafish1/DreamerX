@@ -100,6 +100,16 @@ class TwoHot:
         """
         return self._post_func((self._probs * self._bin_values).sum(dim=-1))
 
+    @property
+    def mode(self) -> torch.Tensor:
+        """Compute the mode of the distribution as a weighted sum of bin values.
+
+        :return: The mode of the distribution.
+        :rtype: torch.Tensor
+
+        """
+        return self.mean
+
     def rsample(self) -> torch.Tensor:
         """Sample by randomly sampling two bins and interpolating. Still WIP, and might be numerically unstable.
 

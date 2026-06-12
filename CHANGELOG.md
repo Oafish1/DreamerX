@@ -1,3 +1,6 @@
+# 0.24.1
+- Fix documentation references to old package name
+
 # 0.24.0
 - Fully migrate to `DreamerX` package name
 - Train `RLGym` further

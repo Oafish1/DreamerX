@@ -6,7 +6,7 @@ __location__ = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(__location__, "../.."))
 
 # Project information
-project = 'Fishy RL'
+project = 'DreamerX'
 copyright = '2026, Noah Cohen Kalafut'
 author = 'Noah Cohen Kalafut'
 

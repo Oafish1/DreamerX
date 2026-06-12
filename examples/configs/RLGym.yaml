@@ -1,6 +1,10 @@
 # MuJoCo Humanoid
 name: "RLGym"
 
+# Checkpoint configuration
+checkpoint:
+  frequency: 500000
+
 # Environment configuration
 env:
   num: 1

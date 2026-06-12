@@ -10,4 +10,4 @@ Fishy RL
    :maxdepth: 3
    :caption: Contents:
 
-   API reference <api/fishyrl>
+   API reference <api/dreamerx>

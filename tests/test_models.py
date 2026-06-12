@@ -1,6 +1,6 @@
 import torch
 
-import fishyrl.models
+import dreamerx.models
 
 
 def test_ChannelNorm():
@@ -9,7 +9,7 @@ def test_ChannelNorm():
     torch.manual_seed(42)
     x = 2 * torch.randn(2, 3, 4, 4) + 1
     # Apply the normalization
-    norm = fishyrl.models.ChannelNorm(3, elementwise_affine=False, bias=False, eps=1e-5)
+    norm = dreamerx.models.ChannelNorm(3, elementwise_affine=False, bias=False, eps=1e-5)
     output = norm(x)
     output_mean = output.mean(dim=1)
     output_std = output.std(dim=1, correction=0)
@@ -26,7 +26,7 @@ def test_RecurrentModel():
     s = torch.randn(2, 7)
     a = torch.randn(2, 3)
     # Create the recurrent model
-    model = fishyrl.models.BlockRecurrentModel(stoch_dim=7, act_dim=3, hidden_dim=5, deter_dim=22, num_blocks=11)
+    model = dreamerx.models.BlockRecurrentModel(stoch_dim=7, act_dim=3, hidden_dim=5, deter_dim=22, num_blocks=11)
     # Test the forward pass with no initial hidden state
     h0 = model(s, a)
     assert h0.shape == (2, 22)

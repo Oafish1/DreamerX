@@ -1,3 +1,11 @@
+# 0.24.0
+- Fully migrate to `DreamerX` package name
+- Train `RLGym` further
+
+# 0.23.1
+- Add individual agent consideration option to highlight detection in `RLGym_Preview` notebook
+- Re-export `RLGym` progress GIFs
+
 # 0.23.0
 - Add decimal places to over 1m step evaluation output filenames
 - Add `mode` to `distributions.TwoHot`

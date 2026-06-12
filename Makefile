@@ -18,7 +18,7 @@ build:
 # NOTE: May require `rm -rf ./docs/source/api` even with --remove-old, but doesn't work on Windows when folder doesn't exist
 .PHONY: build-docs
 build-docs:
-	sphinx-apidoc --implicit-namespaces --separate --remove-old -t ./docs/source/_templates -o ./docs/source/api ./fishyrl
+	sphinx-apidoc --implicit-namespaces --separate --remove-old -t ./docs/source/_templates -o ./docs/source/api ./dreamerx
 	make -C ./docs html
 
 # Run tests

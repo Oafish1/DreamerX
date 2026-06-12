@@ -28,9 +28,9 @@ The library is designed to be *flexible* and *user-friendly*, allowing researche
         </tr>
         <tr>
             <td style="text-align: center">100K Steps</td>
-            <td style="text-align: center">200K Steps</td>
             <td style="text-align: center">500K Steps</td>
             <td style="text-align: center">1M Steps</td>
+            <td style="text-align: center">10M Steps</td>
         </tr>
         <tr>
             <td style="text-align: center">
@@ -39,13 +39,13 @@ The library is designed to be *flexible* and *user-friendly*, allowing researche
                 <img src="./examples/images/RLGym_100k.gif" width="100%" alt="Trained transformer-based DreamerX agent after 100k steps on RLGym Soccar environment"></td>
             </td>
             <td style="text-align: center">
-                <img src="./examples/images/RLGym_200k.gif" width="100%" alt="Trained transformer-based DreamerX agent after 200k steps on RLGym Soccar environment"></td>
-            </td>
-            <td style="text-align: center">
                 <img src="./examples/images/RLGym_500k.gif" width="100%" alt="Trained transformer-based DreamerX agent after 500k steps on RLGym Soccar environment"></td>
             </td>
             <td style="text-align: center">
                 <img src="./examples/images/RLGym_1-00m.gif" width="100%" alt="Trained transformer-based DreamerX agent after 1m steps on RLGym Soccar environment"></td>
+            </td>
+            <td style="text-align: center">
+                <img src="./examples/images/RLGym_10-00m.gif" width="100%" alt="Trained transformer-based DreamerX agent after 10m steps on RLGym Soccar environment"></td>
             </td>
         </tr>
         <!-- Walker2D -->

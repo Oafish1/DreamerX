@@ -11,7 +11,8 @@ __pycache__/
 # Installer eggs
 *.egg-info/
 
-# Tensorboard logs
+# Tensorboard logs and old files
+examples/images_old/
 examples/runs/
 examples/runs_old/
 

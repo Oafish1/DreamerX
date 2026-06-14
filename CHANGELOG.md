@@ -1,3 +1,6 @@
+# 0.25.1
+- Change `copy` methods in `VectorizedEnvironment` subclasses to dynamically reference top-level class for compatibility with custom environments
+
 # 0.25.0
 - Add `environments.register_env` function to register custom environments
 - Add `utilities.CaseInsensitiveDict` to mock `utilities.CaseInsensitiveEnumMeta` functionality for mutable storage

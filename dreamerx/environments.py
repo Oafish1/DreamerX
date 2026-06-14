@@ -235,7 +235,7 @@ class VectorizedGymEnvironment(VectorizedEnvironment):
             'allow_rendering': self._allow_rendering,
             **self._init_kwargs}
         new_kwargs.update(kwargs)
-        return VectorizedGymEnvironment(**new_kwargs)
+        return self.__class__(**new_kwargs)
 
 
 class VectorizedRLGymEnvironment(VectorizedEnvironment):
@@ -598,7 +598,7 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
             'allow_rendering': self._allow_rendering,
             **self._init_kwargs}
         new_kwargs.update(kwargs)
-        return VectorizedRLGymEnvironment(**new_kwargs)
+        return self.__class__(**new_kwargs)
 
 
 """String identifiers for environment definitions, mapped to their corresponding classes."""

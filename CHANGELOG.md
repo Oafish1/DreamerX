@@ -1,3 +1,7 @@
+# 0.25.0
+- Add `environments.register_env` function to register custom environments
+- Add `utilities.CaseInsensitiveDict` to mock `utilities.CaseInsensitiveEnumMeta` functionality for mutable storage
+
 # 0.24.1
 - Fix documentation references to old package name
 

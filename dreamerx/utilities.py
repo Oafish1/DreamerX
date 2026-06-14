@@ -235,6 +235,31 @@ class CaseInsensitiveEnumMeta(enum.EnumMeta):
         return super().__getitem__(value.upper()).value
 
 
+class CaseInsensitiveDict(dict):
+    """Dictionary that performs case-insensitive key lookup."""
+    def __getitem__(self, key: str) -> Any:  # noqa: ANN401
+        """Override the default item access to perform case-insensitive lookup.
+
+        :param key: The key to look for.
+        :type key: str
+        :return: The value corresponding to the matching key.
+        :rtype: Any
+
+        """
+        return super().__getitem__(key.upper())
+
+    def __setitem__(self, key: str, value: Any) -> None:  # noqa: ANN401
+        """Override the default item setting to perform case-insensitive key storage.
+
+        :param key: The key to set.
+        :type key: str
+        :param value: The value to set for the key.
+        :type value: Any
+
+        """
+        super().__setitem__(key.upper(), value)
+
+
 def load_config(*paths: list[str], list_behavior: str = 'replace') -> DotDict:
     """Load and merge YAML configuration files into a single ``DotDict``, with priority given to earlier files.
 

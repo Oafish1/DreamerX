@@ -1,6 +1,5 @@
 """Environment definitions for DreamerX."""
 
-import enum
 import time
 import warnings
 from abc import abstractmethod
@@ -602,7 +601,25 @@ class VectorizedRLGymEnvironment(VectorizedEnvironment):
         return VectorizedRLGymEnvironment(**new_kwargs)
 
 
-class ENVIRONMENT_IDENTIFIERS(enum.Enum, metaclass=frl_utilities.CaseInsensitiveEnumMeta):
-    """String identifiers for environment definitions, mapped to their corresponding classes."""
-    GYMNASIUM = VectorizedGymEnvironment
-    RLGYM = VectorizedRLGymEnvironment
+"""String identifiers for environment definitions, mapped to their corresponding classes."""
+ENVIRONMENT_IDENTIFIERS = frl_utilities.CaseInsensitiveDict()
+ENVIRONMENT_IDENTIFIERS['GYMNASIUM'] = VectorizedGymEnvironment
+ENVIRONMENT_IDENTIFIERS['RLGYM'] = VectorizedRLGymEnvironment
+# TODO: Get this into documentation somehow
+
+
+def register_env(
+    env_id: str,
+    env_class: type[VectorizedEnvironment],
+) -> None:
+    """Register a new environment class with a string identifier.
+
+    :param env_id: The string identifier for the environment.
+    :type env_id: str
+    :param env_class: The environment class to register, which must be a subclass of `VectorizedEnvironment`.
+    :type env_class: type[VectorizedEnvironment]
+
+    """
+    # Add environment to the global environment identifiers
+    global ENVIRONMENT_IDENTIFIERS
+    ENVIRONMENT_IDENTIFIERS[env_id] = env_class

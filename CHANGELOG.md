@@ -1,3 +1,6 @@
+# 0.25.2
+- Fix license copyright
+
 # 0.25.1
 - Change `copy` methods in `VectorizedEnvironment` subclasses to dynamically reference top-level class for compatibility with custom environments
 

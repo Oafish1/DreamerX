@@ -1,0 +1,18 @@
+dreamerx.rlgym package
+======================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dreamerx.rlgym.rewards
+
+Module contents
+---------------
+
+.. automodule:: dreamerx.rlgym
+   :members:
+   :show-inheritance:
+   :undoc-members:

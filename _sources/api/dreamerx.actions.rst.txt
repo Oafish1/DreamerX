@@ -1,0 +1,7 @@
+dreamerx.actions module
+=======================
+
+.. automodule:: dreamerx.actions
+   :members:
+   :show-inheritance:
+   :undoc-members:

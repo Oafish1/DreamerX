@@ -1,0 +1,33 @@
+dreamerx package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dreamerx.rlgym
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dreamerx.actions
+   dreamerx.buffers
+   dreamerx.distributions
+   dreamerx.dreamer
+   dreamerx.environments
+   dreamerx.losses
+   dreamerx.models
+   dreamerx.utilities
+
+Module contents
+---------------
+
+.. automodule:: dreamerx
+   :members:
+   :show-inheritance:
+   :undoc-members:

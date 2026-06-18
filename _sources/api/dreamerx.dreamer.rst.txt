@@ -1,0 +1,7 @@
+dreamerx.dreamer module
+=======================
+
+.. automodule:: dreamerx.dreamer
+   :members:
+   :show-inheritance:
+   :undoc-members:

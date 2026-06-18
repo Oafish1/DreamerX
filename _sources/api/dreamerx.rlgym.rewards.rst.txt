@@ -1,0 +1,7 @@
+dreamerx.rlgym.rewards module
+=============================
+
+.. automodule:: dreamerx.rlgym.rewards
+   :members:
+   :show-inheritance:
+   :undoc-members:

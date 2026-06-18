@@ -1,0 +1,7 @@
+dreamerx.losses module
+======================
+
+.. automodule:: dreamerx.losses
+   :members:
+   :show-inheritance:
+   :undoc-members:

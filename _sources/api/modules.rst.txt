@@ -1,0 +1,7 @@
+dreamerx
+========
+
+.. toctree::
+   :maxdepth: 4
+
+   dreamerx

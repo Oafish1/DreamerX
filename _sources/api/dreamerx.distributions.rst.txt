@@ -1,0 +1,7 @@
+dreamerx.distributions module
+=============================
+
+.. automodule:: dreamerx.distributions
+   :members:
+   :show-inheritance:
+   :undoc-members:
